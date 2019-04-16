@@ -9,6 +9,6 @@ public class DefaultController {
 
     @GetMapping("/")
     public String helloWorld(Model model) {
-        return "login";
+        return "authentication/login";
     }
 }

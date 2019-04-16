@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Facetale - Kirjaudu sisään</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/assets/css/main.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/assets/css/authentication.css}">
+        <script defer src="//use.fontawesome.com/releases/v5.8.1/js/all.js"
+            integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ"
+            crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <header id="header-test">
+            <a href="https://google.com">
+                <img id="logo2" th:src="@{/assets/images/logo-with-text.png}" />
+            </a>
+        </header>
+        <main id="test">
+            <div class="account-container">
+                <div class="credentials-area-header">
+                    <p id="title">Tervetuloa Facetalesiin!</p>
+                    <p>Kirjaudu sisään ja tiedät mitä kaverisi puuhaavat, niin helppoa se on.</p>
+                </div>
+                <div class="credentials-area">
+                    <form th:action="@{/api/account/login}" th:method="POST">
+                        <div class="form-group">
+                            <input type="text" id="testinput" class="form-input" name="userid" required>
+                            <div class="form-control-placeholder">Käyttäjätunnus</div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-input" name="password" required>
+                            <label class="form-control-placeholder" for="password">Salasana</label>
+                        </div>
+                        <p id="new-user">Ei vielä käyttäjää? <a href="https://www.google.com">Rekisteröidy</a></p>
+                        <input type="button" class="authbutton" value="Kirjaudu sisään" onclick="alert('Test!');" />
+                    </form>
+                </div>
+            </div>
+            <div class="tooltip-container">
+                <div class="tooltip">
+                    <i class="fas fa-user-friends fa-2x"></i>
+                    <p>Kaverisi sielä missä sinäkin.</p>
+                </div>
+                <div class="tooltip">
+                    <i class="far fa-comments fa-2x"></i>
+                    <p>Viestittele vaivattomasti.</p>
+                </div>
+                <div class="tooltip">
+                    <i class="fas fa-camera fa-2x"></i>
+                    <p>Jaa kuvia muutamalla napin painalluksella.</p>
+                </div>
+            </div>
+        </main>
+        <footer id="footer-area">
+            <h3 id="footer-inside-footer">DEV Kevät 2019<br>Web-palvelinohjelmointi projekti</h3>
+        </footer>
+    </body>
+</html>

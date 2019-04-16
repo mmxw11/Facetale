@@ -56,6 +56,20 @@
             <input type="submit" value="Rekisteröidy" onclick="return validateSignUpFields();">
         </form>
     </div>
+            <!-- div id="sing-up-div" style="display:none">
+                    <form th:action="@{/api/account/sign-up}" th:method="POST">
+                        <input type="text" class="form-input" placeholder="Käyttäjätunnus" name="userId" required>
+                        <input type="text" class="form-input" placeholder="Nimi" name="name" required>
+                        <input type="text" class="form-input" placeholder="Profiili tägi" name="profileTag" required>
+                        <input type="password" class="form-input" placeholder="Salasana" id="signup_password"
+                            name="password" required>
+                        <input type="password" class="form-input" placeholder="Vahvista Salasana"
+                            id="signup_password_confirm" required>
+                    </form>
+                </div -->
+
+
+
     <script>
        function validateSignUpFields() {
             var password = document.getElementById('signup_password').value;

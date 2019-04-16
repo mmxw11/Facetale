@@ -255,9 +255,8 @@ padding-bottom: 20px;
 
 
 .tooltip {
-	font-size: 16px;
-	    font-weight: 300;
-        line-height: 20px;
+ 
+       
         margin-bottom: 45px;
         margin-top: 45px;
  align-items: center;
@@ -265,6 +264,11 @@ padding-bottom: 20px;
 
 }
 
+.tooltip p {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 20px;  
+}
 .tooltip svg {
 	padding-right: 10px;
 }
