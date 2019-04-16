@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
+    <title>TEST</title>
+    <!-- link rel="stylesheet" type="text/css" href="css/style.css" -->
+	<style>
+	* {
+        margin: 0;
+        padding: 0;
+    }
+	body {
+	    
+	}
+	#sign-up-container {
+		margin: auto;
+        width: 50%;
+		background: #42a7f4;
+		
+	}
+	
+	
+	
+	input {
+	    margin: auto;
+        width: 50%;
+	    display: block;
+		margin-bottom: 10px;
+       
+  }
+   
+	</style>
+</head>
+<body>
+    <div id="bar">
+	TEKSTI
+	</div>
+    <h1>Tervetuloa Facetaleen2!</h1>
+    <div id="login-container">
+        <h2>Kirjaudu sisään</h2>
+        <form th:action="@{/api/account/login}" th:method="POST">
+            <input type="text" placeholder="Käyttäjätunnus" name="userId" required>
+            <input type="password" placeholder="Salasana" name="password" required>
+            <input type="submit" value="Kirjaudu sisään" />
+        </form>
+    </div>
+    <div id="sign-up-container">
+        <h2>Rekisteröidy</h2>
+        <form th:action="@{/api/account/signup}" th:method="POST">
+            <input type="text" placeholder="Käyttäjätunnus" name="userId" required>
+            <input type="text" placeholder="Nimi" name="name" required>
+            <input type="text" placeholder="Profiili tägi" name="profileTag" required>
+            <input type="password" placeholder="Salasana" id="signup_password" name="password" required>
+            <input type="password" placeholder="Vahvista Salasana" id="signup_password_confirm" required>
+            <input type="submit" value="Rekisteröidy" onclick="return validateSignUpFields();">
+        </form>
+    </div>
+    <script>
+       function validateSignUpFields() {
+            var password = document.getElementById('signup_password').value;
+            var passwordConfirm = document.getElementById('signup_password_confirm').value;
+            if (password !== passwordConfirm) {
+                alert('password not same');
+                return false;
+            }
+			return true;
+        }
+    </script>
+</body>
+</html>
