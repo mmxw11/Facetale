@@ -10,12 +10,12 @@
             crossorigin="anonymous"></script>
     </head>
     <body>
-        <header id="header-test">
-            <a href="https://google.com">
-                <img id="logo2" th:src="@{/assets/images/logo-with-text.png}" />
+        <header id="master-head">
+            <a href="/">
+                <img id="logo" th:src="@{/assets/images/logo-with-text.png}" />
             </a>
         </header>
-        <main id="test">
+        <main id="content">
             <div class="account-container">
                 <div class="credentials-area-header">
                     <p id="title">Tervetuloa Facetalesiin!</p>
@@ -51,8 +51,8 @@
                 </div>
             </div>
         </main>
-        <footer id="footer-area">
-            <h3 id="footer-inside-footer">DEV Kevät 2019<br>Web-palvelinohjelmointi projekti</h3>
+        <footer class="footer-area">
+            <h3 class="footer-text">University of Helsinki<br>Web-palvelinohjelmointi projekti Spring 2019</h3>
         </footer>
     </body>
 </html>
