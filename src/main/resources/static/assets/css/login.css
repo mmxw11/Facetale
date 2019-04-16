@@ -6,7 +6,7 @@ html {
     direction: ltr;
     /*  background-attachment: fixed;*/
     /* background-color:  hsl(0, 0%, 7%); */
-   background-image: url(login-background.png);
+   background-image: url("../images/login-background.png");
     background-repeat: repeat-y;
     background-size: 50% 100%;
     position:relative; 

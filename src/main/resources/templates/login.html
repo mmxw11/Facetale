@@ -4,7 +4,9 @@
 <head>
     <title>Facetale - Kirjaudu sisään</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="./login-style.css">
+	 <link rel="stylesheet" type="text/css" th:href="@{/assets/css/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/login.css}">
+
     <script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js"
         integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ"
         crossorigin="anonymous"></script>
@@ -15,7 +17,7 @@
         <a href="https://google.com">
 
 
-            <img id="logo2" src="logo-with-text.png" />
+            <img id="logo2" th:src="@{/assets/images/logo-with-text.png}" />
         </a>
         <!-- h2>Pidä kaverisi aina mukana</h2 -->
     </header>
