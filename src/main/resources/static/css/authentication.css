@@ -17,7 +17,11 @@ body {
     height: 48px;
 }
 
-@media only screen and (max-width: 1400px) {
+@media only screen and (max-width: 1365px) {
+    body {
+        background-color: #232323;
+        background-image: none;
+    }
     #master-head {
         background-color: #1e7bd2;
     }
@@ -37,7 +41,7 @@ body {
     position: relative;
 }
 
-/* Account container */
+/* Account */
 
 #account-container {
     background-color: #232323;
@@ -128,7 +132,7 @@ body {
     float: right;
     margin-right: 5%;
     padding: 11px;
-    outline: 0;
+    outline: 0px;
     border: none;
     border-radius: 2px;
     box-sizing: border-box;
@@ -144,75 +148,64 @@ body {
     filter: brightness(85%);
 }
 
-/* TODO HERE  */
+/* Hints */
 
-.tooltip-container {
+#hint-container {
     position: absolute;
-    top: 0;
+    top: 0px;
     left: 10%;
-    /**
-    margin-top: 130px;*/
     transform: translateX(-10%);
 }
 
 @media only screen and (max-width: 1650px) {
-    .tooltip-container {
+    #hint-container {
         left: 0%;
+        margin-left: 5px;
         transform: none;
-        margin-left: 20px;
     }
 }
 
-.tooltip {
-    margin-bottom: 45px;
-    margin-top: 45px;
-    align-items: center;
+.hint {
     display: flex;
+    align-items: center;
+    margin-top: 45px;
 }
 
-.tooltip p {
+.hint p {
     font-size: 16px;
     font-weight: 300;
     line-height: 20px;
 }
 
-.tooltip svg {
+.hint svg {
     padding-right: 10px;
 }
 
-/* Ids */
-
-@media only screen and (max-width: 1400px) {
-    .tooltip-container {
+@media only screen and (max-width: 1365px) {
+    #hint-container {
         position: static;
-        margin-top: 0;
-        margin-left: auto;
-        margin-right: auto;
         max-width: 620px;
         border-top: 2px solid #1e7bd2;
         border-bottom: 2px solid #1e7bd2;
+        margin-left: auto;
+        margin-right: auto;
+        padding-bottom: 45px;
     }
-    .tooltip {
+    .hint {
         padding-left: 7%;
     }
-    body {
-        background-color: #232323;
-        background-image: none;
-        /*
-        background-size: 100% 100%;*/
-    }
 }
 
-/* Footer. */
+/* Footer */
 
-.footer-area {
+#master-footer {
+    position: absolute;
     height: 42px;
     width: 100%;
-    position: absolute;
-    bottom: 0;
+    bottom: 0px;
 }
 
-.footer-text {
+#master-footer h3 {
     font-size: 14px;
     font-weight: 400;
     padding-left: 5px;
