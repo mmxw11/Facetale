@@ -102,7 +102,7 @@ body {
     transition: all 200ms;
 }
 
-.form-element:focus+.floating-form-label, .form-element:valid+.floating-form-label {
+.form-element:focus + .floating-form-label, .form-element:valid + .floating-form-label {
     height: 20px;
     top: 0px;
     left: 0px;
