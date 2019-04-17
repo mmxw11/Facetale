@@ -8,9 +8,10 @@ body {
 
 #master-head {
     height: 60px;
+    width: 100%;
 }
 
-#logo {
+#master-head-logo {
     padding-top: 6px;
     padding-left: 6px;
     height: 48px;
@@ -20,7 +21,7 @@ body {
     #master-head {
         background-color: #1e7bd2;
     }
-    #logo {
+    #master-head-logo {
         position: absolute;
         left: 0px;
         right: 0px;
@@ -29,184 +30,128 @@ body {
     }
 }
 
-/* TODO HERE */
+/* Main */
 
 #content {
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-bottom: 80px;
-    /* Height of footer*/
-}
-
-#title {
-    /*
-    margin-right: 78px;*/
-    display: inline-block;
-    padding-bottom: 10px;
-    /**
-    position: absolute;
-    left: 50%;
-	   line-height: 1px;
-    transform: translateX(-50%);*/
-    /*line-height: 20px;*/
-    font-size: 20px;
-    font-weight: 400;
-}
-
-.form-input {
-    /*
-    margin-top: 20px;*/
-    /**
-    border: 2px solid #ddd;*/
-    border-radius: 4px;
-    box-sizing: border-box;
-    border: 2px solid #1e7bd2;
-    color: black;
-    /** width: 100%;
-	*/
-    width: 100%;
-    padding: 0 10px;
-    /**
-	 min-width: 100%;
-    max-width: 100%;*/
-    height: 46px;
-    /**vertical-align: middle;*/
-    /**overflow: hidden;
-    */
-    /**
-    text-decoration: none;
-    white-space: nowrap;*/
-}
-
-.form-input:focus {
-    /*
-    border-color: #1e7bd2;*/
-    /*
-    border: 2px solid #1e7bd2;*/
-    box-shadow: 0 0 0 2px#1e7bd2;
-}
-
-/**
-.form-group{
-	 width: 90%;
-	margin: 10px 0px 0px 0px;
-  position: relative;
-
-padding:0;
-
-   margin-left: 5%;
-    
-}
-
-.form-group legend {
-    position: relative; 
-    top : 0.5em;
-    display: inline;
-    text-align: left;
-    background-color: red;
-}
-*/
-
-.form-group {
-    width: 90%;
-    margin: 27px 0px 10px 5%;
-    padding: 0;
+    margin: 80px 10px 80px 10px;
     position: relative;
 }
 
-/**
-label {
-    display: inline-block; 
-    color: black;
-}*/
+/* Account container */
 
-.form-control-placeholder {
-    pointer-events: none;
-    position: absolute;
-    top: 10px;
-    left: 15px;
-    font-size: 14px;
-    /**
-    background-color:red;
-    */
-    /*padding: 7px 0 0 15px;*/
-    transition: all 200ms;
-    opacity: 1;
-    color: black;
-}
-
-a {
-    color: white;
-    text-decoration: none;
-}
-
-.form-input:focus+.form-control-placeholder, .form-input:valid+.form-control-placeholder {
-    /**font-size: 95%;*/
-    transform: translate3d(0, -98%, 0);
-    opacity: 1;
-    color: white;
-    height: 20px;
-    left: 5px;
-    padding: 0 2px 0 2px;
-    top: 0;
-    /*
-    padding: 7px 0 0 10px;*/
+#account-container {
     background-color: #232323;
-}
-
-/* classes */
-
-.account-container {
-    margin-bottom: 50px;
-    background-color: #232323;
-    /*font-size: calc(100% - 2px);*/
-    line-height: calc(100% + 6px);
     max-width: 620px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 80px;
-    padding-bottom: 50px;
-    position: relative;
+    margin: 0px auto 50px auto;
 }
 
-.credentials-area-header {
+#account-header {
     margin-left: 5%;
     margin-right: 5%;
     padding-top: 20px;
-    /*
-    padding-bottom: 40px;*/
 }
 
-.credentials-area {
+#account-header h1 {
+    font-size: 20px;
+    font-weight: 400;
+    padding-bottom: 5px;
+}
+
+#account-credentials {
+    line-height: 24px;
+    min-height: 270px;
     padding-top: 5px;
-    margin-bottom: 20px;
-    line-height: 25px;
-    /*
-    text-align: center;*/
 }
 
-#new-user {
-    padding-bottom: 20px;
-    /*text-align: right; */
-    margin-right: 6%;
+/* Account credentials form */
+
+.form-group {
+    position: relative;
+    width: 90%;
+    padding: 0;
+    margin: 30px 0px 10px 5%;
+}
+
+.form-element {
+    height: 46px;
+    width: 100%;
+    border-radius: 4px;
+    padding-left: 10px;
+    color: black;
+    border: 1px solid #1e7bd2;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+.form-element:focus {
+    box-shadow: 0 0 0 3px#1e7bd2;
+}
+
+.floating-form-label {
+    position: absolute;
+    font-size: 14px;
+    color: black;
+    top: 11px;
+    left: 15px;
+    pointer-events: none;
+    -webkit-transition: all 200ms;
+    transition: all 200ms;
+}
+
+.form-element:focus+.floating-form-label, .form-element:valid+.floating-form-label {
+    height: 20px;
+    top: 0px;
+    left: 0px;
+    color: white;
+    transform: translate3d(0, -135%, 0);
+}
+
+#alter-authentication-action {
     margin-left: 6%;
+    padding-bottom: 20px;
 }
 
-#new-user a {
+#alter-authentication-action a {
     color: #D55246;
+    text-decoration: none;
 }
 
-#new-user a:hover {
-    /*
-    opacity: 0.7;*/
+#alter-authentication-action a:hover {
     text-decoration: underline;
 }
+
+.form-submit-button {
+    color: inherit;
+    text-align: center;
+    background-color: #1e7bd2;
+    cursor: pointer;
+    float: right;
+    margin-right: 5%;
+    padding: 11px;
+    outline: 0;
+    border: none;
+    border-radius: 2px;
+    box-sizing: border-box;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.form-submit-button:hover {
+    filter: brightness(85%);
+}
+
+/* TODO HERE  */
 
 .tooltip-container {
     position: absolute;
     top: 0;
     left: 10%;
-    margin-top: 130px;
+    /**
+    margin-top: 130px;*/
     transform: translateX(-10%);
 }
 
@@ -233,37 +178,6 @@ a {
 
 .tooltip svg {
     padding-right: 10px;
-}
-
-.authbutton {
-    float: right;
-    margin-left: 5%;
-    margin-right: 5%;
-    padding-top: 50px;
-    border: none;
-    color: inherit;
-    outline: 0;
-    border-radius: 2px;
-    box-sizing: border-box;
-    padding: 11px;
-    vertical-align: middle;
-    overflow: hidden;
-    text-decoration: none;
-    background-color: #1e7bd2;
-    text-align: center;
-    cursor: pointer;
-    white-space: nowrap;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.authbutton:hover {
-    /*
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);*/
-    filter: brightness(85%);
 }
 
 /* Ids */

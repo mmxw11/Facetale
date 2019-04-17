@@ -12,30 +12,31 @@
     <body>
         <header id="master-head">
             <a href="/">
-                <img id="logo" th:src="@{/static/images/logo-with-text.png}" />
+                <img id="master-head-logo" th:src="@{/static/images/logo-with-text.png}" />
             </a>
         </header>
         <main id="content">
-            <div class="account-container">
-                <div class="credentials-area-header">
-                    <p id="title">Tervetuloa Facetalesiin!</p>
+            <div id="account-container">
+                <div id="account-header">
+                    <h1>Tervetuloa Facetalesiin!</h1>
                     <p>Kirjaudu sisään ja tiedät mitä kaverisi puuhaavat, niin helppoa se on.</p>
                 </div>
-                <div class="credentials-area">
+                <div id="account-credentials">
                     <form th:action="@{/api/account/login}" th:method="POST">
                         <div class="form-group">
-                            <input type="text" id="testinput" class="form-input" name="userid" required>
-                            <div class="form-control-placeholder">Käyttäjätunnus</div>
+                            <input type="text" class="form-element" name="userId" required>
+                            <div class="floating-form-label">Käyttäjätunnus</div>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-input" name="password" required>
-                            <label class="form-control-placeholder" for="password">Salasana</label>
+                            <input type="password" class="form-element" name="password" required>
+                            <div class="floating-form-label">Salasana</div>
                         </div>
-                        <p id="new-user">Ei vielä käyttäjää? <a href="https://www.google.com">Rekisteröidy</a></p>
-                        <input type="button" class="authbutton" value="Kirjaudu sisään" onclick="alert('Test!');" />
+                        <p id="alter-authentication-action">Ei vielä käyttäjää? <a th:href="@{/sign-up}">Rekisteröidy</a></p>
+                        <input type="submit" class="form-submit-button" value="Kirjaudu sisään" />
                     </form>
                 </div>
             </div>
+            <!-- TODO HERE-->
             <div class="tooltip-container">
                 <div class="tooltip">
                     <i class="fas fa-user-friends fa-2x"></i>

@@ -25,7 +25,10 @@ public class AccountController {
 
     @PostMapping("/api/account/login")
     @ResponseBody
-    public String handeLogin() {
-        return "TODO";
+    public String handeLogin(@RequestParam String userId, @RequestParam String password) {
+        StringBuilder b = new StringBuilder();
+        b.append("userId").append(": ").append(userId)
+                .append(" password").append(": ").append(password);
+        return b.toString();
     }
 }
