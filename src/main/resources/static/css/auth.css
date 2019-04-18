@@ -36,7 +36,7 @@ body {
 
 /* Main */
 
-#content {
+main {
     margin: 80px 10px 80px 10px;
     position: relative;
 }
@@ -77,14 +77,27 @@ body {
 
 #account-credentials {
     line-height: 24px;
-    padding: 5px 0px 60px 0px;
+    padding: 5px 5% 60px 5%;
 }
 
 .form-group {
     position: relative;
-    width: 90%;
     padding: 0px;
-    margin: 30px 0px 10px 5%;
+    margin-top: 30px;
+}
+
+@media only screen and (min-width: 500px) {
+    .multi-element-form-group {
+        height: 76px;
+    }
+    .multi-element-form-group .form-group-left {
+        float: left;
+        width: 48%;
+    }
+    .multi-element-form-group .form-group-right {
+        float: right;
+        width: 48%;
+    }
 }
 
 .form-element {
@@ -99,7 +112,7 @@ body {
 }
 
 .form-element:focus {
-    box-shadow: 0 0 0 3px#1e7bd2;
+    box-shadow: 0px 0px 0px 3px #1e7bd2;
 }
 
 .floating-form-label {
@@ -121,7 +134,7 @@ body {
 }
 
 #alter-authentication-action {
-    margin-left: 6%;
+    padding-top: 5px;
     padding-bottom: 20px;
 }
 
@@ -140,7 +153,6 @@ body {
     background-color: #1e7bd2;
     cursor: pointer;
     float: right;
-    margin-right: 5%;
     padding: 11px;
     outline: 0px;
     border: none;

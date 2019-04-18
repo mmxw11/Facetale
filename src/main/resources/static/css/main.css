@@ -17,6 +17,12 @@ body {
     min-width: 300px;
 }
 
+/* IE fix (IE doesn't support main.) */
+
+main {
+    display: block;
+}
+
 p {
     line-height: 24px;
 }

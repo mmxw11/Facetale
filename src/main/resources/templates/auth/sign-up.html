@@ -3,26 +3,41 @@
     <head th:replace="fragments/auth :: head(title='Facetale - Rekisteröidy')"> </head>
     <body>
         <header th:replace="fragments/auth :: master-head"> </header>
-        <main id="content">
+        <main>
             <div id="account-container">
                 <div id="account-header">
                     <h1>Tervetuloa Facetalesiin!</h1>
                     <p>Luo uusi käyttäjä.</p>
                 </div>
                 <!-- WIP div th:if="${(param.fail != null) and (param.fail[0] == 'true')}" id="error-alert">
-                    <p>Väärä käyttäjänimi tai salasana!</p>
+                    <p>Väärä käyttäjänimi tai salasana.</p>
                 </div -->
                 <div id="account-credentials">
                     <form th:action="@{/api/auth/sign-up}" th:method="POST">
-                        <div class="form-group">
-                            <input type="text" class="form-element" name="test" required>
-                            <div class="floating-form-label">Test</div>
+                        <div class="multi-element-form-group">
+                            <div class="form-group form-group-left">
+                                <input type="text" class="form-element" name="username" required>
+                                <div class="floating-form-label">Käyttäjänimi</div>
+                            </div>
+                            <div class="form-group form-group-right">
+                                <input type="text" class="form-element" name="name" required>
+                                <div class="floating-form-label">Nimi</div>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-element" name="test2" required>
-                            <div class="floating-form-label">Test2</div>
+                            <input type="text" class="form-element" name="profileTag" required>
+                            <div class="floating-form-label">Profiili tagi</div>
                         </div>
-                        <p id="alter-authentication-action">Minulla on jo käyttäjä. <a th:href="@{/login}">Kirjaudu sisään</a></p>
+                        <div class="form-group">
+                            <input type="password" class="form-element" name="password" required>
+                            <div class="floating-form-label">Salasana</div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-element" id="signup_password_confirm" required>
+                            <div class="floating-form-label">Vahvista salasana</div>
+                        </div>
+                        <p id="alter-authentication-action">Minulla on jo käyttäjä. <a th:href="@{/login}">Kirjaudu
+                                sisään</a></p>
                         <input type="submit" class="form-submit-button" value="Rekisteröidy" />
                     </form>
                 </div>

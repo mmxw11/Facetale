@@ -3,14 +3,14 @@
     <head th:replace="fragments/auth :: head(title='Facetale - Kirjaudu sisään')"> </head>
     <body>
         <header th:replace="fragments/auth :: master-head"> </header>
-        <main id="content">
+        <main>
             <div id="account-container">
                 <div id="account-header">
                     <h1>Tervetuloa Facetalesiin!</h1>
                     <p>Kirjaudu sisään ja tiedät mitä kaverisi puuhaavat, niin helppoa se on.</p>
                 </div>
                 <div th:if="${(param.fail != null) and (param.fail[0] == 'true')}" id="error-alert">
-                    <p>Väärä käyttäjänimi tai salasana!</p>
+                    <p>Väärä käyttäjänimi tai salasana.</p>
                 </div>
                 <div id="account-credentials">
                     <form th:action="@{/api/auth/login}" th:method="POST">
