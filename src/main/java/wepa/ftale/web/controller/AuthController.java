@@ -22,7 +22,7 @@ public class AuthController {
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             return "redirect:/";
         }
-        return "authentication/login";
+        return "auth/login";
     }
 
     @PostMapping("/api/auth/sign-up")
