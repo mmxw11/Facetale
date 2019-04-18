@@ -13,28 +13,28 @@
                     <p>Väärä käyttäjänimi tai salasana.</p>
                 </div -->
                 <div id="account-credentials">
-                    <form th:action="@{/api/auth/sign-up}" th:method="POST">
+                    <form th:action="@{/api/auth/sign-up}" th:method="POST" autocomplete="off">
                         <div class="multi-element-form-group">
                             <div class="form-group form-group-left">
                                 <input type="text" class="form-element" name="username" required>
-                                <div class="floating-form-label">Käyttäjänimi</div>
+                                <div class="floating-form-element-label">Käyttäjänimi</div>
                             </div>
                             <div class="form-group form-group-right">
                                 <input type="text" class="form-element" name="name" required>
-                                <div class="floating-form-label">Nimi</div>
+                                <div class="floating-form-element-label">Nimi</div>
                             </div>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-element" name="profileTag" required>
-                            <div class="floating-form-label">Profiili tagi</div>
+                            <div class="floating-form-element-label">Profiili tagi</div>
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-element" name="password" required>
-                            <div class="floating-form-label">Salasana</div>
+                            <div class="floating-form-element-label">Salasana</div>
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-element" id="signup_password_confirm" required>
-                            <div class="floating-form-label">Vahvista salasana</div>
+                            <div class="floating-form-element-label">Vahvista salasana</div>
                         </div>
                         <p id="alter-authentication-action">Minulla on jo käyttäjä. <a th:href="@{/login}">Kirjaudu
                                 sisään</a></p>
