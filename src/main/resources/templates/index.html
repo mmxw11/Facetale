@@ -8,7 +8,7 @@
     <body>
         <p>Tervetuloa <span th:text="${username}">user</span></p>
         <br>
-        <form th:action="@{/logout}" th:method="POST">
+        <form th:action="@{/api/auth/logout}" th:method="POST">
             <input type="submit" value="Logout">
         </form>
     </body>

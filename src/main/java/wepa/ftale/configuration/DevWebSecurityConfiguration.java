@@ -18,7 +18,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Profile("test")
 @Configuration
 @EnableWebSecurity
-public class DevelopmentWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class DevWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity sec) throws Exception {
@@ -26,9 +26,17 @@ public class DevelopmentWebSecurityConfiguration extends WebSecurityConfigurerAd
                 .antMatchers("/static/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll().and()
-                .logout().permitAll();
-        // .httpBasic();
+                // Login.
+                .formLogin().permitAll()
+                .loginPage("/login")
+                .failureUrl("/login?fail=true")
+                .loginProcessingUrl("/api/auth/login")
+                .defaultSuccessUrl("/", true)
+                // Logout.
+                .and()
+                .logout().permitAll()
+                .logoutUrl("/api/auth/logout")
+                .logoutSuccessUrl("/login");
     }
 
     @Bean
