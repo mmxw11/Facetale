@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head th:replace="fragments/auth :: head(title='Facetale - Rekisteröidy')"> </head>
+    <body>
+        <header th:replace="fragments/auth :: master-head"> </header>
+        <main id="content">
+            <div id="account-container">
+                <div id="account-header">
+                    <h1>Tervetuloa Facetalesiin!</h1>
+                    <p>Luo uusi käyttäjä.</p>
+                </div>
+                <!-- WIP div th:if="${(param.fail != null) and (param.fail[0] == 'true')}" id="error-alert">
+                    <p>Väärä käyttäjänimi tai salasana!</p>
+                </div -->
+                <div id="account-credentials">
+                    <form th:action="@{/api/auth/sign-up}" th:method="POST">
+                        <div class="form-group">
+                            <input type="text" class="form-element" name="test" required>
+                            <div class="floating-form-label">Test</div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-element" name="test2" required>
+                            <div class="floating-form-label">Test2</div>
+                        </div>
+                        <p id="alter-authentication-action">Minulla on jo käyttäjä. <a th:href="@{/login}">Kirjaudu sisään</a></p>
+                        <input type="submit" class="form-submit-button" value="Rekisteröidy" />
+                    </form>
+                </div>
+            </div>
+            <div th:replace="fragments/auth :: hint-container"></div>
+        </main>
+        <footer th:replace="fragments/auth :: master-footer"> </footer>
+    </body>
+</html>

@@ -1,21 +1,8 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-        <title>Facetale - Kirjaudu sisään</title>
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}">
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/auth.css}">
-        <script defer src="//use.fontawesome.com/releases/v5.8.1/js/all.js"
-            integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ"
-            crossorigin="anonymous"></script>
-    </head>
+    <head th:replace="fragments/auth :: head(title='Facetale - Kirjaudu sisään')"> </head>
     <body>
-        <header id="master-head">
-            <a href="/">
-                <img id="master-head-logo" th:src="@{/static/images/logo-with-text.png}" />
-            </a>
-        </header>
+        <header th:replace="fragments/auth :: master-head"> </header>
         <main id="content">
             <div id="account-container">
                 <div id="account-header">
@@ -35,28 +22,14 @@
                             <input type="password" class="form-element" name="password" required>
                             <div class="floating-form-label">Salasana</div>
                         </div>
-                        <p id="alter-authentication-action">Ei vielä käyttäjää? <a th:href="@{/sign-up}">Rekisteröidy</a></p>
+                        <p id="alter-authentication-action">Ei vielä käyttäjää? <a
+                                th:href="@{/sign-up}">Rekisteröidy</a></p>
                         <input type="submit" class="form-submit-button" value="Kirjaudu sisään" />
                     </form>
                 </div>
             </div>
-            <div id="hint-container">
-                <div class="hint">
-                    <i class="fas fa-user-friends fa-2x"></i>
-                    <p>Kaverisi sielä missä sinäkin.</p>
-                </div>
-                <div class="hint">
-                    <i class="far fa-comments fa-2x"></i>
-                    <p>Viestittele vaivattomasti.</p>
-                </div>
-                <div class="hint">
-                    <i class="fas fa-camera fa-2x"></i>
-                    <p>Jaa kuvia muutamalla napin painalluksella.</p>
-                </div>
-            </div>
+            <div th:replace="fragments/auth :: hint-container"></div>
         </main>
-        <footer id="master-footer">
-            <h3>WORK IN PROGRESS University of Helsinki<br>Web-palvelinohjelmointi projekti, Spring 2019</h3>
-        </footer>
+        <footer th:replace="fragments/auth :: master-footer"> </footer>
     </body>
 </html>

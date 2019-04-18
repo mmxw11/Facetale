@@ -3,6 +3,7 @@ package wepa.ftale.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -23,7 +24,12 @@ public class DevWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity sec) throws Exception {
         sec.authorizeRequests()
-                .antMatchers("/static/**").permitAll()
+                // Resources.
+                .antMatchers(HttpMethod.GET, "/static/**").permitAll()
+                // Sign up.
+                .antMatchers(HttpMethod.GET, "/sign-up").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/auth/sign-up").permitAll()
+                // Require login for everything else.
                 .anyRequest().authenticated()
                 .and()
                 // Login.

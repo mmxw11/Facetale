@@ -25,6 +25,16 @@ public class AuthController {
         return "auth/login";
     }
 
+    @GetMapping("/sign-up")
+    public String handleSignUpPage() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("AUTH: " + auth + " | " + auth.isAuthenticated());
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            return "redirect:/";
+        }
+        return "auth/sign-up";
+    }
+
     @PostMapping("/api/auth/sign-up")
     @ResponseBody
     public String handleSignUp(@RequestParam String userId, @RequestParam String name,
