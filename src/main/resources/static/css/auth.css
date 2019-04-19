@@ -62,7 +62,7 @@ main {
     padding-bottom: 5px;
 }
 
-#error-alert {
+.error-alert {
     display: flex;
     height: 46px;
     width: 90%;
@@ -101,7 +101,6 @@ main {
 }
 
 .form-element {
-    height: 46px;
     width: 100%;
     outline: 0px;
     border-radius: 4px;
@@ -112,16 +111,20 @@ main {
     white-space: nowrap;
 }
 
+.form-element.fe-credentials-input {
+    height: 46px;
+}
+
+.form-element.fe-invalid-value {
+    box-shadow: 0px 0px 0px 2px #D55246 !important;
+    border-color: #D55246 !important;
+}
+
 .form-element:focus {
     box-shadow: 0px 0px 0px 2px #1e7bd2;
 }
 
-.form-element.fe-invalid-value {
-    box-shadow: 0px 0px 0px 2px #D55246;
-    border-color: #D55246;
-}
-
-.floating-form-element-label {
+.floating-fe-label {
     position: absolute;
     color: black;
     top: 11px;
@@ -131,7 +134,7 @@ main {
     transition: all 200ms;
 }
 
-.form-element:focus + .floating-form-element-label, .form-element:valid + .floating-form-element-label, .form-element.fe-invalid-value + .floating-form-element-label {
+.form-element:focus + .floating-fe-label, .form-element:valid + .floating-fe-label, .form-element.fe-invalid-value + .floating-fe-label {
     height: 20px;
     top: 0px;
     left: 0px;
@@ -139,17 +142,17 @@ main {
     transform: translate3d(0, -135%, 0);
 }
 
-#alter-authentication-action {
+#alter-auth-action {
     padding-top: 5px;
     padding-bottom: 20px;
 }
 
-#alter-authentication-action a {
+#alter-auth-action a {
     color: #D55246;
     text-decoration: none;
 }
 
-#alter-authentication-action a:hover {
+#alter-auth-action a:hover {
     text-decoration: underline;
 }
 

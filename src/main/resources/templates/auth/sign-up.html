@@ -54,28 +54,28 @@
                     <form th:action="@{/api/auth/sign-up}" th:method="POST" id="account-credentials-form" autocomplete="off">
                         <div class="multi-element-form-group">
                             <div class="form-group fg-left">
-                                <input type="text" class="form-element" name="username" required />
-                                <div class="floating-form-element-label">Käyttäjänimi</div>
+                                <input type="text" class="form-element fe-credentials-input" name="username" required />
+                                <div class="floating-fe-label">Käyttäjänimi</div>
                             </div>
                             <div class="form-group fg-right">
-                                <input type="text" class="form-element" name="name" required />
-                                <div class="floating-form-element-label">Nimi</div>
+                                <input type="text" class="form-element fe-credentials-input" name="name" required />
+                                <div class="floating-fe-label">Nimi</div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-element" name="profileTag" required />
-                            <div class="floating-form-element-label">Profiili tagi</div>
+                            <input type="text" class="form-element fe-credentials-input" name="profileTag" required />
+                            <div class="floating-fe-label">Profiili tagi</div>
                         </div>
                         <div class="form-group">
-                            <input type="password" id="sign-up-password" class="form-element" name="password" required />
-                            <div class="floating-form-element-label">Salasana</div>
+                            <input type="password" id="sign-up-password" class="form-element fe-credentials-input" name="password" required />
+                            <div class="floating-fe-label">Salasana</div>
                         </div>
                         <div class="form-group">
                             <!-- This field will not be send to the server. Only for client side validation to prevent typos. -->
-                            <input type="password" id="sign-up-password-2" class="form-element" required />
-                            <div class="floating-form-element-label">Vahvista salasana</div>
+                            <input type="password" id="sign-up-password-2" class="form-element fe-credentials-input" required />
+                            <div class="floating-fe-label">Vahvista salasana</div>
                         </div>
-                        <p id="alter-authentication-action">Minulla on jo käyttäjä. <a th:href="@{/login}">Kirjaudu sisään</a></p>
+                        <p id="alter-auth-action">Minulla on jo käyttäjä. <a th:href="@{/login}">Kirjaudu sisään</a></p>
                         <input type="submit" class="form-submit-button" value="Rekisteröidy" />
                     </form>
                 </div>

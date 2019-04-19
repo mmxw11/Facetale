@@ -9,20 +9,20 @@
                     <h1>Tervetuloa Facetalesiin!</h1>
                     <p>Kirjaudu sisään ja tiedät mitä kaverisi puuhaavat, niin helppoa se on.</p>
                 </div>
-                <div th:if="${(param.fail != null) and (param.fail[0] == 'true')}" id="error-alert">
+                <div th:if="${(param.fail != null) and (param.fail[0] == 'true')}" class="error-alert">
                     <p>Väärä käyttäjänimi tai salasana.</p>
                 </div>
                 <div id="account-credentials">
                     <form th:action="@{/api/auth/login}" th:method="POST" autocomplete="off">
                         <div class="form-group">
-                            <input type="text" class="form-element" name="username" required />
-                            <div class="floating-form-element-label">Käyttäjätunnus</div>
+                            <input type="text" class="form-element fe-credentials-input" name="username" required />
+                            <div class="floating-fe-label">Käyttäjätunnus</div>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-element" name="password" required />
-                            <div class="floating-form-element-label">Salasana</div>
+                            <input type="password" class="form-element fe-credentials-input" name="password" required />
+                            <div class="floating-fe-label">Salasana</div>
                         </div>
-                        <p id="alter-authentication-action">Ei vielä käyttäjää? <a th:href="@{/sign-up}">Rekisteröidy</a></p>
+                        <p id="alter-auth-action">Ei vielä käyttäjää? <a th:href="@{/sign-up}">Rekisteröidy</a></p>
                         <input type="submit" class="form-submit-button" value="Kirjaudu sisään" />
                     </form>
                 </div>
