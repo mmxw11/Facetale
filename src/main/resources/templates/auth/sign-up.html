@@ -1,42 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- TODO: FIX Thymeleaf insert (we got double head tags now) -->
-        <div th:insert="fragments/auth :: head(title='Facetale - Rekisteröidy')"></div>
+        <div th:replace="fragments/auth :: head(title='Facetale - Rekisteröidy')"></div>
+        <script type="text/javascript" th:src="@{/static/js/form-utilities.js}"></script>
         <script type="text/javascript">
             window.addEventListener('load', function () {
                 var form = document.getElementById("account-credentials-form");
-                form.addEventListener("submit", formSubmitListener, false);
+                form.addEventListener("submit", formSubmitPasswordListener, false);
                 var formGroups = document.getElementsByClassName("form-group");
                 for (let i = 0; i < formGroups.length; i++) {
                     const felement = formGroups[i].getElementsByClassName("form-element")[0];
                     felement.addEventListener("click", setFormElementValid, false);
                     felement.addEventListener("input", setFormElementValid, false);
                 }
-            });
-
-            function formSubmitListener(event) {
-                var passwordElement = document.getElementById('sign-up-password');
-                var passwordConfirmElement = document.getElementById('sign-up-password-2');
-                if (passwordElement.value !== passwordConfirmElement.value) {
-                    passwordConfirmElement.classList.add("fe-invalid-value");
-                    passwordConfirmElement.setCustomValidity("Salasanat eivät täsmää.");
-                    try {
-                        passwordConfirmElement.reportValidity();
-                    } catch (ex) {
-                        // IE Fix. IS IE still relevant?
-                        alert("Salasanat eivät täsmää.");
-                    }
-                    event.preventDefault()
-                }
-            }
-
-            function setFormElementValid(event) {
-                var felement = event.target;
-                felement.classList.remove("fe-invalid-value");
-                felement.setCustomValidity("");
-            }
-        </script>
+            });</script>
     </head>
     <body>
         <noscript>You must have JavaScript enabled to access this page.</noscript>
@@ -51,30 +28,30 @@
                     <p>Väärä käyttäjänimi tai salasana.</p>
                 </div -->
                 <div id="account-credentials">
-                    <form th:action="@{/api/auth/sign-up}" th:method="POST" id="account-credentials-form" autocomplete="off">
+                    <form th:action="@{/api/auth/sign-up}" th:method="POST" id="account-credentials-form">
                         <div class="multi-element-form-group">
                             <div class="form-group fg-left">
-                                <input type="text" class="form-element fe-credentials-input" name="username" required />
+                                <input type="text" class="form-element fe-credentials-input" name="username" autocomplete="username" required />
                                 <div class="floating-fe-label">Käyttäjänimi</div>
                                 <p class="fe-invalid-value-message">Error!</p>
                             </div>
                             <div class="form-group fg-right">
-                                <input type="text" class="form-element fe-credentials-input" name="name" required />
+                                <input type="text" class="form-element fe-credentials-input" name="name"autocomplete="name" required />
                                 <div class="floating-fe-label">Nimi</div>
                                 <p class="fe-invalid-value-message">Error!</p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-element fe-credentials-input" name="profileTag" required />
+                            <input type="text" class="form-element fe-credentials-input" name="profileTag" autocomplete="nickname" required />
                             <div class="floating-fe-label">Profiili tagi</div>
                         </div>
                         <div class="form-group">
-                            <input type="password" id="sign-up-password" class="form-element fe-credentials-input" name="password" required />
+                            <input type="password" id="form-password" class="form-element fe-credentials-input" name="password" autocomplete="new-password" required />
                             <div class="floating-fe-label">Salasana</div>
                         </div>
                         <div class="form-group">
                             <!-- This field will not be send to the server. Only for client side validation to prevent typos. -->
-                            <input type="password" id="sign-up-password-2" class="form-element fe-credentials-input" required />
+                            <input type="password" id="form-password-2" class="form-element fe-credentials-input" autocomplete="on" required />
                             <div class="floating-fe-label">Vahvista salasana</div>
                         </div>
                         <p id="alter-auth-action">Minulla on jo käyttäjä. <a th:href="@{/login}">Kirjaudu sisään</a></p>
