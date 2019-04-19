@@ -27,9 +27,9 @@ body {
     }
     #master-head-logo {
         position: absolute;
-        left: 0px;
-        right: 0px;
-        padding-left: 0px;
+        left: 0;
+        right: 0;
+        padding-left: 0;
         margin: auto;
     }
 }
@@ -47,7 +47,7 @@ main {
     font-size: 14px;
     background-color: #232323;
     max-width: 620px;
-    margin: 0px auto 50px auto;
+    margin: 0 auto 50px auto;
 }
 
 #account-header {
@@ -82,7 +82,7 @@ main {
 
 .form-group {
     position: relative;
-    padding: 0px;
+    padding: 0;
     margin-top: 30px;
 }
 
@@ -103,7 +103,7 @@ main {
 
 .form-element {
     width: 100%;
-    outline: 0px;
+    outline: 0;
     border-radius: 4px;
     padding-left: 10px;
     color: black;
@@ -117,19 +117,19 @@ main {
 }
 
 .form-element.fe-invalid-value {
-    box-shadow: 0px 0px 0px 2px #D55246 !important;
+    box-shadow: 0 0 0 2px #D55246 !important;
     border-color: #D55246 !important;
 }
 
 .form-element:focus {
-    box-shadow: 0px 0px 0px 2px #1e7bd2;
+    box-shadow: 0 0 0 2px #1e7bd2;
 }
 
 .floating-fe-label {
     position: absolute;
     color: black;
     top: 11px;
-    left: 15px;
+    left: 10px;
     pointer-events: none;
     -webkit-transition: all 200ms;
     transition: all 200ms;
@@ -144,8 +144,8 @@ main {
 .form-element:valid + .floating-fe-label,
 .form-element.fe-invalid-value + .floating-fe-label {
     height: 20px;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     color: white;
     transform: translate3d(0, -135%, 0);
 }
@@ -154,8 +154,8 @@ main {
 
 .form-element:-webkit-autofill + .floating-fe-label {
     height: 20px;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     color: white;
     transform: translate3d(0, -135%, 0);
 }
@@ -181,7 +181,7 @@ main {
     cursor: pointer;
     float: right;
     padding: 11px;
-    outline: 0px;
+    outline: 0;
     border: none;
     border-radius: 2px;
     box-sizing: border-box;
@@ -201,14 +201,14 @@ main {
 
 #hint-container {
     position: absolute;
-    top: 0px;
+    top: 0;
     left: 10%;
     transform: translateX(-10%);
 }
 
 @media only screen and (max-width: 1650px) {
     #hint-container {
-        left: 0%;
+        left: 0;
         margin-left: 5px;
         transform: none;
     }
@@ -251,7 +251,7 @@ main {
     position: absolute;
     height: 42px;
     width: 100%;
-    bottom: 0px;
+    bottom: 0;
 }
 
 #master-footer h3 {
