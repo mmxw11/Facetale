@@ -88,7 +88,8 @@ main {
 
 @media only screen and (min-width: 500px) {
     .multi-element-form-group {
-        height: 76px;
+        min-height: 76px;
+        overflow: auto;
     }
     .multi-element-form-group .fg-left {
         float: left;
@@ -132,6 +133,11 @@ main {
     pointer-events: none;
     -webkit-transition: all 200ms;
     transition: all 200ms;
+}
+
+.fe-invalid-value-message {
+    color: #D55246;
+    margin-top: 5px;
 }
 
 .form-element:focus + .floating-fe-label, .form-element:valid + .floating-fe-label, .form-element.fe-invalid-value + .floating-fe-label {
