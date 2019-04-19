@@ -8,4 +8,6 @@ import wepa.ftale.domain.Account;
  * @author Matias
  */
 public interface AccountRepository extends JpaRepository<Account, Long> {
+
+    Account findByUsername(String username);
 }
