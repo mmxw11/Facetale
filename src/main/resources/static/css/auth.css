@@ -62,7 +62,7 @@ main {
     padding-bottom: 5px;
 }
 
-.error-alert {
+.account-error-alert {
     display: flex;
     height: 46px;
     width: 90%;
@@ -140,7 +140,19 @@ main {
     margin-top: 5px;
 }
 
-.form-element:focus + .floating-fe-label, .form-element:valid + .floating-fe-label, .form-element.fe-invalid-value + .floating-fe-label {
+.form-element:focus + .floating-fe-label,
+.form-element:valid + .floating-fe-label,
+.form-element.fe-invalid-value + .floating-fe-label {
+    height: 20px;
+    top: 0px;
+    left: 0px;
+    color: white;
+    transform: translate3d(0, -135%, 0);
+}
+
+/* Fix floating label position on autofill in most browsers. */
+
+.form-element:-webkit-autofill + .floating-fe-label {
     height: 20px;
     top: 0px;
     left: 0px;

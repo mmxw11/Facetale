@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html>
-    <head th:include="fragments/auth :: head(title='Facetale - Kirjaudu sisään')"> </head>
+    <head th:include="fragments/auth :: head(title='Facetale - Kirjaudu sisään')"></head>
     <body>
-        <header th:replace="fragments/auth :: master-head"> </header>
+        <div th:replace="fragments/auth :: header"></div>
         <main>
             <div id="account-container">
                 <div id="account-header">
                     <h1>Tervetuloa Facetalesiin!</h1>
-                    <p>Kirjaudu sisään ja tiedät mitä kaverisi puuhaavat, niin helppoa se on.</p>
+                    <p>Kirjaudu sisään.</p>
                 </div>
-                <div th:if="${(param.fail != null) and (param.fail[0] == 'true')}" class="error-alert">
+                <div th:if="${(param.fail != null) and (param.fail[0] == 'true')}" class="account-error-alert">
                     <p>Väärä käyttäjänimi tai salasana.</p>
                 </div>
                 <div id="account-credentials">
                     <form th:action="@{/api/auth/login}" th:method="POST">
                         <div class="form-group">
-                            <input type="text" class="form-element fe-credentials-input" name="username" autocomplete="username" required />
+                            <input type="text" class="form-element fe-credentials-input" name="username"
+                                autocomplete="username" required />
                             <div class="floating-fe-label">Käyttäjätunnus</div>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-element fe-credentials-input" name="password" autocomplete="current-password" required />
+                            <input type="password" class="form-element fe-credentials-input" name="password"
+                                autocomplete="current-password" required />
                             <div class="floating-fe-label">Salasana</div>
                         </div>
                         <p id="alter-auth-action">Ei vielä käyttäjää? <a th:href="@{/sign-up}">Rekisteröidy</a></p>
@@ -29,6 +31,6 @@
             </div>
             <div th:replace="fragments/auth :: hint-container"></div>
         </main>
-        <footer th:replace="fragments/auth :: master-footer"> </footer>
+        <footer th:replace="fragments/auth :: master-footer"></footer>
     </body>
 </html>

@@ -1,13 +1,18 @@
 package wepa.ftale.web.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import wepa.ftale.domain.Account;
 
 /**
  * @author Matias
@@ -36,14 +41,21 @@ public class AuthController {
     }
 
     @PostMapping("/api/auth/sign-up")
-    @ResponseBody
-    public String handleSignUp(@RequestParam String userId, @RequestParam String name,
-            @RequestParam String profileTag, @RequestParam String password) {
-        StringBuilder b = new StringBuilder();
-        b.append("userId").append(": ").append(userId)
-                .append(" name").append(": ").append(name)
-                .append(" profileTag").append(": ").append(profileTag)
-                .append(" password").append(": ").append(password);
-        return b.toString();
+    public String handleSignUp(@Valid @ModelAttribute Account account, BindingResult bindingResult) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("AUTH: " + auth + " | " + auth.isAuthenticated());
+        System.out.println("new acc: " + account);
+        if (bindingResult.hasErrors()) {
+            bindingResult.addError(new FieldError("account", "profileTag", "TEST ERROR: " + account.getProfileTag()));
+            System.out.println("errors!");
+            return "auth/sign-up";
+        }
+        System.out.println("acc suc!");
+        return "redirect:/";
+    }
+
+    @ModelAttribute
+    private Account getAccount() {
+        return new Account();
     }
 }
