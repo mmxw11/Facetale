@@ -1,28 +1,24 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <div th:replace="fragments/auth :: head(title='Facetale - Rekisteröidy')"></div>
+        <div th:replace="fragments/app :: head(title='Facetale - Rekisteröidy')"></div>
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/auth.css}">
         <script type="text/javascript" th:src="@{/static/js/form-utilities.js}"></script>
         <script type="text/javascript">
             window.addEventListener('load', function () {
                 var form = document.getElementById("account-credentials-form");
                 form.addEventListener("submit", formSubmitPasswordListener, false);
-                var formGroups = document.getElementsByClassName("form-group");
-                for (let i = 0; i < formGroups.length; i++) {
-                    const felement = formGroups[i].getElementsByClassName("form-element")[0];
-                    felement.addEventListener("click", setFormElementValid, false);
-                    felement.addEventListener("input", setFormElementValid, false);
-                }
+                registerFormGroupValidationListeners();
             });
         </script>
     </head>
     <body>
-        <div th:replace="fragments/auth :: header"></div>
+        <div th:replace="fragments/auth :: auth-head"></div>
         <main>
             <div id="account-container">
                 <div id="account-header">
                     <h1>Tervetuloa Facetalesiin!</h1>
-                    <p>Luo uusi käyttäjä.</p>
+                    <p>Luo uusi käyttäjä</p>
                 </div>
                 <div id="account-credentials">
                     <form th:action="@{/api/auth/sign-up}" th:method="POST" th:object="${account}"
@@ -68,6 +64,6 @@
             </div>
             <div th:replace="fragments/auth :: hint-container"></div>
         </main>
-        <footer th:replace="fragments/auth :: master-footer"></footer>
+        <footer th:replace="fragments/app :: master-footer"></footer>
     </body>
 </html>

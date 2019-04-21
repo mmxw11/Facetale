@@ -1,17 +1,10 @@
 <!DOCTYPE html>
 <html>
-    <head th:fragment="head(title)" th:remove="tag">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-        <title th:text="${title}">Title</title>
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}">
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/auth.css}">
-        <script defer src="//use.fontawesome.com/releases/v5.8.1/js/all.js"
-            integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ"
-            crossorigin="anonymous"></script>
+    <head>
+        <title>Auth template</title>
     </head>
     <body>
-        <div th:fragment="header" th:remove="tag">
+        <div th:fragment="auth-head" th:remove="tag">
             <noscript>You must have JavaScript enabled for this page to function properly.</noscript>
             <header id="auth-head">
                 <a href="/">
@@ -35,8 +28,5 @@
                 </div>
             </div>
         </main>
-        <footer th:fragment="master-footer" id="master-footer">
-            <h3>WORK IN PROGRESS University of Helsinki<br>Web-palvelinohjelmointi projekti, Spring 2019</h3>
-        </footer>
     </body>
 </html>
