@@ -6,12 +6,15 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import wepa.ftale.FormUtils;
 import wepa.ftale.domain.Account;
 import wepa.ftale.service.AccountService;
 
@@ -34,10 +37,14 @@ public class AuthController {
     }
 
     @GetMapping("/sign-up")
-    public String handleSignUpPage() {
+    public String handleSignUpPage(Model model) {
         if (accountService.isUserAuthenticated()) {
             // Redirect the user if they are already authenticated.
             return "redirect:/";
+        }
+        // Check if post redirect contains any errors.
+        if (!model.containsAttribute("account")) {
+            model.addAttribute("account", new Account());
         }
         return "auth/sign-up";
     }
@@ -50,22 +57,20 @@ public class AuthController {
     }
 
     @PostMapping("/api/auth/sign-up")
-    public String handleSignUp(@Valid @ModelAttribute Account account, BindingResult bindingResult, HttpServletRequest request) throws ServletException {
-        if (bindingResult.hasErrors()) {// Form validation errors.
-            return "auth/sign-up";
+    public String handleSignUp(@Valid @ModelAttribute Account account, BindingResult bindingResult, RedirectAttributes rdAttributes,
+            HttpServletRequest request) throws ServletException {
+        // Form validation errors.
+        if (FormUtils.redirectBindingResult("account", account, bindingResult, rdAttributes)) {
+            return "redirect:/sign-up";
         }
         final String originalPassword = account.getPassword();
         accountService.createAccount(account, bindingResult);
-        if (bindingResult.hasErrors()) { // createAccount failed.
-            return "auth/sign-up";
+        if (FormUtils.redirectBindingResult("account", account, bindingResult, rdAttributes)) {
+            // createAccount failed.
+            return "redirect:/sign-up";
         }
-        // Sign up success. Login the user automatically.
+        // Sign up succeed. Login the user automatically.
         request.login(account.getUsername(), originalPassword);
         return "redirect:/";
-    }
-
-    @ModelAttribute
-    private Account getAccount() {
-        return new Account();
     }
 }
