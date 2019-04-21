@@ -11,9 +11,9 @@ body {
 }
 
 #ah-logo {
-    padding-top: 6px;
+    padding-top: 10px;
     padding-left: 10px;
-    height: 48px;
+    height: 40px;
 }
 
 @media only screen and (max-width: 1365px) {
@@ -110,8 +110,8 @@ main {
 }
 
 .form-element.fe-invalid-value {
-    box-shadow: 0 0 0 2px #D55246 !important;
-    border-color: #D55246 !important;
+    box-shadow: 0 0 0 2px #D55246;
+    border-color: #D55246;
 }
 
 .form-element:focus {

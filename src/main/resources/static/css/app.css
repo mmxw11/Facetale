@@ -1,3 +1,5 @@
+/* Header */
+
 #master-head {
     display: flex;
     align-items: center;
@@ -10,17 +12,85 @@
     height: 40px;
 }
 
-.mh-navlinks {
+#mh-nav-actions {
     margin-right: 10px;
+    display: flex;
+    align-items: center;
 }
 
-.mh-navlink {
+.nav-item {
     display: inline-block;
 }
 
-.mh-navlink:not(:last-child) {
-    margin-right: 5px;
+.nav-item:not(:last-child) {
+    margin-right: 10px;
 }
+
+.nav-item.ni-relative {
+    position: relative;
+}
+
+.nav-item .nav-dropdown-toggle {
+    cursor: pointer;
+    padding: 5px;
+    outline: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.nav-item .nav-dropdown-toggle:hover {
+    color: #232323;
+}
+
+/** TODO FIX*/
+
+.nav-item .nav-user {
+    display: flex;
+    align-items: center;
+}
+
+.nav-item .nav-user img {
+    height: 35px;
+    padding-right: 5px;
+    border-radius: 50%;
+}
+
+#nav-user-dropdown-menu {
+    display: none;
+    top: 40px;
+    right: 0;
+    font-size: 14px;
+    /*
+    width: 20%;*/
+    max-width: 300px;
+    min-width: 200px;
+    position: absolute;
+    background-color: #232323;
+    /* float: right;*/
+    /*z-index: 1;*/
+}
+
+.nav-item .nav-dropdown-menu.dm-visible {
+    display: block !important;
+}
+
+/** TODO **/
+
+.nav-item .nav-dropdown-menu a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.nav-item .nav-dropdown-menu a:hover {
+    background-color: #302f2f;
+}
+
+/* Footer */
 
 #master-footer {
     background-color: #232323;

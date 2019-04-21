@@ -44,14 +44,14 @@
                             <p th:if="${#fields.hasErrors('profileTag')}" th:errors="*{profileTag}" class="fe-invalid-value-message">Error</p>
                         </div>
                         <div class="form-group">
-                            <input type="password" id="form-password" class="form-element fe-credentials-input" th:classappend="${#fields.hasErrors('password')} ? fe-invalid-value : ''"
+                            <input type="password" id="account-password" class="form-element fe-credentials-input" th:classappend="${#fields.hasErrors('password')} ? fe-invalid-value : ''"
                                 name="password" th:field="*{password}" autocomplete="new-password" required />
                             <div class="floating-fe-label">Salasana</div>
                             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fe-invalid-value-message">Error</p>
                         </div>
                         <div class="form-group">
                             <!-- This field will not be send to the server. Only for client side validation to prevent typos. -->
-                            <input type="password" id="form-password-2" class="form-element fe-credentials-input"
+                            <input type="password" id="account-password-2" class="form-element fe-credentials-input"
                                 autocomplete="on" required />
                             <div class="floating-fe-label">Vahvista salasana</div>
                         </div>

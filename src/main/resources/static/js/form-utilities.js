@@ -1,6 +1,6 @@
 function formSubmitPasswordListener(event) {
-    var passwordElement = document.getElementById('form-password');
-    var passwordConfirmElement = document.getElementById('form-password-2');
+    var passwordElement = document.getElementById('account-password');
+    var passwordConfirmElement = document.getElementById('account-password-2');
     if (passwordElement.value !== passwordConfirmElement.value) {
         passwordConfirmElement.classList.add("fe-invalid-value");
         passwordConfirmElement.setCustomValidity("Salasanat eivät täsmää.");

@@ -8,6 +8,30 @@
         <script defer src="//use.fontawesome.com/releases/v5.8.1/js/all.js"
             integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ"
             crossorigin="anonymous"></script>
+        <script>
+
+            function toggleUserDropdownMenu() {
+                var element = document.getElementById("nav-user-dropdown-menu");
+
+                element.classList.toggle("dm-visible");
+            }
+
+            window.addEventListener("click", function (e) {
+                console.log(e.target.tagName);
+                if (e.target.matches(".nav-dropdown-toggle")) {
+                    return;
+                }
+                var dropdownMenus = document.getElementsByClassName("nav-dropdown-menu");
+
+                for (let i = 0; i < dropdownMenus.length; i++) {
+                    const dmenu = dropdownMenus[i];
+                    if (dmenu.classList.contains("dm-visible")) {
+                        dmenu.classList.remove("dm-visible");
+                    }
+
+                }
+            });
+        </script>
     </head>
     <body>
         <div th:fragment="master-head" th:remove="tag">
@@ -16,16 +40,26 @@
                 <a href="/">
                     <img id="mh-logo" th:src="@{/static/images/logo-with-text.png}" />
                 </a>
-                <!-- TODO -->
-                <div class="mh-navlinks">
-                    <a class="mh-navlink" href="#">TEST</a>
-                    <a class="mh-navlink" href="#">TEST</a>
-                    <a class="mh-navlink" href="#">TEST</a>
-                    <div class="mh-navlink">
+                <div id="mh-nav-actions">
+                    <div class="nav-item ni-relative">
+                        <div class="nav-user">
+                            <img th:src="@{/static/images/Portrait_placeholder.png}" />
+                            <span onclick="toggleUserDropdownMenu();"
+                                class="fas fa-chevron-down nav-dropdown-toggle"></span>
+                        </div>
+                        <div class="nav-dropdown-menu" id="nav-user-dropdown-menu">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                    </div>
+                    <!-- TODO -->
+                    <div class="nav-item">
                         <form th:action="@{/api/auth/logout}" th:method="POST">
-                            <input type="submit" class="button-test" value="Logout">
+                            <input type="submit" value="Kirjaudu ulos">
                         </form>
                     </div>
+                    <!-- TODO -->
                 </div>
             </header>
         </div>
