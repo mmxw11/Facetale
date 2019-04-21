@@ -15,12 +15,11 @@ body {
     font-family: "Open Sans", sans-serif;
     color: white;
     min-width: 300px;
+    font-size: 100%;
 }
 
-/* IE fix (IE doesn't support main.) */
-
 main {
-    display: block;
+    display: block; /* IE fix (IE doesn't support main.) */
 }
 
 p {
