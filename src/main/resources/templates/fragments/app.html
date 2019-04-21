@@ -10,15 +10,27 @@
             crossorigin="anonymous"></script>
     </head>
     <body>
-        <!-- div th:fragment="header" th:remove="tag">
+        <div th:fragment="master-head" th:remove="tag">
             <noscript>You must have JavaScript enabled for this page to function properly.</noscript>
-            <header id="auth-head">
+            <header id="master-head">
                 <a href="/">
-                    <img id="auth-head-logo" th:src="@{/static/images/logo-with-text.png}" />
+                    <img id="mh-logo" th:src="@{/static/images/logo-with-text.png}" />
                 </a>
+                <!-- TODO -->
+                <div class="mh-navlinks">
+                    <a class="mh-navlink" href="#">TEST</a>
+                    <a class="mh-navlink" href="#">TEST</a>
+                    <a class="mh-navlink" href="#">TEST</a>
+                    <div class="mh-navlink">
+                        <form th:action="@{/api/auth/logout}" th:method="POST">
+                            <input type="submit" class="button-test" value="Logout">
+                        </form>
+                    </div>
+                </div>
             </header>
-        </div -->
+        </div>
         <main>
+            <!-- TODO -->
         </main>
         <footer th:fragment="master-footer" id="master-footer">
             <h3>WORK IN PROGRESS University of Helsinki<br>Web-palvelinohjelmointi projekti, Spring 2019</h3>

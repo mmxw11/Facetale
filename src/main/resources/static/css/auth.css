@@ -6,15 +6,13 @@ body {
 
 /* Header */
 
-#auth-head {
-    height: 60px;
-    width: 100%;
+#master-head {
     position: relative;
 }
 
-#auth-head-logo {
+#ah-logo {
     padding-top: 6px;
-    padding-left: 6px;
+    padding-left: 10px;
     height: 48px;
 }
 
@@ -23,10 +21,10 @@ body {
         background-color: #232323;
         background-image: none;
     }
-    #auth-head {
+    #master-head {
         background-color: #1e7bd2;
     }
-    #auth-head-logo {
+    #ah-logo {
         position: absolute;
         left: 0;
         right: 0;
@@ -38,7 +36,6 @@ body {
 /* Main */
 
 main {
-    margin: 60px 10px 80px 10px;
     position: relative;
 }
 
@@ -51,18 +48,18 @@ main {
     margin: 0 auto 50px auto;
 }
 
-#account-header {
+#ac-header {
     margin: 0 5%;
     padding-top: 20px;
 }
 
-#account-header h1 {
+#ac-header h1 {
     font-size: 20px;
     font-weight: 400;
     padding-bottom: 5px;
 }
 
-.account-error-alert {
+.ac-error-alert {
     display: flex;
     height: 46px;
     background-color: #D55246;
@@ -74,7 +71,7 @@ main {
 
 /* Account credentials form */
 
-#account-credentials {
+#ac-credentials {
     line-height: 24px;
     padding: 5px 5% 25px 5%;
 }
@@ -171,11 +168,11 @@ main {
     text-decoration: underline;
 }
 
-.form-submit-button-wrapper {
+.fsubmit-button-wrapper {
     text-align: right;
 }
 
-.form-submit-button {
+.fsubmit-button {
     color: white;
     background-color: #1e7bd2;
     cursor: pointer;
@@ -191,7 +188,7 @@ main {
     user-select: none;
 }
 
-.form-submit-button:hover {
+.fsubmit-button:hover {
     filter: brightness(85%);
 }
 
@@ -207,7 +204,6 @@ main {
 @media only screen and (max-width: 1650px) {
     #hint-container {
         left: 0;
-        margin-left: 5px;
         transform: none;
     }
 }
@@ -236,19 +232,4 @@ main {
     .hint {
         padding-left: 7%;
     }
-}
-
-/* Footer */
-
-#master-footer {
-    position: absolute;
-    height: 42px;
-    width: 100%;
-    bottom: 0;
-}
-
-#master-footer h3 {
-    font-size: 14px;
-    font-weight: 400;
-    padding-left: 5px;
 }

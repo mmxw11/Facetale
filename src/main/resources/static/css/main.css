@@ -19,7 +19,9 @@ body {
 }
 
 main {
-    display: block; /* IE fix (IE doesn't support main.) */
+    /* IE fix (IE doesn't support main.) */
+    display: block;
+    margin: 60px 10px 80px 10px;
 }
 
 p {
@@ -31,4 +33,28 @@ p {
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
+}
+
+/* Header */
+
+#master-head {
+    height: 60px;
+    width: 100%;
+}
+
+/* Footer */
+
+#master-footer {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    height: 46px;
+    width: 100%;
+    bottom: 0;
+}
+
+#master-footer h3 {
+    font-size: 14px;
+    font-weight: 400;
+    padding-left: 10px;
 }

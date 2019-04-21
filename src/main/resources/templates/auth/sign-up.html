@@ -16,11 +16,11 @@
         <div th:replace="fragments/auth :: auth-head"></div>
         <main>
             <div id="account-container">
-                <div id="account-header">
+                <div id="ac-header">
                     <h1>Tervetuloa Facetalesiin!</h1>
                     <p>Luo uusi käyttäjä</p>
                 </div>
-                <div id="account-credentials">
+                <div id="ac-credentials">
                     <form th:action="@{/api/auth/sign-up}" th:method="POST" th:object="${account}"
                         id="account-credentials-form">
                         <div class="multi-element-form-group">
@@ -56,8 +56,8 @@
                             <div class="floating-fe-label">Vahvista salasana</div>
                         </div>
                         <p id="alter-auth-action">Minulla on jo käyttäjä. <a th:href="@{/login}">Kirjaudu sisään</a></p>
-                        <div class="form-submit-button-wrapper">
-                            <input type="submit" class="form-submit-button" value="Rekisteröidy" />
+                        <div class="fsubmit-button-wrapper">
+                            <input type="submit" class="fsubmit-button" value="Rekisteröidy" />
                         </div>
                     </form>
                 </div>

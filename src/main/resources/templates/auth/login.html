@@ -8,14 +8,14 @@
         <div th:replace="fragments/auth :: auth-head"></div>
         <main>
             <div id="account-container">
-                <div id="account-header">
+                <div id="ac-header">
                     <h1>Tervetuloa Facetalesiin!</h1>
                     <p>Kirjaudu sisään</p>
                 </div>
-                <div th:if="${(param.fail != null) and (param.fail[0] == 'true')}" class="account-error-alert">
+                <div th:if="${(param.fail != null) and (param.fail[0] == 'true')}" class="ac-error-alert">
                     <p>Väärä käyttäjänimi tai salasana.</p>
                 </div>
-                <div id="account-credentials">
+                <div id="ac-credentials">
                     <form th:action="@{/api/auth/login}" th:method="POST">
                         <div class="form-group">
                             <input type="text" class="form-element fe-credentials-input" name="username"
@@ -28,8 +28,8 @@
                             <div class="floating-fe-label">Salasana</div>
                         </div>
                         <p id="alter-auth-action">Ei vielä käyttäjää? <a th:href="@{/sign-up}">Rekisteröidy</a></p>
-                        <div class="form-submit-button-wrapper">
-                            <input type="submit" class="form-submit-button" value="Kirjaudu sisään" />
+                        <div class="fsubmit-button-wrapper">
+                            <input type="submit" class="fsubmit-button" value="Kirjaudu sisään" />
                         </div>
                     </form>
                 </div>

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-        <title>Facetale</title>
+        <div th:replace="fragments/app :: head(title='Facetale')"></div>
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/app.css}">
     </head>
     <body>
-        <p>Tervetuloa <span th:text="${username}">user</span></p>
-        <br>
-        <form th:action="@{/api/auth/logout}" th:method="POST">
-            <input type="submit" value="Logout">
-        </form>
+        <div th:replace="fragments/app :: master-head"></div>
+        <main>
+            <p style="color:black;">Tervetuloa <span th:text="${username}">user</span></p>
+            <br>
+        </main>
     </body>
+    <footer th:replace="fragments/app :: master-footer"></footer>
 </html>

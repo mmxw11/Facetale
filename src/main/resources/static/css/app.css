@@ -1,0 +1,27 @@
+#master-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1e7bd2;
+}
+
+#mh-logo {
+    margin-left: 10px;
+    height: 40px;
+}
+
+.mh-navlinks {
+    margin-right: 10px;
+}
+
+.mh-navlink {
+    display: inline-block;
+}
+
+.mh-navlink:not(:last-child) {
+    margin-right: 5px;
+}
+
+#master-footer {
+    background-color: #232323;
+}
