@@ -48,9 +48,22 @@
                                 class="fas fa-chevron-down nav-dropdown-toggle"></span>
                         </div>
                         <div class="nav-dropdown-menu" id="nav-user-dropdown-menu">
-                            <a href="#">Link 1</a>
-                            <a href="#">Link 2</a>
-                            <a href="#">Link 3</a>
+                            <div class="nav-user-dm-profile">
+                                <img th:src="@{/static/images/Portrait_placeholder.png}" />
+                                <a href="#" class="dm-profile-info">
+                                    <h1 th:text="${username}">username</h1>
+                                    <p th:text="${profileTag}">profileTag</p>
+                                </a>
+                            </div>
+                            <a href="#" class="al">Sivuni</a>
+                            <a href="#" class="al"> <i class="fas fa-user-friends"></i> Kaverit</a>
+                            <a href="#" class="al">Albumi</a>
+                            <a href="#" class="al">Link 3</a>
+                            <div class="al">
+                                <form th:action="@{/api/auth/logout}" th:method="POST">
+                                    <input type="submit" value="Kirjaudu ulos">
+                                </form>
+                            </div>
                         </div>
                     </div>
                     <!-- TODO -->

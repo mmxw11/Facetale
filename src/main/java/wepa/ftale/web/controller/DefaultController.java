@@ -16,6 +16,7 @@ public class DefaultController {
     public String helloWorld(Model model) {
         SecurityContext context = SecurityContextHolder.getContext();
         model.addAttribute("username", context.getAuthentication().getName());
+        model.addAttribute("profileTag", "@test");
         return "index";
     }
 }
