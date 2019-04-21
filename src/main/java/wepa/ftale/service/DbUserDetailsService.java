@@ -1,4 +1,4 @@
-package wepa.ftale.db;
+package wepa.ftale.service;
 
 import java.util.Arrays;
 
@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import wepa.ftale.db.repository.AccountRepository;
 import wepa.ftale.domain.Account;
+import wepa.ftale.repository.AccountRepository;
 
 @Service
 public class DbUserDetailsService implements UserDetailsService {

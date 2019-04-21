@@ -1,37 +1,33 @@
 package wepa.ftale.web.controller;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import wepa.ftale.db.repository.AccountRepository;
 import wepa.ftale.domain.Account;
+import wepa.ftale.service.AccountService;
 
 /**
  * @author Matias
  */
 @Controller
 public class AuthController {
-    
+
     @Autowired
-    private AccountRepository accountRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private AccountService accountService;
 
     @GetMapping("/login")
     public String handleLoginPage() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("LOGIN AUTH: " + auth + " | " + auth.isAuthenticated());
-        if (!(auth instanceof AnonymousAuthenticationToken)) {
+        if (accountService.isUserAuthenticated()) {
+            // Redirect the user if they are already authenticated.
             return "redirect:/";
         }
         return "auth/login";
@@ -39,30 +35,32 @@ public class AuthController {
 
     @GetMapping("/sign-up")
     public String handleSignUpPage() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("SIGN UP PAGE AUTH: " + auth + " | " + auth.isAuthenticated());
-        if (!(auth instanceof AnonymousAuthenticationToken)) {
+        if (accountService.isUserAuthenticated()) {
+            // Redirect the user if they are already authenticated.
             return "redirect:/";
         }
         return "auth/sign-up";
     }
 
+    @PostMapping("/api/auth/login")
+    public void handleSignUp(@RequestParam String username, @RequestParam String password, HttpServletRequest request) throws ServletException {
+        // This controller ensures that user can't post anything to the login processing endpoint
+        // when they are already logged in. (Needed for HttpSecurity to work)
+        request.login(username, password);
+    }
+
     @PostMapping("/api/auth/sign-up")
-    public String handleSignUp(@Valid @ModelAttribute Account account, BindingResult bindingResult) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        account.setPassword(passwordEncoder.encode(account.getPassword()));
-        System.out.println("AUTH: SIGN PAGE " + auth + " | " + auth.isAuthenticated());
-        System.out.println("new acc: " + account);
-        //TODO: Do something with the unique fields (USERNAME AND PRORIFLETAG)
-        if (bindingResult.hasErrors()) {
-            /*bindingResult.addError(new FieldError("account", "profileTag", "TEST ERROR: " + account.getProfileTag()));
-            */
-            System.out.println("errors!");
+    public String handleSignUp(@Valid @ModelAttribute Account account, BindingResult bindingResult, HttpServletRequest request) throws ServletException {
+        if (bindingResult.hasErrors()) {// Form validation errors.
             return "auth/sign-up";
         }
-        System.out.println("acc suc!");
-        accountRepository.save(account);
-        // We prob want to log in the user here.
+        final String originalPassword = account.getPassword();
+        accountService.createAccount(account, bindingResult);
+        if (bindingResult.hasErrors()) { // createAccount failed.
+            return "auth/sign-up";
+        }
+        // Sign up success. Login the user automatically.
+        request.login(account.getUsername(), originalPassword);
         return "redirect:/";
     }
 

@@ -30,13 +30,16 @@ public class DevWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // Resources.
                 .antMatchers(HttpMethod.GET, "/static/**").permitAll()
                 // Sign up.
+                .antMatchers(HttpMethod.GET, "/login").permitAll()
                 .antMatchers(HttpMethod.GET, "/sign-up").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/auth/sign-up").permitAll()
+                // Only uses who are NOT authenticated can access the processing endpoints.
+                .antMatchers(HttpMethod.POST, "/api/auth/sign-up").hasRole("ANONYMOUS")
+                .antMatchers(HttpMethod.POST, "/api/auth/login").hasRole("ANONYMOUS")
                 // Require login for everything else.
                 .anyRequest().authenticated()
                 .and()
                 // Login.
-                .formLogin().permitAll()
+                .formLogin()
                 .loginPage("/login")
                 .failureUrl("/login?fail=true")
                 .loginProcessingUrl("/api/auth/login")
@@ -57,17 +60,4 @@ public class DevWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    /**
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User.builder().passwordEncoder(PasswordEncoderFactories.createDelegatingPasswordEncoder()::encode)
-                .username("test")
-                .password("moi")
-                .roles("USER")
-                .build();
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(user);
-        return manager;
-    }*/
 }
