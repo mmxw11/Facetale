@@ -11,7 +11,7 @@
         <script type="text/javascript">
             function toggleAccountDropdownMenu() {
                 var element = document.getElementById("ni-account-dropdown-menu");
-                element.classList.toggle("dm-visible");
+                element.classList.toggle("show-element");
             }
 
             window.addEventListener("click", function (e) {
@@ -23,8 +23,8 @@
                     return;
                 }
                 var dmenu = document.getElementById("ni-account-dropdown-menu");
-                if (dmenu.classList.contains("dm-visible")) {
-                    dmenu.classList.remove("dm-visible");
+                if (dmenu.classList.contains("show-element")) {
+                    dmenu.classList.remove("show-element");
                 }
             });
         </script>
@@ -33,12 +33,14 @@
         <div th:fragment="master-head" th:remove="tag">
             <noscript>You must have JavaScript enabled for this page to function properly.</noscript>
             <header id="master-head">
-                <div class="nav-action-group nag-left">
-                    <a href="/" class="nav-item">
-                        <img id="mh-logo" th:src="@{/static/images/logo-with-text.png}" alt="logo" />
-                    </a>
+                <ul class="nav-action-group nag-left">
+                    <li class="nav-item">
+                        <a href="/">
+                            <img id="mh-logo" th:src="@{/static/images/logo-with-text.png}" alt="logo" />
+                        </a>
+                    </li>
                     <!-- TODO: MOBILE BACK BUTTON THINGY -->
-                </div>
+                </ul>
                 <!-- TODO SEARCH BAR-->
                 <div class="nav-item">
                     <form th:action="@{/}" th:method="POST">
@@ -53,12 +55,12 @@
                     </form>
                 </div>
                 <!-- TODO SEARCH BAR-->
-                <div class="nav-action-group nag-right">
-                    <div class="nav-item">
+                <ul class="nav-action-group nag-right">
+                    <li class="nav-item">
                         <!-- TODO ONLY SHOW ON MOBILE -->
                         <button type="submit" class="ni-action"><i class="fas fa-search"></i></button>
-                    </div>
-                    <div class="nav-item ni-relative">
+                    </li>
+                    <li class="nav-item ni-relative">
                         <div class="ni-account">
                             <img th:src="@{/static/images/Portrait_placeholder.png}" alt="Profile picture" />
                             <span onclick="toggleAccountDropdownMenu();"
@@ -72,16 +74,20 @@
                                     <p th:text="${profileTag}">profileTag</p>
                                 </a>
                             </div>
-                            <a href="#"><i class="fas fa-user"></i>Sivuni</a>
-                            <a href="#"><i class="fas fa-user-friends"></i>Kaverit</a>
-                            <a href="#"><i class="fas fa-images"></i>Albumi</a>
-                            <a href="#"><i class="fas fa-cog"></i>Asetukset</a>
-                            <form th:action="@{/api/auth/logout}" th:method="POST">
-                                <button type="submit"><i class="fas fa-sign-out-alt"></i>Kirjaudu ulos</button>
-                            </form>
+                            <ul>
+                                <li><a href="#"><i class="fas fa-user"></i>Sivuni</a></li>
+                                <li><a href="#"><i class="fas fa-user-friends"></i>Kaverit</a></li>
+                                <li><a href="#"><i class="fas fa-images"></i>Albumi</a></li>
+                                <li><a href="#"><i class="fas fa-cog"></i>Asetukset</a></li>
+                                <li>
+                                    <form th:action="@{/api/auth/logout}" th:method="POST">
+                                        <button type="submit"><i class="fas fa-sign-out-alt"></i>Kirjaudu ulos</button>
+                                    </form>
+                                </li>
+                            </ul>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </header>
         </div>
         <main>

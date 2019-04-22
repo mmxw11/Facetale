@@ -21,9 +21,11 @@ body {
         background-color: #232323;
         background-image: none;
     }
+
     #master-head {
         background-color: #1e7bd2;
     }
+
     #ah-logo {
         position: absolute;
         left: 0;
@@ -85,11 +87,13 @@ main {
     .multi-element-form-group {
         display: flex;
     }
-    .multi-element-form-group .fg-left {
+
+    .multi-element-form-group > .fg-left {
         margin-right: auto;
         width: 48%;
     }
-    .multi-element-form-group .fg-right {
+
+    .multi-element-form-group > .fg-right {
         margin-left: auto;
         width: 48%;
     }
@@ -229,6 +233,7 @@ main {
         margin: 0 auto;
         padding-bottom: 45px;
     }
+
     .hint {
         padding-left: 7%;
     }

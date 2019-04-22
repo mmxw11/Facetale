@@ -102,10 +102,6 @@
     z-index: 2;
 }
 
-#ni-account-dropdown-menu.dm-visible {
-    display: block !important;
-}
-
 #ni-account-dropdown-menu .dm-account {
     display: flex;
     border-bottom: 2px solid #302f2f;
@@ -131,7 +127,11 @@
 #ni-account-dropdown-menu .dm-account .dma-profile-info h1 {
     font-size: 1em;
     font-weight: 700;
-    line-height: 15px;
+    line-height: 1.5em;
+}
+
+#ni-account-dropdown-menu .dm-account .dma-profile-info p {
+    line-height: 1.2em
 }
 
 #ni-account-dropdown-menu a:not(.dma-profile-info),

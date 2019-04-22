@@ -1,7 +1,8 @@
 /* Common css for all pages. */
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:700,300,400);
-html, body {
+
+html, body, ul {
     margin: 0;
     padding: 0;
 }
@@ -36,6 +37,14 @@ button {
     font-size: inherit;
 }
 
+.show-element {
+    display: block !important;
+}
+
+ul {
+    list-style-type: none;
+}
+
 /* Header */
 
 #master-head {
@@ -47,15 +56,16 @@ button {
 
 #master-footer {
     display: flex;
-    align-items: center;
     position: absolute;
     height: 46px;
     width: 100%;
     bottom: 0;
+    align-items: center;
 }
 
 #master-footer h3 {
     font-size: 14px;
+    line-height: 20px;
     font-weight: 400;
     padding-left: 10px;
 }
