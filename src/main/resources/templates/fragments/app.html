@@ -27,36 +27,52 @@
                     dmenu.classList.remove("show-element");
                 }
             });
+
+            function toggleMobileSearchBar() {
+                var mnavSearchGroup = document.getElementById("mobile-nav-search-group");
+                mnavSearchGroup.classList.toggle("mobile-nav-search-group-visible");
+                var navGroups = document.getElementsByClassName("nav-action-group");
+                for (let i = 0; i < navGroups.length; i++) {
+                    const navGroup = navGroups[i];
+                    if (navGroup.id == "mobile-nav-search-group") {
+                        continue;
+                    }
+                    navGroup.classList.toggle("mobile-nav-hidden-element");
+                }
+            }
         </script>
     </head>
     <body>
         <div th:fragment="master-head" th:remove="tag">
             <noscript>You must have JavaScript enabled for this page to function properly.</noscript>
             <header id="master-head">
-                <ul class="nav-action-group nag-left">
+                <!-- Left Side -->
+                <ul class="nav-action-group">
                     <li class="nav-item">
                         <a href="/">
                             <img id="mh-logo" th:src="@{/static/images/logo-with-text.png}" alt="logo" />
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <!-- TODO ONLY SHOW ON MOBILE -->
-                        <button type="button" class="ni-action"><i class="fas fa-arrow-left"></i></button>
+                </ul>
+                <!-- Middle -->
+                <ul class="nav-action-group nag-middle" id="mobile-nav-search-group">
+                    <li class="nav-item mobile-ni-search-icon">
+                        <button type="button" onclick="toggleMobileSearchBar();" class="ni-action"><i
+                                class="fas fa-arrow-left"></i></button>
+                    </li>
+                    <li class="nav-item ni-search-container">
+                        <form th:action="@{/}" th:method="POST" class="ni-search-form">
+                            <input type="text" class="ni-search-bar" name="name" placeholder="Etsi käyttäjiä."
+                                autocomplete="off" required />
+                            <input type="submit" class="ni-search-fsubmit-button" value="Hae" />
+                        </form>
                     </li>
                 </ul>
-                <!-- TODO SEARCH BAR-->
-                <div class="nav-item nav-search-container">
-                    <form th:action="@{/}" th:method="POST" class="ni-search-form">
-                        <input type="text" class="ni-search-bar" name="name" placeholder="Etsi käyttäjiä."
-                            autocomplete="off" required />
-                        <input type="submit" class="ni-search-fsubmit-button" value="Hae" />
-                    </form>
-                </div>
-                <!-- TODO SEARCH BAR-->
-                <ul class="nav-action-group nag-right">
-                    <li class="nav-item">
-                        <!-- TODO ONLY SHOW ON MOBILE -->
-                        <button type="button" class="ni-action"><i class="fas fa-search"></i></button>
+                <!-- Righth Side -->
+                <ul class="nav-action-group">
+                    <li class="nav-item mobile-ni-search-icon">
+                        <button type="button" onclick="toggleMobileSearchBar();" class="ni-action"><i
+                                class="fas fa-search"></i></button>
                     </li>
                     <li class="nav-item ni-relative">
                         <div class="ni-account">

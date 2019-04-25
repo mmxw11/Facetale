@@ -88,12 +88,12 @@ main {
         display: flex;
     }
 
-    .multi-element-form-group > .fg-left {
+    .multi-element-form-group .form-group:first-child {
         margin-right: auto;
         width: 48%;
     }
 
-    .multi-element-form-group > .fg-right {
+    .multi-element-form-group .form-group:last-child {
         margin-left: auto;
         width: 48%;
     }

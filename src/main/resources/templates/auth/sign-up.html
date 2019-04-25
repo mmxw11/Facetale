@@ -24,13 +24,13 @@
                     <form th:action="@{/api/auth/sign-up}" th:method="POST" th:object="${account}"
                         id="account-credentials-form">
                         <div class="multi-element-form-group">
-                            <div class="form-group fg-left">
+                            <div class="form-group">
                                 <input type="text" class="form-element fe-credentials-input" th:classappend="${#fields.hasErrors('username')} ? fe-invalid-value : ''" name="username"
                                     th:field="*{username}" autocomplete="username" required />
                                 <div class="floating-fe-label">Käyttäjänimi</div>
                                 <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="fe-invalid-value-message">Error</p>
                             </div>
-                            <div class="form-group fg-right">
+                            <div class="form-group">
                                 <input type="text" class="form-element fe-credentials-input" th:classappend="${#fields.hasErrors('name')} ? fe-invalid-value : ''" name="name"
                                     th:field="*{name}" autocomplete="name" required />
                                 <div class="floating-fe-label">Nimi</div>
