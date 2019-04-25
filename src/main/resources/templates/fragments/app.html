@@ -39,26 +39,24 @@
                             <img id="mh-logo" th:src="@{/static/images/logo-with-text.png}" alt="logo" />
                         </a>
                     </li>
-                    <!-- TODO: MOBILE BACK BUTTON THINGY -->
+                    <li class="nav-item">
+                        <!-- TODO ONLY SHOW ON MOBILE -->
+                        <button type="button" class="ni-action"><i class="fas fa-arrow-left"></i></button>
+                    </li>
                 </ul>
                 <!-- TODO SEARCH BAR-->
-                <div class="nav-item">
-                    <form th:action="@{/}" th:method="POST">
-                        <div class="form-group" style="display:inline;">
-                            <input type="text" class="form-element fe-credentials-input" name="name"
-                                placeholder="Etsi käyttäjiä" autocomplete="off" required />
-                            <!-- div class="floating-fe-label">Käyttäjätunnus</div -->
-                        </div>
-                        <div class="fsubmit-button-wrapper" style="display:inline;">
-                            <input type="submit" class="fsubmit-button" value="Hae" />
-                        </div>
+                <div class="nav-item nav-search-container">
+                    <form th:action="@{/}" th:method="POST" class="ni-search-form">
+                        <input type="text" class="ni-search-bar" name="name" placeholder="Etsi käyttäjiä."
+                            autocomplete="off" required />
+                        <input type="submit" class="ni-search-fsubmit-button" value="Hae" />
                     </form>
                 </div>
                 <!-- TODO SEARCH BAR-->
                 <ul class="nav-action-group nag-right">
                     <li class="nav-item">
                         <!-- TODO ONLY SHOW ON MOBILE -->
-                        <button type="submit" class="ni-action"><i class="fas fa-search"></i></button>
+                        <button type="button" class="ni-action"><i class="fas fa-search"></i></button>
                     </li>
                     <li class="nav-item ni-relative">
                         <div class="ni-account">

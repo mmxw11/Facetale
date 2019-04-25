@@ -30,7 +30,7 @@
     display: inline-block;
 }
 
-.nav-item:not(:last-child) {
+.nav-action-group .nav-item:not(:last-child) {
     margin-right: 10px;
 }
 
@@ -70,13 +70,67 @@
     padding-right: 5px;
 }
 
+/* Navigation search */
+
+.nav-search-container {
+    max-width: 620px;
+    flex-grow: 1;
+    margin: 0 10%;
+}
+
+.nav-search-container .ni-search-form {
+    display: flex;
+    height: 40px;
+    width: 100%;
+}
+
+.ni-search-form .ni-search-bar {
+    width: 88%;
+    outline: 0;
+    color: white;
+    border-radius: 2px 0 0 2px;
+    padding-left: 10px;
+    padding-right: 5px;
+    background-color: #232323;
+    border-color: #5c5c5c;
+    border-style: solid;
+    border-width: 1px 0 1px 1px;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+.ni-search-form .ni-search-bar:focus {
+    border: 1px solid#7e7e7e;
+}
+
+.ni-search-form .ni-search-fsubmit-button {
+    flex: 1;
+    min-width: 80px;
+    color: white;
+    background-color: #134370;
+    cursor: pointer;
+    outline: 0;
+    border: none;
+    border-radius: 2px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.ni-search-form .ni-search-fsubmit-button:hover {
+    filter: brightness(85%);
+}
+
+/* Navigation bar account */
+
 .nav-item .ni-account {
     display: flex;
     align-items: center;
 }
 
-.nav-item .ni-account img,
-#ni-account-dropdown-menu .dm-account img {
+.ni-account img,
+.dm-account img {
     height: 35px;
     border-radius: 50%;
     margin-right: 5px;
@@ -86,7 +140,7 @@
     user-select: none;
 }
 
-/* Navigation bar user dropdown menu */
+/* Navigation bar account dropdown menu */
 
 #ni-account-dropdown-menu {
     display: none;
@@ -112,11 +166,11 @@
     align-items: center;
 }
 
-#ni-account-dropdown-menu .dm-account img {
+.dm-account img {
     height: 40px;
 }
 
-#ni-account-dropdown-menu .dm-account .dma-profile-info {
+.dm-account .dma-profile-info {
     display: flex;
     color: white;
     text-decoration: none;
@@ -124,13 +178,13 @@
     justify-content: center;
 }
 
-#ni-account-dropdown-menu .dm-account .dma-profile-info h1 {
+.dma-profile-info h1 {
     font-size: 1em;
     font-weight: 700;
     line-height: 1.5em;
 }
 
-#ni-account-dropdown-menu .dm-account .dma-profile-info p {
+.dma-profile-info p {
     line-height: 1.2em
 }
 

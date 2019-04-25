@@ -104,6 +104,7 @@ main {
     outline: 0;
     border-radius: 4px;
     padding-left: 10px;
+    padding-right: 5px;
     border: 1px solid #1e7bd2;
     box-sizing: border-box;
     white-space: nowrap;
