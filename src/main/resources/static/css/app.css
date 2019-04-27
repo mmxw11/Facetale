@@ -12,6 +12,31 @@
     height: 40px;
 }
 
+/* Main */
+
+#main-container {
+    display: flex;
+    width: 100%;
+    flex-flow: row;
+    box-sizing: border-box;
+    padding: 0 10px;
+}
+
+.column:not(.primary) {
+    flex: 1;
+}
+
+@media screen and (max-width: 1000px) {
+    #main-container {
+        flex-flow: column;
+    }
+
+    .column.primary {
+        flex: 1;
+        width: 100%;
+    }
+}
+
 /* Navigation bar */
 
 .nav-action-group {
@@ -66,7 +91,7 @@
     color: #232323;
 }
 
-.nav-item a:not(.dma-profile-info),
+.nav-item a:not(.dm-account-profile-info),
 .nav-item button {
     display: flex;
     color: white;
@@ -194,7 +219,7 @@
     height: 40px;
 }
 
-.dm-account .dma-profile-info {
+.dm-account .dm-account-profile-info {
     display: flex;
     color: white;
     text-decoration: none;
@@ -202,22 +227,22 @@
     justify-content: center;
 }
 
-.dma-profile-info h1 {
+.dm-account-profile-info h1 {
     font-size: 1em;
     font-weight: 700;
     line-height: 1.5em;
 }
 
-.dma-profile-info p {
+.dm-account-profile-info p {
     line-height: 1.2em
 }
 
-#ni-account-dropdown-menu a:not(.dma-profile-info),
+#ni-account-dropdown-menu a:not(.dm-account-profile-info),
 #ni-account-dropdown-menu button {
     padding: 12px 16px;
 }
 
-#ni-account-dropdown-menu a:not(.dma-profile-info):hover,
+#ni-account-dropdown-menu a:not(.dm-account-profile-info):hover,
 #ni-account-dropdown-menu button:hover {
     background-color: #302f2f;
 }

@@ -8,35 +8,32 @@
         <div th:replace="fragments/app :: master-head"></div>
         <main>
             <style>
-                #columns {
-                    display: flex;
+                #main-container {
                     height: 500px;
-                    width: 100%;
-                    justify-content: space-between;
                 }
 
-                #primary {
+                .column.primary {
                     width: 70%;
                     background-color: green;
                 }
 
-                #secondary {
-                    flex: 1;
+                .column.secondary {
                     background-color: red;
                 }
             </style>
-            <div id="columns">
-                <div id="secondary"></div>
-                <div id="primary"></div>
+            <div id="main-container">
+                <div class="column secondary"></div>
+                <div class="column primary">
+                    <p style="color:black;">Tervetuloa <span th:text="${username}">user</span></p>
+                    <p style="color:black;">Friends</p>
+                    <p style="color:black;">User search</p>
+                    <p style="color:black;">Album</p>
+                    <p style="color:black;">Profile picture </p>
+                    <p style="color:black;">"Wall"</p>
+                    <p style="color:black;">Comments</p>
+                    <p style="color:black;">Likes</P>
+                </div>
             </div>
-            <!-- p style="color:black;">Tervetuloa <span th:text="${username}">user</span></p>
-            <p style="color:black;">Friends</p>
-            <p style="color:black;">User search</p>
-            <p style="color:black;">Album</p>
-            <p style="color:black;">Profile picture </p>
-            <p style="color:black;">"Wall"</p>
-            <p style="color:black;">Comments</p>
-            <p style="color:black;">Likes</p-->
         </main>
         <footer th:replace="fragments/app :: master-footer"></footer>
     </body>
