@@ -37,8 +37,10 @@ body {
 
 /* Main */
 
-main {
+#content-wrapper {
     position: relative;
+    padding-bottom: 30px;
+    margin: 60px 10px 0 10px;
 }
 
 /* Account */

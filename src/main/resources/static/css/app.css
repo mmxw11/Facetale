@@ -2,6 +2,7 @@
 
 #master-head {
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
     background-color: #1e7bd2;

@@ -15,54 +15,58 @@
     <body>
         <div th:replace="fragments/auth :: auth-head"></div>
         <main>
-            <div id="account-container">
-                <div id="ac-header">
-                    <h1>Tervetuloa Facetalesiin!</h1>
-                    <p>Luo uusi käyttäjä</p>
-                </div>
-                <div id="ac-credentials">
-                    <form th:action="@{/api/auth/sign-up}" th:method="POST" th:object="${account}"
-                        id="account-credentials-form">
-                        <div class="multi-element-form-group">
-                            <div class="form-group">
-                                <input type="text" class="form-element fe-credentials-input" th:classappend="${#fields.hasErrors('username')} ? fe-invalid-value : ''" name="username"
+            <div id="content-wrapper">
+                <div id="account-container">
+                    <div id="ac-header">
+                        <h1>Tervetuloa Facetalesiin!</h1>
+                        <p>Luo uusi käyttäjä</p>
+                    </div>
+                    <div id="ac-credentials">
+                        <form th:action="@{/api/auth/sign-up}" th:method="POST" th:object="${account}"
+                            id="account-credentials-form">
+                            <div class="multi-element-form-group">
+                                <div class="form-group">
+                                    <input type="text" class="form-element fe-credentials-input" th:classappend="${#fields.hasErrors('username')} ? fe-invalid-value : ''" name="username"
                                     th:field="*{username}" autocomplete="username" required />
-                                <div class="floating-fe-label">Käyttäjänimi</div>
-                                <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="fe-invalid-value-message">Error</p>
+                                    <div class="floating-fe-label">Käyttäjänimi</div>
+                                    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="fe-invalid-value-message">Error</p>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-element fe-credentials-input" th:classappend="${#fields.hasErrors('name')} ? fe-invalid-value : ''" name="name"
+                                    th:field="*{name}" autocomplete="name" required />
+                                    <div class="floating-fe-label">Nimi</div>
+                                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fe-invalid-value-message">Error</p>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-element fe-credentials-input" th:classappend="${#fields.hasErrors('name')} ? fe-invalid-value : ''" name="name"
-                                    th:field="*{name}" autocomplete="name" required />
-                                <div class="floating-fe-label">Nimi</div>
-                                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fe-invalid-value-message">Error</p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-element fe-credentials-input" th:classappend="${#fields.hasErrors('profileTag')} ? fe-invalid-value : ''" name="profileTag"
+                                <input type="text" class="form-element fe-credentials-input" th:classappend="${#fields.hasErrors('profileTag')} ? fe-invalid-value : ''" name="profileTag"
                                 th:field="*{profileTag}" autocomplete="on" required />
-                            <div class="floating-fe-label">Profiili tagi</div>
-                            <p th:if="${#fields.hasErrors('profileTag')}" th:errors="*{profileTag}" class="fe-invalid-value-message">Error</p>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" id="account-password" class="form-element fe-credentials-input" th:classappend="${#fields.hasErrors('password')} ? fe-invalid-value : ''"
+                                <div class="floating-fe-label">Profiili tagi</div>
+                                <p th:if="${#fields.hasErrors('profileTag')}" th:errors="*{profileTag}" class="fe-invalid-value-message">Error</p>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" id="account-password" class="form-element fe-credentials-input"
+                                    th:classappend="${#fields.hasErrors('password')} ? fe-invalid-value : ''"
                                 name="password" th:field="*{password}" autocomplete="new-password" required />
-                            <div class="floating-fe-label">Salasana</div>
-                            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fe-invalid-value-message">Error</p>
-                        </div>
-                        <div class="form-group">
-                            <!-- This field will not be send to the server. Only for client side validation to prevent typos. -->
-                            <input type="password" id="account-password-2" class="form-element fe-credentials-input"
-                                autocomplete="on" required />
-                            <div class="floating-fe-label">Vahvista salasana</div>
-                        </div>
-                        <p id="alter-auth-action">Minulla on jo käyttäjä. <a th:href="@{/login}">Kirjaudu sisään</a></p>
-                        <div class="fsubmit-button-wrapper">
-                            <input type="submit" class="fsubmit-button" value="Rekisteröidy" />
-                        </div>
-                    </form>
+                                <div class="floating-fe-label">Salasana</div>
+                                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fe-invalid-value-message">Error</p>
+                            </div>
+                            <div class="form-group">
+                                <!-- This field will not be send to the server. Only for client side validation to prevent typos. -->
+                                <input type="password" id="account-password-2" class="form-element fe-credentials-input"
+                                    autocomplete="on" required />
+                                <div class="floating-fe-label">Vahvista salasana</div>
+                            </div>
+                            <p id="alter-auth-action">Minulla on jo käyttäjä. <a th:href="@{/login}">Kirjaudu sisään</a>
+                            </p>
+                            <div class="fsubmit-button-wrapper">
+                                <input type="submit" class="fsubmit-button" value="Rekisteröidy" />
+                            </div>
+                        </form>
+                    </div>
                 </div>
+                <div th:replace="fragments/auth :: hint-container"></div>
             </div>
-            <div th:replace="fragments/auth :: hint-container"></div>
         </main>
         <footer th:replace="fragments/app :: master-footer"></footer>
     </body>

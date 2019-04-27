@@ -7,14 +7,36 @@
     <body>
         <div th:replace="fragments/app :: master-head"></div>
         <main>
-            <p style="color:black;">Tervetuloa <span th:text="${username}">user</span></p>
+            <style>
+                #columns {
+                    display: flex;
+                    height: 500px;
+                    width: 100%;
+                    justify-content: space-between;
+                }
+
+                #primary {
+                    width: 70%;
+                    background-color: green;
+                }
+
+                #secondary {
+                    flex: 1;
+                    background-color: red;
+                }
+            </style>
+            <div id="columns">
+                <div id="secondary"></div>
+                <div id="primary"></div>
+            </div>
+            <!-- p style="color:black;">Tervetuloa <span th:text="${username}">user</span></p>
             <p style="color:black;">Friends</p>
             <p style="color:black;">User search</p>
             <p style="color:black;">Album</p>
             <p style="color:black;">Profile picture </p>
             <p style="color:black;">"Wall"</p>
             <p style="color:black;">Comments</p>
-            <p style="color:black;">Likes</p>
+            <p style="color:black;">Likes</p-->
         </main>
         <footer th:replace="fragments/app :: master-footer"></footer>
     </body>
