@@ -86,7 +86,7 @@
     color: #232323;
 }
 
-.nav-item a:not(.dm-account-profile-info),
+.nav-item a:not(.dm-account-user-profile),
 .nav-item button {
     display: flex;
     color: white;
@@ -214,7 +214,7 @@
     height: 40px;
 }
 
-.dm-account .dm-account-profile-info {
+.dm-account .dm-account-user-profile {
     display: flex;
     color: white;
     text-decoration: none;
@@ -222,22 +222,22 @@
     justify-content: center;
 }
 
-.dm-account-profile-info h1 {
+.dm-account-user-profile h1 {
     font-size: 1em;
     font-weight: 700;
     line-height: 1.5em;
 }
 
-.dm-account-profile-info p {
+.dm-account-user-profile p {
     line-height: 1.2em
 }
 
-#ni-account-dropdown-menu a:not(.dm-account-profile-info),
+#ni-account-dropdown-menu a:not(.dm-account-user-profile),
 #ni-account-dropdown-menu button {
     padding: 12px 16px;
 }
 
-#ni-account-dropdown-menu a:not(.dm-account-profile-info):hover,
+#ni-account-dropdown-menu a:not(.dm-account-user-profile):hover,
 #ni-account-dropdown-menu button:hover {
     background-color: #302f2f;
 }

@@ -23,7 +23,7 @@ function toggleMobileSearchBar() {
     var navGroups = document.getElementsByClassName("nav-action-group");
     for (let i = 0; i < navGroups.length; i++) {
         const navGroup = navGroups[i];
-        if (navGroup.id === "mobile-nav-search-group") {
+        if (navGroup.id == "mobile-nav-search-group") {
             continue;
         }
         navGroup.classList.toggle("mobile-nav-hidden-element");

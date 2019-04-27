@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fi">
+    <head>
+        <div th:replace="fragments/app :: head(title='Facetale')"></div>
+        <style>
+            #main-container {
+                height: 500px;
+            }
+
+            .column.primary {
+                width: 70%;
+                background-color: green;
+            }
+
+            .column.secondary {
+                background-color: red;
+            }
+
+            @media screen and (max-width: 1000px) {
+                .column.primary {
+                    flex: 1;
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div th:replace="fragments/app :: master-head"></div>
+        <main>
+            <div id="main-container">
+                <div class="column secondary">
+                    <p style="color:black;" th:text="${urlname}">USERPROFILE</p>
+                </div>
+                <div class="column primary">
+                    <p style="color:black;">Tervetuloa <span th:text="${username}">user</span></p>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="fragments/app :: master-footer"></footer>
+    </body>
+</html>
