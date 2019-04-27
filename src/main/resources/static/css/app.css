@@ -30,11 +30,6 @@
     #main-container {
         flex-flow: column;
     }
-
-    .column.primary {
-        flex: 1;
-        width: 100%;
-    }
 }
 
 /* Navigation bar */

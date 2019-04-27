@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="fi">
     <head>
-        <div th:replace="fragments/app :: head(title='Facetale - Rekisteröidy')"></div>
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/auth.css}">
-        <script type="text/javascript" th:src="@{/static/js/form-utilities.js}"></script>
+        <div th:replace="fragments/auth :: head(title='Facetale - Rekisteröidy')"></div>
+        <script type="text/javascript" th:src="@{/static/js/form-utilities.js}" defer></script>
         <script type="text/javascript">
-            window.addEventListener('load', function () {
+            window.addEventListener('load', function (e) {
                 var form = document.getElementById("account-credentials-form");
                 form.addEventListener("submit", formSubmitPasswordListener, false);
                 registerFormGroupValidationListeners();

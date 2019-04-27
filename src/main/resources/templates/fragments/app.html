@@ -1,46 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="fi">
     <head th:fragment="head(title)" th:remove="tag">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
         <title th:text="${title}">Title</title>
         <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}">
-        <script defer src="//use.fontawesome.com/releases/v5.8.1/js/all.js"
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/app.css}">
+        <script type="text/javascript" th:src="@{/static/js/app.js}" defer></script>
+        <script src="//use.fontawesome.com/releases/v5.8.1/js/all.js"
             integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ"
-            crossorigin="anonymous"></script>
-        <script type="text/javascript">
-            function toggleAccountDropdownMenu() {
-                var element = document.getElementById("ni-account-dropdown-menu");
-                element.classList.toggle("show-element");
-            }
-
-            window.addEventListener("click", function (e) {
-                if (!Element.prototype.matches) {
-                    // IE fix.
-                    Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
-                }
-                if (e.target.matches(".nia-dropdown-toggle")) {
-                    return;
-                }
-                var dmenu = document.getElementById("ni-account-dropdown-menu");
-                if (dmenu.classList.contains("show-element")) {
-                    dmenu.classList.remove("show-element");
-                }
-            });
-
-            function toggleMobileSearchBar() {
-                var mnavSearchGroup = document.getElementById("mobile-nav-search-group");
-                mnavSearchGroup.classList.toggle("mobile-nav-search-group-visible");
-                var navGroups = document.getElementsByClassName("nav-action-group");
-                for (let i = 0; i < navGroups.length; i++) {
-                    const navGroup = navGroups[i];
-                    if (navGroup.id == "mobile-nav-search-group") {
-                        continue;
-                    }
-                    navGroup.classList.toggle("mobile-nav-hidden-element");
-                }
-            }
-        </script>
+            crossorigin="anonymous" defer></script>
     </head>
     <body>
         <div th:fragment="master-head" th:remove="tag">

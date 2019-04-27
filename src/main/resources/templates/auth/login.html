@@ -1,9 +1,6 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <div th:replace="fragments/app :: head(title='Facetale - Kirjaudu sisään')"></div>
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/auth.css}">
-    </head>
+<html lang="fi">
+    <head th:insert="fragments/auth :: head(title='Facetale - Kirjaudu sisään')"></head>
     <body>
         <div th:replace="fragments/auth :: auth-head"></div>
         <main>

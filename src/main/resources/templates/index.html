@@ -1,26 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="fi">
     <head>
         <div th:replace="fragments/app :: head(title='Facetale')"></div>
-        <link rel="stylesheet" type="text/css" th:href="@{/static/css/app.css}">
+        <style>
+            #main-container {
+                height: 500px;
+            }
+
+            .column.primary {
+                width: 70%;
+                background-color: green;
+            }
+
+            .column.secondary {
+                background-color: red;
+            }
+
+            @media screen and (max-width: 1000px) {
+                .column.primary {
+                    flex: 1;
+                    width: 100%;
+                }
+            }
+        </style>
     </head>
     <body>
         <div th:replace="fragments/app :: master-head"></div>
         <main>
-            <style>
-                #main-container {
-                    height: 500px;
-                }
-
-                .column.primary {
-                    width: 70%;
-                    background-color: green;
-                }
-
-                .column.secondary {
-                    background-color: red;
-                }
-            </style>
             <div id="main-container">
                 <div class="column secondary"></div>
                 <div class="column primary">
