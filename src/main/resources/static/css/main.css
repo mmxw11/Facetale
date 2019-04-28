@@ -53,7 +53,22 @@ ul {
     width: 100%;
 }
 
-/* Elements */
+/* Forms */
+
+.form-element {
+    width: 100%;
+    outline: 0;
+    border-radius: 4px;
+    padding-left: 10px;
+    padding-right: 5px;
+    border: 1px solid #1e7bd2;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+.form-element:focus {
+    box-shadow: 0 0 0 2px #1e7bd2;
+}
 
 .form-button {
     color: white;
@@ -73,6 +88,10 @@ ul {
 
 .form-button:hover {
     filter: brightness(85%);
+}
+
+.fsubmit-button-wrapper {
+    text-align: right;
 }
 
 /* Footer */

@@ -42,12 +42,12 @@
                     </li>
                     <li class="nav-item ni-relative">
                         <div class="ni-account">
-                            <img th:src="@{/static/images/Portrait_placeholder.png}" alt="Profile picture" />
+                            <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
                             <span onclick="toggleAccountDropdownMenu();" class="fas fa-chevron-down ni-action nia-dropdown-toggle"></span>
                         </div>
                         <div id="ni-account-dropdown-menu">
                             <div class="dm-account">
-                                <img th:src="@{/static/images/Portrait_placeholder.png}" alt="Profile picture" />
+                                <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
                                 <a href="#" class="dm-account-user-profile">
                                     <h1 th:text="${username}">username</h1>
                                     <p th:text="${profileTag}">profileTag</p>

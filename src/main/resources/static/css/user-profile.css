@@ -1,33 +1,126 @@
-#main-container {
-    /* CHECK HEIGHT */
-    /*
-    min-height: 1000px;*/
-    padding-top: 30px;
-}
-
 .column.primary {
-    width: 70%;
-    background-color: green;
+    width: 65%;
+    /*
+    background-color: red;*/
 }
 
 .column.secondary {
     display: flex;
-    justify-content: center;
-    background-color: red;
+    justify-content: flex-end;
+}
+
+/* Primary column */
+
+#posts-container {
+    width: 70%;
+    min-width: 620px;
+    min-height: 1000px;
+    border: 1px solid #d8d8d8;
+    background-color: white;
+    border-radius: 5px 5px 0 0;
+    box-sizing: border-box;
 }
 
 @media screen and (max-width: 1000px) {
     .column.primary {
-        flex: 1;
         width: 100%;
+        background-color: #232323;
+    }
+
+    .column.secondary {
+        background-color: #232323;
+    }
+
+    #posts-container {
+        border: none;
+        margin: 0 auto;
+        width: 100%;
+        min-width: 100%;
     }
 }
 
+#posts-header {
+    display: flex;
+    height: 46px;
+    border-bottom: 2px solid #1e7bd2;
+    background-color: #134370;
+    border-radius: 4px 4px 0 0;
+    /*
+    margin-bottom: 20px;*/
+    align-items: center;
+    justify-content: center;
+}
+
+#posts-header h1 {
+    font-weight: 400;
+    font-size: 1.2em;
+    color: #f9f9f9;
+}
+
+/* TODO HERE*/
+
+#posts-wrapper {
+    /*
+    margin: 10px;*/
+}
+
+#posts-wrapper .profile-picture-small {
+    height: 40px;
+}
+
+#posts-wrapper h2 {
+    color: white;
+    font-weight: 700;
+    font-size: 0.95em;
+    background-color: #232323;
+    border-bottom: 1px solid #134370;
+
+    padding: 6px 20px;
+    /*
+    padding: 5px;*/
+}
+
+#posts-wrapper textarea {
+    resize: vertical;
+    font-family: inherit;
+    font-size: 0.95em;
+    padding: 5px;
+}
+
+
+#posts-wrapper .posts-text-container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+/* New post */
+
+#create-new-post {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+    /*
+    padding: 0 20px;
+    box-sizing: border-box;*/
+    background-color: #232323;
+}
+
+#create-new-post form {
+    flex: 1;
+    margin: 15px 20px;
+    /*
+    padding: 0 20px;*/
+}
+
+
+
 /* Secondary column */
 
-.user-profile-container {
+#user-profile-container {
     display: flex;
-    flex-flow: column;
+    flex-direction: column;
     width: 100%;
     max-height: 420px;
     max-width: 350px;
@@ -36,46 +129,46 @@
     background-color: #232323;
 }
 
-.user-profile-wrapper {
+#user-profile-wrapper {
     width: 200px;
     margin: 1em;
 }
 
-.user-profile-wrapper img {
+#user-profile-wrapper img {
     height: 200px;
     width: 100%;
 }
 
 @media screen and (max-width: 1000px) {
-    .user-profile-container {
+    #user-profile-container {
         max-width: none;
         max-height: 520px;
-
+        padding: 20px;
     }
 
-    .user-profile-wrapper {
+    #user-profile-wrapper {
         width: 300px;
     }
 
-    .user-profile-wrapper img {
+    #user-profile-wrapper img {
         height: 300px;
 
     }
 }
 
-.user-profile-wrapper h1 {
-    font-size: 1.1em;
+#user-profile-wrapper h1 {
+    font-size: 1.05em;
     font-weight: 700;
     line-height: 1em;
 }
 
-.user-profile-wrapper h2 {
+#user-profile-wrapper h2 {
     font-size: 1em;
     font-weight: 400;
     line-height: 1.5em;
 }
 
-.user-profile-wrapper p {
+#user-profile-wrapper p {
     line-height: 1.2em;
     font-size: 1em;
 }
@@ -91,8 +184,17 @@
     justify-content: space-between;
 }
 
+.user-profile-actions .upa-list-item-flex-container li {
+    flex: 1;
+}
+
+.user-profile-actions .upa-list-item-flex-container li:not(:last-child) {
+    margin-right: 5%;
+}
+
 .user-profile-actions .upa-list-item-flex-container a {
-    padding: 12px 13px;
+    padding: 12px 0;
+    justify-content: center;
 }
 
 .user-profile-actions .nl-container {
@@ -149,6 +251,6 @@
     border-color: white transparent transparent transparent;
 }
 
-.user-profile-actions .nl-container .nav-link.nl-disabled:hover + .nl-disabled-tooltip {
+.user-profile-actions .nl-container .nav-link.nl-disabled:hover+.nl-disabled-tooltip {
     display: block;
 }

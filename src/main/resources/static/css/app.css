@@ -1,3 +1,7 @@
+body {
+    background-color: #f9f9f9;
+}
+
 /* Header */
 
 #master-head {
@@ -17,9 +21,12 @@
 #main-container {
     display: flex;
     width: 100%;
-    flex-flow: row;
+    flex-direction: row;
+}
+
+.column {
     box-sizing: border-box;
-    padding: 0 10px;
+    padding: 50px 10px 0 10px;
 }
 
 .column:not(.primary) {
@@ -28,8 +35,23 @@
 
 @media screen and (max-width: 1000px) {
     #main-container {
-        flex-flow: column;
+        flex-direction: column;
     }
+
+    .column {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+.profile-picture-small {
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 5px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* Navigation bar */
@@ -67,6 +89,8 @@
     }
 }
 
+/* Navigation items */
+
 .nav-action-group .nav-item:not(:last-child) {
     margin-right: 10px;
 }
@@ -101,7 +125,6 @@
     align-items: center;
     text-align: left;
 }
-
 
 .nav-link.nl-padding {
     padding: 12px 16px;
@@ -175,17 +198,6 @@
 .nav-item .ni-account {
     display: flex;
     align-items: center;
-}
-
-.ni-account img,
-.dm-account img {
-    height: 35px;
-    border-radius: 50%;
-    margin-right: 5px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
 
 /* Account dropdown menu */

@@ -9,8 +9,8 @@
         <main>
             <div id="main-container">
                 <div class="column secondary">
-                    <div class="user-profile-container">
-                        <div class="user-profile-wrapper">
+                    <div id="user-profile-container">
+                        <div id="user-profile-wrapper">
                             <img th:src="@{/static/images/Portrait_placeholder.png}" alt="Profile picture" />
                             <h1 th:text="${urlname}">name</h1>
                             <h2 th:text="${urlusername}">username</h2>
@@ -40,7 +40,27 @@
                     </div>
                 </div>
                 <div class="column primary">
-                    <p style="color:black;">Tervetuloa <span th:text="${username}">user</span></p>
+                    <div id="posts-container">
+                        <div id="posts-header">
+                            <h1><i class="fas fa-th-large fa-sm"></i> Julkaisut</h1>
+                        </div>
+                        <div id="posts-wrapper">
+                            <div id="create-new-post">
+                                <h2>Luo uusi julkaisu</h2>
+                                <form th:action="@{/}" th:method="POST">
+                                    <div class="posts-text-container">
+                                        <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small"
+                                            alt="Profile picture" />
+                                        <textarea class="form-element" rows="4" placeholder="What's up?" required></textarea>
+                                    </div>
+                                    <div class="fsubmit-button-wrapper">
+                                        <input type="submit" class="form-button" value="Lähetä" />
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- TODO POSTS -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
