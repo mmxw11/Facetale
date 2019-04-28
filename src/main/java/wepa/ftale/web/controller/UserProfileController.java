@@ -18,7 +18,9 @@ public class UserProfileController {
         SecurityContext context = SecurityContextHolder.getContext();
         model.addAttribute("username", context.getAuthentication().getName());
         model.addAttribute("profileTag", "@test");
-        model.addAttribute("urlname", "me");
+        model.addAttribute("urlname", "test-test-test-test-test");
+        model.addAttribute("urlusername", "test-test-test");
+        model.addAttribute("urlprofileTag", "@test-test-test");
         return "user-profile";
     }
 

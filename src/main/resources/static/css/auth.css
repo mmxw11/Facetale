@@ -179,26 +179,6 @@ body {
     text-align: right;
 }
 
-.fsubmit-button {
-    color: white;
-    background-color: #1e7bd2;
-    cursor: pointer;
-    padding: 11px;
-    outline: 0;
-    border: none;
-    border-radius: 2px;
-    box-sizing: border-box;
-    overflow: hidden;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.fsubmit-button:hover {
-    filter: brightness(85%);
-}
-
 /* Hints */
 
 #hint-container {

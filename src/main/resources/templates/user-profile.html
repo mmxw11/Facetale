@@ -2,34 +2,42 @@
 <html lang="fi">
     <head>
         <div th:replace="fragments/app :: head(title='Facetale')"></div>
-        <style>
-            #main-container {
-                height: 500px;
-            }
-
-            .column.primary {
-                width: 70%;
-                background-color: green;
-            }
-
-            .column.secondary {
-                background-color: red;
-            }
-
-            @media screen and (max-width: 1000px) {
-                .column.primary {
-                    flex: 1;
-                    width: 100%;
-                }
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/user-profile.css}">
     </head>
     <body>
         <div th:replace="fragments/app :: master-head"></div>
         <main>
             <div id="main-container">
                 <div class="column secondary">
-                    <p style="color:black;" th:text="${urlname}">USERPROFILE</p>
+                    <div class="user-profile-container">
+                        <div class="user-profile-wrapper">
+                            <img th:src="@{/static/images/Portrait_placeholder.png}" alt="Profile picture" />
+                            <h1 th:text="${urlname}">name</h1>
+                            <h2 th:text="${urlusername}">username</h2>
+                            <p th:text="${urlprofileTag}">profileTag</p>
+                            <ul class="user-profile-actions">
+                                <div class="upa-list-item-flex-container">
+                                    <li><a href="#" class="nav-link"><i class="fas fa-images"></i>Albumi</a></li>
+                                    <li>
+                                        <div class="nl-container">
+                                            <a href="#" class="nav-link nl-disabled"><i class="fas fa-user-friends"></i>Kaverit</a>
+                                            <p class="nl-disabled-tooltip">Tooltip text Tooltip text</p>
+                                        </div>
+                                    </li>
+                                </div>
+                                <li>
+                                    <form th:action="@{/}" th:method="POST">
+                                        <div class="nl-container">
+                                            <button type="submit" class="form-button nav-link nl-disabled"><i class="fas fa-user-plus"></i>Lähetä
+                                                kaveripyyntö</button>
+                                            <p class="nl-disabled-tooltip">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ante
+                                                lacus, mollis vel libero vel, luctus hendrerit odio. Proin quis bibendum velit. </p>
+                                        </div>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <div class="column primary">
                     <p style="color:black;">Tervetuloa <span th:text="${username}">user</span></p>

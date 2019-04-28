@@ -21,8 +21,10 @@ body {
 }
 
 main {
-    display: block; /* IE fix (IE doesn't support main.) */
-    margin-bottom: 46px; /* Height of footer */
+    /* IE fix (IE doesn't support main.) */
+    display: block;
+    margin-bottom: 46px;
+    /* Height of footer */
 }
 
 p, h1, h2, h3, h4, h5, h6 {
@@ -49,6 +51,28 @@ ul {
 #master-head {
     height: 60px;
     width: 100%;
+}
+
+/* Elements */
+
+.form-button {
+    color: white;
+    background-color: #1e7bd2;
+    cursor: pointer;
+    padding: 11px;
+    outline: 0;
+    border: none;
+    border-radius: 2px;
+    box-sizing: border-box;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.form-button:hover {
+    filter: brightness(85%);
 }
 
 /* Footer */

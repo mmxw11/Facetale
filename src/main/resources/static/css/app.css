@@ -86,15 +86,6 @@
     color: #232323;
 }
 
-.nav-item a:not(.dm-account-user-profile),
-.nav-item button {
-    display: flex;
-    color: white;
-    text-decoration: none;
-    align-items: center;
-    text-align: left;
-}
-
 .nav-item button {
     width: 100%;
     cursor: pointer;
@@ -103,7 +94,20 @@
     outline: 0;
 }
 
-.nav-item svg {
+.nav-link {
+    display: flex;
+    color: white;
+    text-decoration: none;
+    align-items: center;
+    text-align: left;
+}
+
+
+.nav-link.nl-padding {
+    padding: 12px 16px;
+}
+
+.nav-link svg {
     padding-right: 5px;
 }
 
@@ -194,6 +198,7 @@
     top: 40px;
     right: 0;
     background-color: #232323;
+    border: 1px solid black;
     font-size: 0.9em;
     text-align: left;
     padding: 5px;
@@ -230,11 +235,6 @@
 
 .dm-account-user-profile p {
     line-height: 1.2em
-}
-
-#ni-account-dropdown-menu a:not(.dm-account-user-profile),
-#ni-account-dropdown-menu button {
-    padding: 12px 16px;
 }
 
 #ni-account-dropdown-menu a:not(.dm-account-user-profile):hover,

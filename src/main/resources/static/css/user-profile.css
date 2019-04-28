@@ -1,0 +1,154 @@
+#main-container {
+    /* CHECK HEIGHT */
+    /*
+    min-height: 1000px;*/
+    padding-top: 30px;
+}
+
+.column.primary {
+    width: 70%;
+    background-color: green;
+}
+
+.column.secondary {
+    display: flex;
+    justify-content: center;
+    background-color: red;
+}
+
+@media screen and (max-width: 1000px) {
+    .column.primary {
+        flex: 1;
+        width: 100%;
+    }
+}
+
+/* Secondary column */
+
+.user-profile-container {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    max-height: 420px;
+    max-width: 350px;
+    align-items: center;
+    justify-content: center;
+    background-color: #232323;
+}
+
+.user-profile-wrapper {
+    width: 200px;
+    margin: 1em;
+}
+
+.user-profile-wrapper img {
+    height: 200px;
+    width: 100%;
+}
+
+@media screen and (max-width: 1000px) {
+    .user-profile-container {
+        max-width: none;
+        max-height: 520px;
+
+    }
+
+    .user-profile-wrapper {
+        width: 300px;
+    }
+
+    .user-profile-wrapper img {
+        height: 300px;
+
+    }
+}
+
+.user-profile-wrapper h1 {
+    font-size: 1.1em;
+    font-weight: 700;
+    line-height: 1em;
+}
+
+.user-profile-wrapper h2 {
+    font-size: 1em;
+    font-weight: 400;
+    line-height: 1.5em;
+}
+
+.user-profile-wrapper p {
+    line-height: 1.2em;
+    font-size: 1em;
+}
+
+/* User profile actions */
+
+.user-profile-actions {
+    margin-top: 10px;
+}
+
+.user-profile-actions .upa-list-item-flex-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-profile-actions .upa-list-item-flex-container a {
+    padding: 12px 13px;
+}
+
+.user-profile-actions .nl-container {
+    position: relative;
+}
+
+.user-profile-actions .nav-link {
+    font-size: 0.9em;
+    background-color: #1e7bd2;
+    margin-top: 10px;
+}
+
+.user-profile-actions .nav-link.nl-disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+.user-profile-actions .nav-link:not(.nl-disabled):hover {
+    filter: brightness(85%);
+}
+
+.user-profile-actions button {
+    width: 100%;
+    justify-content: center;
+}
+
+.user-profile-actions button.nl-disabled:hover {
+    filter: none;
+}
+
+/* Disable nav link tooltip */
+
+.user-profile-actions .nl-container .nl-disabled-tooltip {
+    display: none;
+    position: absolute;
+    color: black;
+    background: white;
+    font-size: 0.9em;
+    max-width: 100%;
+    padding: 5px;
+    border-radius: 2px;
+    box-sizing: border-box;
+    bottom: 50px;
+    word-wrap: break-word;
+    z-index: 1;
+}
+
+.user-profile-actions .nl-container .nl-disabled-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 10%;
+    border: 5px solid;
+    border-color: white transparent transparent transparent;
+}
+
+.user-profile-actions .nl-container .nav-link.nl-disabled:hover + .nl-disabled-tooltip {
+    display: block;
+}

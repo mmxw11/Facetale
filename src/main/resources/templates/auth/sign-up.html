@@ -21,8 +21,7 @@
                         <p>Luo uusi käyttäjä</p>
                     </div>
                     <div id="ac-credentials">
-                        <form th:action="@{/api/auth/sign-up}" th:method="POST" th:object="${account}"
-                            id="account-credentials-form">
+                        <form th:action="@{/api/auth/sign-up}" th:method="POST" th:object="${account}" id="account-credentials-form">
                             <div class="multi-element-form-group">
                                 <div class="form-group">
                                     <input type="text" class="form-element fe-credentials-input" th:classappend="${#fields.hasErrors('username')} ? fe-invalid-value : ''" name="username"
@@ -59,7 +58,7 @@
                             <p id="alter-auth-action">Minulla on jo käyttäjä. <a th:href="@{/login}">Kirjaudu sisään</a>
                             </p>
                             <div class="fsubmit-button-wrapper">
-                                <input type="submit" class="fsubmit-button" value="Rekisteröidy" />
+                                <input type="submit" class="form-button" value="Rekisteröidy" />
                             </div>
                         </form>
                     </div>
