@@ -101,12 +101,11 @@ body {
     }
 }
 
-
-.form-element.fe-credentials-input {
+.form-input-element {
     height: 46px;
 }
 
-.form-element.fe-invalid-value {
+.form-input-element.fe-invalid-value {
     box-shadow: 0 0 0 2px #D55246;
     border-color: #D55246;
 }
@@ -127,9 +126,9 @@ body {
     padding-top: 5px;
 }
 
-.form-element:focus + .floating-fe-label,
-.form-element:valid + .floating-fe-label,
-.form-element.fe-invalid-value + .floating-fe-label {
+.form-input-element:focus + .floating-fe-label,
+.form-input-element:valid + .floating-fe-label,
+.form-input-element.fe-invalid-value + .floating-fe-label {
     height: 20px;
     top: 0;
     left: 0;
@@ -139,7 +138,7 @@ body {
 
 /* Fix floating label position on autofill in most browsers. */
 
-.form-element:-webkit-autofill + .floating-fe-label {
+.form-input-element:-webkit-autofill + .floating-fe-label {
     height: 20px;
     top: 0;
     left: 0;

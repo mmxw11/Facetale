@@ -23,8 +23,8 @@ body {
 main {
     /* IE fix (IE doesn't support main.) */
     display: block;
-    margin-bottom: 46px;
     /* Height of footer */
+    margin-bottom: 46px;
 }
 
 p, h1, h2, h3, h4, h5, h6 {
@@ -55,7 +55,7 @@ ul {
 
 /* Forms */
 
-.form-element {
+.form-input-element {
     width: 100%;
     outline: 0;
     border-radius: 4px;
@@ -66,20 +66,19 @@ ul {
     white-space: nowrap;
 }
 
-.form-element:focus {
+.form-input-element:focus {
     box-shadow: 0 0 0 2px #1e7bd2;
 }
 
 .form-button {
     color: white;
     background-color: #1e7bd2;
-    cursor: pointer;
     padding: 11px;
+    box-sizing: border-box;
+    cursor: pointer;
     outline: 0;
     border: none;
     border-radius: 2px;
-    box-sizing: border-box;
-    overflow: hidden;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;

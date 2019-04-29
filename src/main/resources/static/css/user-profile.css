@@ -74,15 +74,15 @@
     font-family: inherit;
     font-size: 0.95em;
     background-color: inherit;
-    height: 1.75em;
     width: 99.5%;
     border: none;
     border-bottom: 2px solid #134370;
     outline: none;
-    resize: none;
-    padding: 0.25%;
+    overflow: hidden;
+    padding: 0 0.25% 1% 0.25%;
     margin-top: 2px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    resize: none;
 }
 
 .commentbox .commentbox-textarea:focus {
@@ -165,9 +165,9 @@
     line-height: 1.5em;
 }
 
-#user-profile-wrapper p {
+#user-profile-wrapper > p {
     color: #bad7f1;
-    line-height: 1.2em;
+    line-height: 1.5em;
     font-size: 1em;
 }
 
@@ -223,12 +223,13 @@
     filter: none;
 }
 
-/* Disable nav link tooltip */
+/* Tooltip for disable nav link */
 
 .user-profile-actions .nl-container .nl-disabled-tooltip {
     display: none;
     position: absolute;
     color: black;
+    line-height: 1.2em;
     background: white;
     font-size: 0.9em;
     max-width: 100%;

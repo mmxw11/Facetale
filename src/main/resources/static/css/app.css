@@ -178,23 +178,11 @@ body {
     border: 1px solid#7e7e7e;
 }
 
-.ni-search-form .ni-search-fsubmit-button {
+.ni-search-form .form-button {
     flex: 1;
     min-width: 80px;
-    color: white;
     background-color: #134370;
-    cursor: pointer;
-    outline: 0;
-    border: none;
-    border-radius: 2px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.ni-search-form .ni-search-fsubmit-button:hover {
-    filter: brightness(85%);
+    padding: 0;
 }
 
 /* Account navigation item */
