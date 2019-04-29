@@ -3,6 +3,7 @@
     <head>
         <div th:replace="fragments/app :: head(title='Facetale')"></div>
         <link rel="stylesheet" type="text/css" th:href="@{/static/css/user-profile.css}">
+        <script type="text/javascript" th:src="@{/static/js/comments.js}" defer></script>
     </head>
     <body>
         <div th:replace="fragments/app :: master-head"></div>
@@ -14,7 +15,7 @@
                             <img th:src="@{/static/images/Portrait_placeholder.png}" alt="Profile picture" />
                             <h1 th:text="${urlname}">name</h1>
                             <h2 th:text="${urlusername}">username</h2>
-                            <p th:text="${urlprofileTag}">profileTag</p>
+                            <p><i class="fas fa-user fa-sm"></i> Oma profiili</p>
                             <ul class="user-profile-actions">
                                 <div class="upa-list-item-flex-container">
                                     <li><a href="#" class="nav-link"><i class="fas fa-images"></i>Albumi</a></li>
@@ -44,22 +45,20 @@
                         <div id="posts-header">
                             <h1><i class="fas fa-th-large fa-sm"></i> Julkaisut</h1>
                         </div>
-                        <div id="posts-wrapper">
-                            <div id="create-new-post">
-                                <h2>Luo uusi julkaisu</h2>
+                        <div id="create-new-post">
+                            <div class="commentbox">
+                                <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
                                 <form th:action="@{/}" th:method="POST">
-                                    <div class="posts-text-container">
-                                        <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small"
-                                            alt="Profile picture" />
-                                        <textarea class="form-element" rows="4" placeholder="What's up?" required></textarea>
-                                    </div>
+                                    <textarea rows="1" placeholder="What's up?" class="commentbox-textarea" oninput="resizeCommentBoxTextarea(this);"
+                                        required></textarea>
                                     <div class="fsubmit-button-wrapper">
                                         <input type="submit" class="form-button" value="Lähetä" />
                                     </div>
                                 </form>
                             </div>
-                            <!-- TODO POSTS -->
                         </div>
+                        <!--h2>Luo uusi julkaisu</h2-->
+                        <!-- TODO POSTS -->
                     </div>
                 </div>
             </div>

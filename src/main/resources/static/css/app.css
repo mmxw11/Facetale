@@ -42,10 +42,14 @@ body {
         padding-left: 0;
         padding-right: 0;
     }
+
+    .column.primary {
+        flex: 1;
+    }
 }
 
 .profile-picture-small {
-    height: 35px;
+    height: 40px;
     border-radius: 50%;
     margin-right: 5px;
     -webkit-user-select: none;
@@ -200,6 +204,10 @@ body {
     align-items: center;
 }
 
+.nav-item .ni-account .profile-picture-small {
+    height: 35px;
+}
+
 /* Account dropdown menu */
 
 #ni-account-dropdown-menu {
@@ -225,10 +233,6 @@ body {
     margin-bottom: 5px;
     flex-direction: row;
     align-items: center;
-}
-
-.dm-account img {
-    height: 40px;
 }
 
 .dm-account .dm-account-user-profile {

@@ -1,12 +1,12 @@
 .column.primary {
-    width: 65%;
-    /*
-    background-color: red;*/
+    width: 67%;
+    /* background-color: red;*/
 }
 
 .column.secondary {
     display: flex;
     justify-content: flex-end;
+    /* background-color: green;*/
 }
 
 /* Primary column */
@@ -14,16 +14,16 @@
 #posts-container {
     width: 70%;
     min-width: 620px;
+    /* TODO CHECK HEIGHT */
     min-height: 1000px;
     border: 1px solid #d8d8d8;
     background-color: white;
     border-radius: 5px 5px 0 0;
-    box-sizing: border-box;
 }
 
 @media screen and (max-width: 1000px) {
     .column.primary {
-        width: 100%;
+        width: initial;
         background-color: #232323;
     }
 
@@ -33,88 +33,87 @@
 
     #posts-container {
         border: none;
-        margin: 0 auto;
         width: 100%;
-        min-width: 100%;
+        min-width: 0;
     }
 }
 
 #posts-header {
     display: flex;
     height: 46px;
-    border-bottom: 2px solid #1e7bd2;
     background-color: #134370;
+    border-bottom: 2px solid #1e7bd2;
     border-radius: 4px 4px 0 0;
-    /*
-    margin-bottom: 20px;*/
     align-items: center;
     justify-content: center;
 }
 
 #posts-header h1 {
+    color: #f9f9f9;
     font-weight: 400;
     font-size: 1.2em;
-    color: #f9f9f9;
 }
 
-/* TODO HERE*/
-
-#posts-wrapper {
-    /*
-    margin: 10px;*/
-}
-
-#posts-wrapper .profile-picture-small {
-    height: 40px;
-}
-
-#posts-wrapper h2 {
-    color: white;
-    font-weight: 700;
-    font-size: 0.95em;
-    background-color: #232323;
-    border-bottom: 1px solid #134370;
-
-    padding: 6px 20px;
-    /*
-    padding: 5px;*/
-}
-
-#posts-wrapper textarea {
-    resize: vertical;
-    font-family: inherit;
-    font-size: 0.95em;
-    padding: 5px;
-}
-
-
-#posts-wrapper .posts-text-container {
+.commentbox {
     display: flex;
     flex-direction: row;
     margin-bottom: 10px;
+    padding: 20px;
+}
+
+.commentbox img {
+    margin-right: 10px;
+}
+
+.commentbox form {
+    flex: 1;
+}
+
+.commentbox .commentbox-textarea {
+    color: white;
+    font-family: inherit;
+    font-size: 0.95em;
+    background-color: inherit;
+    height: 1.75em;
+    width: 99.5%;
+    border: none;
+    border-bottom: 2px solid #134370;
+    outline: none;
+    resize: none;
+    padding: 0.25%;
+    margin-top: 2px;
+    margin-bottom: 5px;
+}
+
+.commentbox .commentbox-textarea:focus {
+    border-bottom: 2px solid white;
 }
 
 /* New post */
 
 #create-new-post {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin: 0 auto;
-    /*
-    padding: 0 20px;
-    box-sizing: border-box;*/
     background-color: #232323;
+    padding: 0 10%;
+    box-sizing: border-box;
 }
 
-#create-new-post form {
-    flex: 1;
-    margin: 15px 20px;
-    /*
-    padding: 0 20px;*/
+@media screen and (max-width: 600px) {
+    #create-new-post {
+        padding: 0 5%;
+    }
 }
 
+/* Posts */
 
+/**
+#create-new-post h2 {
+    color: white;
+    font-weight: 700;
+    font-size: 0.95em;
+    background-color: #232323;
+    border-bottom: 1px solid #134370;
+    padding: 6px 20px;
+}*/
 
 /* Secondary column */
 
@@ -142,8 +141,7 @@
 @media screen and (max-width: 1000px) {
     #user-profile-container {
         max-width: none;
-        max-height: 520px;
-        padding: 20px;
+        max-height: none;
     }
 
     #user-profile-wrapper {
@@ -152,7 +150,6 @@
 
     #user-profile-wrapper img {
         height: 300px;
-
     }
 }
 
@@ -169,6 +166,7 @@
 }
 
 #user-profile-wrapper p {
+    color: #bad7f1;
     line-height: 1.2em;
     font-size: 1em;
 }
