@@ -48,6 +48,12 @@ body {
     }
 }
 
+.flex-space-between-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .profile-picture-small {
     height: 40px;
     border-radius: 50%;
@@ -231,14 +237,16 @@ body {
     justify-content: center;
 }
 
-.dm-account-user-profile h1 {
+.dm-account-user-profile h2 {
     font-size: 1em;
     font-weight: 700;
     line-height: 1.5em;
 }
 
-.dm-account-user-profile p {
-    line-height: 1.2em
+.dm-account-user-profile h3 {
+    font-size: 1em;
+    font-weight: 400;
+    line-height: 1.2em;
 }
 
 #ni-account-dropdown-menu a:not(.dm-account-user-profile):hover,

@@ -17,7 +17,7 @@
                             <h2 th:text="${urlusername}">username</h2>
                             <p><i class="fas fa-user fa-sm"></i> Oma profiili</p>
                             <ul class="user-profile-actions">
-                                <div class="upa-list-item-flex-container">
+                                <div class="flex-space-between-wrapper">
                                     <li><a href="#" class="nav-link"><i class="fas fa-images"></i>Albumi</a></li>
                                     <li>
                                         <div class="nl-container">
@@ -45,7 +45,7 @@
                         <div id="posts-header">
                             <h1><i class="fas fa-th-large fa-sm"></i> Julkaisut</h1>
                         </div>
-                        <div id="create-new-post">
+                        <div class="new-comment nc-post">
                             <div class="commentbox">
                                 <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
                                 <form th:action="@{/}" th:method="POST">
@@ -58,7 +58,91 @@
                             </div>
                         </div>
                         <!--h2>Luo uusi julkaisu</h2-->
-                        <!-- TODO POSTS -->
+                        <ul class="posts-list nc">
+                            <!-- PRIMARY -->
+                            <li class="commentbox">
+                                <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
+                                <div class="comment">
+                                    <a href="#" class="comment-author-info">Test <span>@test</span></a>
+                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam diam enim, luctus at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo sagittis nisl mollis aliquet. Integer vel elit quis lorem consequat ultricies. Integer lacus felis, porta ac nunc id, suscipit congue purus. Suspendisse potenti.</p>
+                                    <div class="comment-info-wrapper">
+                                        <div class="flex-space-between-wrapper">
+                                            <h3>6 Tykkäystä</h3>
+                                            <h3>30.4.2019 15:00</h3>
+                                        </div>
+                                        <div class="comment-actions">
+                                            <button type="button" class="form-button">Tykkää</button>
+                                            <button type="button" class="form-button">Kommentoi</button>
+                                            <button type="button" class="form-button expand-comment-section-button">6 Kommenttia <i
+                                                    class="fas fa-chevron-down"></i></button>
+                                        </div>
+                                    </div>
+                                    <!-- REPLIES -->
+                                    <div class="comment-replies">
+                                        <div class="new-comment">
+                                            <div class="commentbox">
+                                                <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small"
+                                                    alt="Profile picture" />
+                                                <form th:action="@{/}" th:method="POST">
+                                                    <textarea rows="1" placeholder="Uusi kommentti." class="commentbox-textarea"
+                                                        oninput="resizeCommentBoxTextarea(this);" required></textarea>
+                                                    <div class="fsubmit-button-wrapper">
+                                                        <input type="submit" class="form-button" value="Lähetä" />
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <ul class="posts-list">
+                                            <li class="commentbox">
+                                                <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small"
+                                                    alt="Profile picture" />
+                                                <div class="comment">
+                                                    <a href="#" class="comment-author-info">Test <span>@test</span></a>
+                                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam diam enim, luctus at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo sagittis nisl mollis aliquet. Integer vel elit quis lorem consequat ultricies. Integer lacus felis, porta ac nunc id, suscipit congue purus. Suspendisse potenti.</p>
+                                                </div>
+                                            </li>
+                                            <li class="commentbox">
+                                                <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small"
+                                                    alt="Profile picture" />
+                                                <div class="comment">
+                                                    <a href="#" class="comment-author-info">Test <span>@test</span></a>
+                                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam diam enim, luctus at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo sagittis nisl mollis aliquet. Integer vel elit quis lorem consequat ultricies. Integer lacus felis, porta ac nunc id, suscipit congue purus. Suspendisse potenti.</p>
+                                                </div>
+                                            </li>
+                                            <li class="commentbox">
+                                                <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small"
+                                                    alt="Profile picture" />
+                                                <div class="comment">
+                                                    <a href="#" class="comment-author-info">Test <span>@test</span></a>
+                                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam diam enim, luctus at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo sagittis nisl mollis aliquet. Integer vel elit quis lorem consequat ultricies. Integer lacus felis, porta ac nunc id, suscipit congue purus. Suspendisse potenti.</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- REPLIES END  -->
+                                </div>
+                            </li>
+                            <!-- PRIMARY -->
+                            <li class="commentbox">
+                                <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
+                                <div class="comment">
+                                    <a href="#" class="comment-author-info">Test <span>@test</span></a>
+                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam diam enim, luctus at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo sagittis nisl mollis aliquet. Integer vel elit quis lorem consequat ultricies. Integer lacus felis, porta ac nunc id, suscipit congue purus. Suspendisse potenti.</p>
+                                    <div class="comment-info-wrapper">
+                                        <div class="flex-space-between-wrapper">
+                                            <h3>6 Tykkäystä</h3>
+                                            <h3>30.4.2019 15:00</h3>
+                                        </div>
+                                        <div class="comment-actions">
+                                            <button type="button" class="form-button">Tykkää</button>
+                                            <button type="button" class="form-button">Kommentoi</button>
+                                            <button type="button" class="form-button expand-comment-section-button">6 Kommenttia <i
+                                                    class="fas fa-chevron-down"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

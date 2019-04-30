@@ -122,7 +122,7 @@ body {
 
 .fe-invalid-value-message {
     color: #D55246;
-    word-wrap: break-word;
+    word-break: break-word;
     padding-top: 5px;
 }
 
