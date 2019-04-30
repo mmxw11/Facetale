@@ -147,17 +147,17 @@
     justify-content: space-between;
 }*/
 
-.comment-info-wrapper .comment-actions .form-button {
+.comment-info-wrapper .comment-actions .ft-button {
     padding: 6px;
 }
 
-.comment-actions .form-button.expand-comment-section-button {
+.comment-actions .ft-button.expand-comment-section-button {
     background: none;
     padding: 3px;
     border-bottom: 2px solid #232323;
 }
 
-.comment-actions .form-button.expand-comment-section-button:hover {
+.comment-actions .ft-button.expand-comment-section-button:hover {
     border-color: #1e7bd2;
     filter: none;
 }

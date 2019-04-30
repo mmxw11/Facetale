@@ -70,7 +70,7 @@ ul {
     box-shadow: 0 0 0 2px #1e7bd2;
 }
 
-.form-button {
+.ft-button {
     color: white;
     background-color: #1e7bd2;
     padding: 11px;
@@ -85,7 +85,7 @@ ul {
     user-select: none;
 }
 
-.form-button:hover {
+.ft-button:hover {
     filter: brightness(85%);
 }
 
