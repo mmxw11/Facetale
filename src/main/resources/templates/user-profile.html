@@ -48,8 +48,8 @@
                         <div class="new-comment nc-post">
                             <div class="commentbox">
                                 <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
-                                <form th:action="@{/}" th:method="POST">
-                                    <textarea rows="1" placeholder="What's up?" class="commentbox-textarea" oninput="resizeCommentBoxTextarea(this);"
+                                <form th:action="@{/}" class="comment" th:method="POST">
+                                    <textarea rows="1" placeholder="What's up?" class="comment-textarea" oninput="resizeCommentBoxTextarea(this);"
                                         required></textarea>
                                     <div class="fsubmit-button-wrapper">
                                         <input type="submit" class="ft-button" value="Lähetä" />
@@ -57,7 +57,6 @@
                                 </form>
                             </div>
                         </div>
-                        <!--h2>Luo uusi julkaisu</h2-->
                         <ul class="posts-list nc">
                             <!-- PRIMARY -->
                             <li class="commentbox">
@@ -83,8 +82,8 @@
                                             <div class="commentbox">
                                                 <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small"
                                                     alt="Profile picture" />
-                                                <form th:action="@{/}" th:method="POST">
-                                                    <textarea rows="1" placeholder="Uusi kommentti." class="commentbox-textarea"
+                                                <form th:action="@{/}" class="comment" th:method="POST">
+                                                    <textarea rows="1" placeholder="Uusi kommentti." class="comment-textarea"
                                                         oninput="resizeCommentBoxTextarea(this);" required></textarea>
                                                     <div class="fsubmit-button-wrapper">
                                                         <input type="submit" class="ft-button" value="Lähetä" />
