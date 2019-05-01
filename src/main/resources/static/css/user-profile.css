@@ -45,6 +45,13 @@
     font-size: 1.2em;
 }
 
+#no-posts-notification {
+    /* display: none */
+    background-color: #232323;
+    text-align: center;
+    padding-bottom: 5px;
+}
+
 /* Comments */
 
 /* 
@@ -56,8 +63,8 @@
 [DONE] PADDING / BACKGROUND
 [DONE] cancel comment
 [DONE] FORM ERROR!
+[DONE] NOT YET ANY COMMENTS
 LOAD MORE BUTTON + ANIMATION
-NOT YET ANY COMMENTS
 */
 
 .commentbox {
