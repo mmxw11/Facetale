@@ -53,11 +53,11 @@
 [DONE] USERPROFILE PICTURE SCALING!
 [DONE] COMMENTS MARGIN
 [DONE] DISABLED + TOOLTIPS
+[DONE] PADDING / BACKGROUND
+[DONE] cancel comment
+[DONE] FORM ERROR!
 LOAD MORE BUTTON + ANIMATION
-PADDING / BACKGROUND
-FORM ERROR!
 NOT YET ANY COMMENTS
-cancel comment
 */
 
 .commentbox {
@@ -74,10 +74,29 @@ cancel comment
     margin-right: 10px;
 }
 
+.commentbox .ft-button {
+    padding: 8px;
+}
+
 .commentbox .comment {
     flex: 1;
     font-size: 0.95em;
     word-break: break-word;
+}
+
+.comment .comment-author-info {
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+}
+
+.comment .comment-author-info span {
+    font-weight: 400;
+}
+
+.comment .comment-author-info:hover {
+    border-color: #1e7bd2;
 }
 
 .comment .comment-textarea {
@@ -96,23 +115,12 @@ cancel comment
     resize: none;
 }
 
+.comment .comment-textarea.fe-invalid-value {
+    border-color: #D55246;
+}
+
 .comment .comment-textarea:focus {
     border-bottom: 2px solid white;
-}
-
-.comment .comment-author-info {
-    color: white;
-    font-weight: 700;
-    text-decoration: none;
-    border-bottom: 2px solid transparent;
-}
-
-.comment .comment-author-info span {
-    font-weight: 400;
-}
-
-.comment .comment-author-info:hover {
-    border-color: #1e7bd2;
 }
 
 .comment .comment-text-content {

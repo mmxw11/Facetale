@@ -33,7 +33,7 @@ p, h1, h2, h3, h4, h5, h6 {
     line-height: 1.4em;
 }
 
-button {
+button, input {
     font-family: inherit;
     font-size: inherit;
 }
@@ -70,6 +70,13 @@ ul {
     box-shadow: 0 0 0 2px #1e7bd2;
 }
 
+.fe-error-message {
+    display: inline-block;
+    color: #D55246;
+    word-break: break-word;
+    padding-top: 5px;
+}
+
 .ft-button {
     color: white;
     background-color: #1e7bd2;
@@ -89,6 +96,10 @@ ul {
     filter: brightness(85%);
 }
 
+.ft-button.ftb-cancel {
+    background-color: #D55246;
+}
+
 .fsubmit-button-wrapper {
     text-align: right;
 }
@@ -105,7 +116,7 @@ ul {
 }
 
 #master-footer h3 {
-    font-size: 14px;
+    font-size: 0.9em;
     line-height: 20px;
     font-weight: 400;
     padding-left: 10px;

@@ -50,10 +50,11 @@
                                 <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
                                 <form th:action="@{/}" class="comment" th:method="POST">
                                     <textarea rows="1" placeholder="What's up?" class="comment-textarea" oninput="resizeCommentBoxTextarea(this);"
-                                        required></textarea>
-                                    <div class="fsubmit-button-wrapper pos-relative-wrapper">
-                                        <input type="submit" class="ft-button user-action-disabled" value="Lähetä" />   
-                                        <p class="user-action-tooltip">Tooltip text Tooltip text</p>
+                                        required></textarea> <!--class = fe-invalid-value attr = disabled-->
+                                    <div class="fsubmit-button-wrapper"><!-- pos-relative-wrapper">
+                                        <p class="fe-error-message" style="display:inline">Voit julkaista vain kavereidesi seinällä.</p-->
+                                        <input type="submit" class="ft-button" value="Lähetä" />  <!-- user-action-disabled -->
+                                        <!-- p class="user-action-tooltip">Tooltip text Tooltip text</p-->
                                     </div>
                                 </form>
                             </div>
@@ -87,6 +88,7 @@
                                                     <textarea rows="1" placeholder="Uusi kommentti." class="comment-textarea"
                                                         oninput="resizeCommentBoxTextarea(this);" required></textarea>
                                                     <div class="fsubmit-button-wrapper">
+                                                        <button type="reset" class="ft-button ftb-cancel" onclick="alert('peruutettu!')">Peruuta</button>
                                                         <input type="submit" class="ft-button" value="Kommentoi" />
                                                     </div>
                                                 </form>

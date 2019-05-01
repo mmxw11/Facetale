@@ -47,7 +47,7 @@ body {
 /* Account */
 
 #account-container {
-    font-size: 14px;
+    font-size: 0.9em;
     background-color: #232323;
     max-width: 620px;
     margin: 0 auto 50px auto;
@@ -59,7 +59,7 @@ body {
 }
 
 #ac-header h1 {
-    font-size: 20px;
+    font-size: 1.4em;
     font-weight: 400;
     padding-bottom: 5px;
 }
@@ -107,8 +107,8 @@ body {
 }
 
 .form-input-element.fe-invalid-value {
-    box-shadow: 0 0 0 2px #D55246;
     border-color: #D55246;
+    box-shadow: 0 0 0 2px #D55246;
 }
 
 .floating-fe-label {
@@ -119,12 +119,6 @@ body {
     pointer-events: none;
     -webkit-transition: all 200ms;
     transition: all 200ms;
-}
-
-.fe-invalid-value-message {
-    color: #D55246;
-    word-break: break-word;
-    padding-top: 5px;
 }
 
 .form-input-element:focus + .floating-fe-label,
@@ -181,7 +175,6 @@ body {
     display: flex;
     align-items: center;
     margin-top: 45px;
-    font-size: 16px;
     font-weight: 300;
 }
 
