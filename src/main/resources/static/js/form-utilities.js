@@ -17,7 +17,7 @@ function formSubmitPasswordListener(event) {
 function registerFormGroupValidationListeners() {
     var formGroups = document.getElementsByClassName("form-group");
     for (let i = 0; i < formGroups.length; i++) {
-        const felement = formGroups[i].getElementsByClassName("form-element")[0];
+        const felement = formGroups[i].getElementsByClassName("form-input-element")[0];
         felement.addEventListener("click", setFormElementValid, false);
         felement.addEventListener("input", setFormElementValid, false);
     }

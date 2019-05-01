@@ -1,12 +1,10 @@
 .column.primary {
     width: 67%;
-    /* background-color: red;*/
 }
 
 .column.secondary {
     display: flex;
     justify-content: flex-end;
-    /* background-color: green;*/
 }
 
 /* Primary column */
@@ -24,16 +22,12 @@
 @media screen and (max-width: 1000px) {
     .column.primary {
         width: initial;
-        background-color: #232323;
-    }
-
-    .column.secondary {
-        background-color: #232323;
     }
 
     #posts-container {
         border: none;
-        width: 100%;
+        width: 96%;
+        margin: 0 auto;
         min-width: 0;
     }
 }
@@ -42,7 +36,6 @@
     display: flex;
     height: 46px;
     background-color: #134370;
-    border-bottom: 2px solid #1e7bd2;
     border-radius: 4px 4px 0 0;
     align-items: center;
     justify-content: center;
@@ -56,30 +49,18 @@
 
 /* Comments */
 
-/* TODO MISSING  comment-replies, posts-list, new-comment
-
+/* 
+[DONE] clean this
+[DONE] COMMENTS SMALLER,
+USERPROFILE PICTURE SCALING!
 COMMENTS MARGIN
-COMMENTS SMALLER,
 DISABLED + TOOLTIPS
 LOAD MORE BUTTON + ANIMATION
 PADDING / BACKGROUND
 FORM ERROR!
+NOT YET ANY COMMENTS
+cancel comment
 */
-
-.new-comment {
-    /* background-color: #232323;*/
-    box-sizing: border-box;
-}
-
-.new-comment.nc-post {
-    padding: 10px 10%;
-}
-
-@media screen and (max-width: 600px) {
-    .new-comment.nc-post {
-        padding: 10px 5%;
-    }
-}
 
 .commentbox {
     display: flex;
@@ -87,7 +68,7 @@ FORM ERROR!
     background-color: #232323;
     border-radius: 4px;
     box-sizing: border-box;
-    padding: 10px 20px;
+    padding: 15px 20px 10px 20px;
     margin-bottom: 50px;
 }
 
@@ -171,6 +152,38 @@ FORM ERROR!
     filter: none;
 }
 
+/* Replies */
+
+.comment .comment-replies .commentbox {
+    border-radius: 0;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.comment .comment-replies img {
+    height: 30px;
+}
+
+.comment .comment-replies .comment-text-content {
+    border-right: none;
+}
+
+/* First comment / post styling */
+
+#posts-container > .new-comment {
+    border-bottom: 1px solid #5c5c5c;
+}
+
+#posts-container > .new-comment .commentbox {
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+#posts-container > .posts-list > .commentbox:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
 /* Secondary column */
 
 #user-profile-container {
@@ -182,6 +195,7 @@ FORM ERROR!
     align-items: center;
     justify-content: center;
     background-color: #232323;
+    border-radius: 4px;
 }
 
 #user-profile-wrapper {
@@ -198,6 +212,8 @@ FORM ERROR!
     #user-profile-container {
         max-width: none;
         max-height: none;
+        width: 96%;
+        margin: 0 2%;
     }
 
     #user-profile-wrapper {
@@ -221,7 +237,7 @@ FORM ERROR!
     line-height: 1.5em;
 }
 
-#user-profile-wrapper>p {
+#user-profile-wrapper > p {
     color: #bad7f1;
     line-height: 1.5em;
     font-size: 1em;
@@ -257,7 +273,7 @@ FORM ERROR!
 }
 
 .user-profile-actions .nav-link.nl-disabled {
-    background-color: gray;
+    background-color: #5c5c5c;
     cursor: not-allowed;
 }
 
@@ -301,6 +317,6 @@ FORM ERROR!
     border-color: white transparent transparent transparent;
 }
 
-.user-profile-actions .nl-container .nav-link.nl-disabled:hover+.nl-disabled-tooltip {
+.user-profile-actions .nl-container .nav-link.nl-disabled:hover + .nl-disabled-tooltip {
     display: block;
 }

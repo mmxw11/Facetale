@@ -45,7 +45,7 @@
                         <div id="posts-header">
                             <h1><i class="fas fa-th-large fa-sm"></i> Julkaisut</h1>
                         </div>
-                        <div class="new-comment nc-post">
+                        <div class="new-comment">
                             <div class="commentbox">
                                 <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
                                 <form th:action="@{/}" class="comment" th:method="POST">
@@ -57,7 +57,7 @@
                                 </form>
                             </div>
                         </div>
-                        <ul class="posts-list nc">
+                        <ul class="posts-list">
                             <!-- PRIMARY -->
                             <li class="commentbox">
                                 <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
@@ -86,7 +86,7 @@
                                                     <textarea rows="1" placeholder="Uusi kommentti." class="comment-textarea"
                                                         oninput="resizeCommentBoxTextarea(this);" required></textarea>
                                                     <div class="fsubmit-button-wrapper">
-                                                        <input type="submit" class="ft-button" value="Lähetä" />
+                                                        <input type="submit" class="ft-button" value="Kommentoi" />
                                                     </div>
                                                 </form>
                                             </div>
