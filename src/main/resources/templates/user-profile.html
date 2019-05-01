@@ -6,6 +6,18 @@
         <script type="text/javascript" th:src="@{/static/js/comments.js}" defer></script>
     </head>
     <body>
+            <!--
+            [DONE] clean this
+            [DONE] COMMENTS SMALLER,
+            [DONE] USERPROFILE PICTURE SCALING!
+            [DONE] COMMENTS MARGIN
+            [DONE] DISABLED + TOOLTIPS
+            [DONE] PADDING / BACKGROUND
+            [DONE] cancel comment
+            [DONE] FORM ERROR!
+            [DONE] NOT YET ANY COMMENTS
+            [DONE] LOAD MORE BUTTON + ANIMATION
+            -->
         <div th:replace="fragments/app :: master-head"></div>
         <main>
             <div id="main-container">
@@ -52,7 +64,7 @@
                                     <textarea rows="1" placeholder="What's up?" class="comment-textarea" oninput="resizeCommentBoxTextarea(this);"
                                         required></textarea> <!--class = fe-invalid-value attr = disabled-->
                                     <div class="fsubmit-button-wrapper"><!-- pos-relative-wrapper">
-                                        <p class="fe-error-message" style="display:inline">Voit julkaista vain kavereidesi seinällä.</p-->
+                                        <p class="fe-error-message">Voit julkaista vain kavereidesi seinällä.</p-->
                                         <input type="submit" class="ft-button" value="Lähetä" />  <!-- user-action-disabled -->
                                         <!-- p class="user-action-tooltip">Tooltip text Tooltip text</p-->
                                     </div>
@@ -123,31 +135,27 @@
                                                 </div>
                                             </li>
                                         </ul>
+                                        <!-- LOAD MORE-->
+                                        <div class="load-items">
+                                            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                                            <p class="fe-error-message">Virhe ladattaessa kommentteja!</p>
+                                            <button type="button" id="load-more-comments" class="ft-button" onclick="document.getElementsByClassName('lds-ring')[0].style.display='block';
+                                            document.getElementById('load-more-comments').style.display='none';">Lataa lisää kommentteja</button>
+                                        </div>
+                                       <!-- LOAD MORE-->
                                     </div>
                                     <!-- REPLIES END  -->
                                 </div>
                             </li>
-                            <!-- PRIMARY -->
-                            <!-- li class="commentbox">
-                                <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
-                                <div class="comment">
-                                    <a href="#" class="comment-author-info">Test <span>@test</span></a>
-                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam diam enim, luctus at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo sagittis nisl mollis aliquet. Integer vel elit quis lorem consequat ultricies. Integer lacus felis, porta ac nunc id, suscipit congue purus. Suspendisse potenti.</p>
-                                    <div class="comment-info-wrapper">
-                                        <div class="flex-space-between-wrapper">
-                                            <h3>6 Tykkäystä</h3>
-                                            <h3>30.4.2019 15:00</h3>
-                                        </div>
-                                        <div class="comment-actions">
-                                            <button type="button" class="ft-button">Tykkää</button>
-                                            <button type="button" class="ft-button">Kommentoi</button>
-                                            <button type="button" class="ft-button expand-comment-section-button">6 Kommenttia <i
-                                                    class="fas fa-chevron-down"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li-->
                         </ul>
+                        <!-- LOAD MORE-->
+                        <div class="load-items">
+                            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                            <!--p class="fe-error-message">Virhe ladattaessa kommentteja!</p-->
+                            <button type="button" id="load-more-comments2" class="ft-button" onclick="document.getElementsByClassName('lds-ring')[1].style.display='block';
+                            document.getElementById('load-more-comments2').style.display='none';">Lataa lisää kommentteja</button>
+                        </div>
+                        <!-- LOAD MORE-->
                     </div>
                 </div>
             </div>

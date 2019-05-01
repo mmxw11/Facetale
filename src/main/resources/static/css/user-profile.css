@@ -54,18 +54,43 @@
 
 /* Comments */
 
-/* 
-[DONE] clean this
-[DONE] COMMENTS SMALLER,
-[DONE] USERPROFILE PICTURE SCALING!
-[DONE] COMMENTS MARGIN
-[DONE] DISABLED + TOOLTIPS
-[DONE] PADDING / BACKGROUND
-[DONE] cancel comment
-[DONE] FORM ERROR!
-[DONE] NOT YET ANY COMMENTS
-LOAD MORE BUTTON + ANIMATION
-*/
+/* First comment / post styling */
+
+#posts-container > .new-comment {
+    border-bottom: 1px solid #5c5c5c;
+}
+
+#posts-container > .new-comment .commentbox {
+    border-radius: 0;
+    margin-top: 0;
+}
+
+#posts-container > .posts-list > .commentbox:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin-top: 0;
+}
+
+/* Comment buttons */
+
+.new-comment .ft-button,
+.posts-list .ft-button {
+    padding: 8px;
+    margin-bottom: 5px;
+}
+
+/* Tooltips for buttons */
+
+.new-comment .user-action-tooltip {
+    right: 0;
+}
+
+.new-comment .user-action-tooltip::after {
+    left: auto;
+    right: 10%;
+}
+
+/* Comments */
 
 .commentbox {
     display: flex;
@@ -74,15 +99,11 @@ LOAD MORE BUTTON + ANIMATION
     border-radius: 4px;
     box-sizing: border-box;
     padding: 15px 20px 10px 20px;
-    margin-bottom: 50px;
+    margin-top: 50px;
 }
 
 .commentbox img {
     margin-right: 10px;
-}
-
-.commentbox .ft-button {
-    padding: 8px;
 }
 
 .commentbox .comment {
@@ -165,37 +186,12 @@ LOAD MORE BUTTON + ANIMATION
     filter: none;
 }
 
-/* First comment / post styling */
-
-#posts-container > .new-comment {
-    border-bottom: 1px solid #5c5c5c;
-}
-
-#posts-container > .new-comment .commentbox {
-    border-radius: 0;
-    margin-bottom: 0;
-}
-
-.new-comment .user-action-tooltip {
-    right: 0;
-}
-
-.new-comment .user-action-tooltip::after {
-    left: auto;
-    right: 10%;
-}
-
-#posts-container > .posts-list > .commentbox:first-child {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-}
-
 /* Replies */
 
 .comment .comment-replies .commentbox {
     border-radius: 0;
     padding-left: 0;
-    margin-bottom: 0;
+    margin-top: 0;
 }
 
 .comment .comment-replies .profile-picture-small {
