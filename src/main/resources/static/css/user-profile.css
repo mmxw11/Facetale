@@ -214,7 +214,7 @@
     justify-content: center;
     background-color: #232323;
     border-radius: 4px;
-    padding: 1em;
+    padding: 2em;
     box-sizing: border-box;
 }
 
@@ -222,7 +222,6 @@
     #user-profile-container {
         max-width: 80%;
         min-width: 60%;
-        padding: 2em;
         margin: 0 auto;
     }
 }
@@ -237,7 +236,6 @@
     #user-profile-container {
         max-width: 96%;
         min-width: 96%;
-        padding: 1em;
     }
 }
 
