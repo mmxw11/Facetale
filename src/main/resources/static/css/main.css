@@ -15,9 +15,9 @@ html {
 body {
     font-family: "Open Sans", sans-serif;
     color: white;
+    font-size: 100%;
     min-width: 320px;
     min-height: 320px;
-    font-size: 100%;
 }
 
 main {

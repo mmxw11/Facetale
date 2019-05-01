@@ -12,8 +12,6 @@
 #posts-container {
     width: 70%;
     min-width: 620px;
-    /* TODO CHECK HEIGHT */
-    min-height: 1000px;
     border: 1px solid #d8d8d8;
     background-color: white;
     border-radius: 5px 5px 0 0;
@@ -27,8 +25,8 @@
     #posts-container {
         border: none;
         width: 96%;
-        margin: 0 auto;
         min-width: 0;
+        margin: 0 auto;
     }
 }
 
@@ -52,7 +50,7 @@
 /* 
 [DONE] clean this
 [DONE] COMMENTS SMALLER,
-USERPROFILE PICTURE SCALING!
+[DONE] USERPROFILE PICTURE SCALING!
 COMMENTS MARGIN
 DISABLED + TOOLTIPS
 LOAD MORE BUTTON + ANIMATION
@@ -152,22 +150,6 @@ cancel comment
     filter: none;
 }
 
-/* Replies */
-
-.comment .comment-replies .commentbox {
-    border-radius: 0;
-    padding-left: 0;
-    margin-bottom: 0;
-}
-
-.comment .comment-replies img {
-    height: 30px;
-}
-
-.comment .comment-replies .comment-text-content {
-    border-right: none;
-}
-
 /* First comment / post styling */
 
 #posts-container > .new-comment {
@@ -184,45 +166,70 @@ cancel comment
     border-top-right-radius: 0;
 }
 
+/* Replies */
+
+.comment .comment-replies .commentbox {
+    border-radius: 0;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.comment .comment-replies .profile-picture-small {
+    height: 30px;
+}
+
+.comment .comment-replies .comment-text-content {
+    border-right: none;
+}
+
 /* Secondary column */
 
 #user-profile-container {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    max-height: 450px;
+    align-self: flex-start;
     max-width: 350px;
+    min-width: 320px;
     align-items: center;
     justify-content: center;
     background-color: #232323;
     border-radius: 4px;
-}
-
-#user-profile-wrapper {
-    width: 200px;
-    margin: 1em;
-}
-
-#user-profile-wrapper img {
-    height: 200px;
-    width: 100%;
+    padding: 1em;
+    box-sizing: border-box;
 }
 
 @media screen and (max-width: 1000px) {
     #user-profile-container {
-        max-width: none;
-        max-height: none;
-        width: 96%;
-        margin: 0 2%;
+        max-width: 80%;
+        min-width: 60%;
+        padding: 2em;
+        margin: 0 auto;
     }
+}
 
-    #user-profile-wrapper {
-        width: 300px;
+@media screen and (max-width: 700px) {
+    #user-profile-container {
+        min-width: 80%;
     }
+}
 
-    #user-profile-wrapper img {
-        height: 300px;
+@media screen and (max-width: 500px) {
+    #user-profile-container {
+        max-width: 96%;
+        min-width: 96%;
+        padding: 1em;
     }
+}
+
+#user-profile-wrapper {
+    width: 80%;
+    max-width: 600px;
+    height: auto;
+}
+
+#user-profile-wrapper img {
+    height: auto;
+    width: 100%;
 }
 
 #user-profile-wrapper h1 {

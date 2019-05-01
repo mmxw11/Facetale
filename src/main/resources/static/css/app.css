@@ -14,6 +14,7 @@ body {
 
 #mh-logo {
     height: 40px;
+    width: auto;
 }
 
 /* Main */
@@ -56,6 +57,7 @@ body {
 
 .profile-picture-small {
     height: 40px;
+    width: auto;
     border-radius: 50%;
     margin-right: 5px;
     -webkit-user-select: none;
