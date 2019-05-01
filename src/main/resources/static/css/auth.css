@@ -111,6 +111,10 @@ body {
     box-shadow: 0 0 0 2px #D55246;
 }
 
+#ac-credentials .fe-error-message {
+    padding-top: 5px;
+}
+
 .floating-fe-label {
     position: absolute;
     color: black;
