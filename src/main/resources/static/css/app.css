@@ -55,6 +55,10 @@ body {
     justify-content: space-between;
 }
 
+.pos-relative-wrapper {
+    position: relative;
+}
+
 .profile-picture-small {
     height: 40px;
     width: auto;
@@ -105,10 +109,6 @@ body {
 
 .nav-action-group .nav-item:not(:last-child) {
     margin-right: 10px;
-}
-
-.nav-item.ni-relative {
-    position: relative;
 }
 
 .nav-item .ni-action {

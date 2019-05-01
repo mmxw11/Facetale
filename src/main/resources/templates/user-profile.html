@@ -20,18 +20,18 @@
                                 <div class="flex-space-between-wrapper">
                                     <li><a href="#" class="nav-link"><i class="fas fa-images"></i>Albumi</a></li>
                                     <li>
-                                        <div class="nl-container">
-                                            <a href="#" class="nav-link nl-disabled"><i class="fas fa-user-friends"></i>Kaverit</a>
-                                            <p class="nl-disabled-tooltip">Tooltip text Tooltip text</p>
+                                        <div class="pos-relative-wrapper">
+                                            <a href="#" class="nav-link user-action-disabled"><i class="fas fa-user-friends"></i>Kaverit</a>
+                                            <p class="user-action-tooltip">Tooltip text Tooltip text</p>
                                         </div>
                                     </li>
                                 </div>
                                 <li>
                                     <form th:action="@{/}" th:method="POST">
-                                        <div class="nl-container">
-                                            <button type="submit" class="ft-button nav-link nl-disabled"><i class="fas fa-user-plus"></i>Lähetä
+                                        <div class="pos-relative-wrapper">
+                                            <button type="submit" class="ft-button nav-link user-action-disabled"><i class="fas fa-user-plus"></i>Lähetä
                                                 kaveripyyntö</button>
-                                            <p class="nl-disabled-tooltip">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ante
+                                            <p class="user-action-tooltip">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ante
                                                 lacus, mollis vel libero vel, luctus hendrerit odio. Proin quis bibendum velit. </p>
                                         </div>
                                     </form>
@@ -51,8 +51,9 @@
                                 <form th:action="@{/}" class="comment" th:method="POST">
                                     <textarea rows="1" placeholder="What's up?" class="comment-textarea" oninput="resizeCommentBoxTextarea(this);"
                                         required></textarea>
-                                    <div class="fsubmit-button-wrapper">
-                                        <input type="submit" class="ft-button" value="Lähetä" />
+                                    <div class="fsubmit-button-wrapper pos-relative-wrapper">
+                                        <input type="submit" class="ft-button user-action-disabled" value="Lähetä" />   
+                                        <p class="user-action-tooltip">Tooltip text Tooltip text</p>
                                     </div>
                                 </form>
                             </div>

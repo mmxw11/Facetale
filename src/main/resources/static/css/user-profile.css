@@ -51,8 +51,8 @@
 [DONE] clean this
 [DONE] COMMENTS SMALLER,
 [DONE] USERPROFILE PICTURE SCALING!
-COMMENTS MARGIN
-DISABLED + TOOLTIPS
+[DONE] COMMENTS MARGIN
+[DONE] DISABLED + TOOLTIPS
 LOAD MORE BUTTON + ANIMATION
 PADDING / BACKGROUND
 FORM ERROR!
@@ -159,6 +159,15 @@ cancel comment
 #posts-container > .new-comment .commentbox {
     border-radius: 0;
     margin-bottom: 0;
+}
+
+.new-comment .user-action-tooltip {
+    right: 0;
+}
+
+.new-comment .user-action-tooltip::after {
+    left: auto;
+    right: 10%;
 }
 
 #posts-container > .posts-list > .commentbox:first-child {
@@ -269,22 +278,13 @@ cancel comment
     justify-content: center;
 }
 
-.user-profile-actions .nl-container {
-    position: relative;
-}
-
 .user-profile-actions .nav-link {
     font-size: 0.9em;
     background-color: #1e7bd2;
     margin-top: 10px;
 }
 
-.user-profile-actions .nav-link.nl-disabled {
-    background-color: #5c5c5c;
-    cursor: not-allowed;
-}
-
-.user-profile-actions .nav-link:not(.nl-disabled):hover {
+.user-profile-actions .nav-link:not(.user-action-disabled):hover {
     filter: brightness(85%);
 }
 
@@ -293,19 +293,27 @@ cancel comment
     justify-content: center;
 }
 
-.user-profile-actions button.nl-disabled:hover {
+/* Buttons and links */
+
+.user-profile-actions .user-action-disabled,
+.user-action-disabled {
+    background-color: #5c5c5c;
+    cursor: not-allowed;
+}
+
+.user-action-disabled:hover {
     filter: none;
 }
 
-/* Tooltip for disable nav link */
+/* Tooltips  */
 
-.user-profile-actions .nl-container .nl-disabled-tooltip {
+.user-action-tooltip {
     display: none;
     position: absolute;
     color: black;
+    font-size: 0.9em;
     line-height: 1.2em;
     background: white;
-    font-size: 0.9em;
     max-width: 100%;
     padding: 5px;
     border-radius: 2px;
@@ -315,7 +323,7 @@ cancel comment
     z-index: 1;
 }
 
-.user-profile-actions .nl-container .nl-disabled-tooltip::after {
+.user-action-tooltip::after {
     content: "";
     position: absolute;
     top: 100%;
@@ -324,6 +332,6 @@ cancel comment
     border-color: white transparent transparent transparent;
 }
 
-.user-profile-actions .nl-container .nav-link.nl-disabled:hover + .nl-disabled-tooltip {
+.user-action-disabled:hover + .user-action-tooltip {
     display: block;
 }
