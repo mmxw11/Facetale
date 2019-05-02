@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import wepa.ftale.domain.UserSession;
-import wepa.ftale.service.UserProfileService;
+import wepa.ftale.service.UserService;
+import wepa.ftale.web.profile.AuthenticatedUserRelationship;
+import wepa.ftale.web.profile.ProfileModel;
+import wepa.ftale.web.profile.ProfileViewDisplayType;
 
 /**
  * @author Matias
@@ -18,21 +20,19 @@ import wepa.ftale.service.UserProfileService;
 public class UserProfileController {
 
     @Autowired
-    private UserProfileService userService;
+    private UserService userService;
 
-    @GetMapping(path = {"/me", "/me/{page}"})
+    @GetMapping(path = {"/me", "/me/{page:posts|album}"})
     public String viewUserProfile(Model model, @PathVariable Optional<String> page) {
         return viewUserProfile(model, null, page);
     }
 
-    @GetMapping(path = {"/users/{profileTag}", "/users/{profileTag}/{page}"})
+    @GetMapping(path = {"/users/{profileTag}", "/users/{profileTag}/{page:posts|album}"})
     public String viewUserProfile(Model model, @PathVariable String profileTag, @PathVariable Optional<String> page) {
-        UserSession userSession = userService.getUserSession();
-        userService.updateUserSessionModel(model);
-        System.out.println("viewUserProfile");
-        System.out.println("PAGE: " + (page.isPresent() ? page.get() : "NOT AVAILABLE"));/*
-        model.addAttribute("username", userSession.getUsername());*/
-        model.addAttribute("urlname", "test");
+        ProfileViewDisplayType displayType = page.isPresent() ? ProfileViewDisplayType.parse(page.get()) : ProfileViewDisplayType.POSTS;
+        ProfileModel profileModel = new ProfileModel(userService.getAuthenticatedUser().getAccount(), displayType, AuthenticatedUserRelationship.ITSELF);
+        userService.updateAuthenticatedUserToModel(model);
+        model.addAttribute("profileModel", profileModel);
         return "user-profile";
     }
 }

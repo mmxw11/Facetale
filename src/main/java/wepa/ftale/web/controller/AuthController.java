@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import wepa.ftale.FormUtils;
 import wepa.ftale.domain.Account;
-import wepa.ftale.service.AccountService;
-import wepa.ftale.service.UserProfileService;
+import wepa.ftale.service.AuthService;
+import wepa.ftale.service.UserService;
+import wepa.ftale.web.FormUtils;
 
 /**
  * @author Matias
@@ -26,9 +26,9 @@ import wepa.ftale.service.UserProfileService;
 public class AuthController {
 
     @Autowired
-    private AccountService accountService;
+    private AuthService accountService;
     @Autowired
-    private UserProfileService userService;
+    private UserService userService;
 
     @GetMapping("/login")
     public String viewLoginPage() {

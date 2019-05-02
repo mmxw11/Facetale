@@ -1,4 +1,4 @@
-package wepa.ftale;
+package wepa.ftale.web;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;

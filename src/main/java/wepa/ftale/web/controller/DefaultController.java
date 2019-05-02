@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import wepa.ftale.service.UserProfileService;
+import wepa.ftale.service.UserService;
 
 /**
  * @author Matias
@@ -14,12 +14,12 @@ import wepa.ftale.service.UserProfileService;
 public class DefaultController {
 
     @Autowired
-    private UserProfileService userService;
+    private UserService userService;
 
     @GetMapping("/")
     public String helloWorld(Model model) {
         /* TODO: REDIRECT USER TO PROFILE PAGE? */
-        userService.updateUserSessionModel(model);
+        userService.updateAuthenticatedUserToModel(model);
         return "index";
     }
 }

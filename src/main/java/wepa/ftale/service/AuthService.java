@@ -16,7 +16,7 @@ import wepa.ftale.repository.AccountRepository;
  * @author Matias
  */
 @Service
-public class AccountService {
+public class AuthService {
 
     @Autowired
     private AccountRepository accountRepository;
