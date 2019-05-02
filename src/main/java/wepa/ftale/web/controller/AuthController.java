@@ -28,7 +28,7 @@ public class AuthController {
     private AccountService accountService;
 
     @GetMapping("/login")
-    public String handleLoginPage() {
+    public String viewLoginPage() {
         if (accountService.isUserAuthenticated()) {
             // Redirect the user if they are already authenticated.
             return "redirect:/";
@@ -37,7 +37,7 @@ public class AuthController {
     }
 
     @GetMapping("/sign-up")
-    public String handleSignUpPage(Model model) {
+    public String viewSignUpPage(Model model) {
         if (accountService.isUserAuthenticated()) {
             // Redirect the user if they are already authenticated.
             return "redirect:/";
