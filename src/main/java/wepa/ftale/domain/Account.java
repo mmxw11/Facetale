@@ -37,6 +37,12 @@ public class Account extends AbstractPersistable<Long> {
     @NotBlank
     @Size(min = 5, max = 256)
     private String password;
+    /*
+     * There's just no point to keep this here. Friends are only needed on one page and I don't
+     * think we want to fetch all of them at once anyway. (Same for comments etc)
+     * 
+     * @OneToMany private List<FriendRequest> friendRequests;
+     */
     @OneToOne
     private FtImage profilePicture;
 }

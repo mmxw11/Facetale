@@ -13,5 +13,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     Account findByUsername(String username);
 
+    Account findByProfileTag(String profileTag);
+
     List<Account> findAllByUsernameOrProfileTagAllIgnoreCase(String username, String profileTag);
 }

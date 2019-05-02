@@ -21,7 +21,7 @@ import wepa.ftale.repository.ImageRepository;
 /**
  * @author Matias
  */
-@Service
+@Service("imageService")
 public class ImageService {
 
     @Autowired

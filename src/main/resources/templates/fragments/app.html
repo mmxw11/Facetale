@@ -42,12 +42,12 @@
                     </li>
                     <li class="nav-item pos-relative-wrapper">
                         <div class="ni-account">
-                            <img th:src="@{${auserProfPicLocation}}" class="profile-picture-small" alt="Profile picture" />
+                            <img th:src="@{${@imageService.parseProfilePictureLocation(auser.account)}}" class="profile-picture-small" alt="Profile picture" />
                             <span onclick="toggleAccountDropdownMenu();" class="fas fa-chevron-down ni-action nia-dropdown-toggle"></span>
                         </div>
                         <div id="ni-account-dropdown-menu">
                             <div class="dm-account">
-                                <img th:src="@{${auserProfPicLocation}}" class="profile-picture-small" alt="Profile picture" />
+                                <img th:src="@{${@imageService.parseProfilePictureLocation(auser.account)}}" class="profile-picture-small" alt="Profile picture" />
                                 <a th:href="@{/me}" class="dm-account-user-profile">
                                     <h2 th:text="${auser.account.username}">username</h2>
                                     <h3 th:text="${auser.account.profileTag}">profileTag</h3>

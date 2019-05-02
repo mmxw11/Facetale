@@ -13,5 +13,5 @@ public class ProfileModel {
 
     private Account user;
     private ProfileViewDisplayType displayType;
-    private AuthenticatedUserRelationship auserRelationship;
+    private UserRelationship auserRelationship;
 }
