@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
 import wepa.ftale.domain.Account;
+import wepa.ftale.domain.SessionUser;
 import wepa.ftale.repository.AccountRepository;
 
 /**
@@ -48,6 +49,14 @@ public class AccountService {
 
     public boolean isUserAuthenticated() {
         return !(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken);
+    }
+
+    public SessionUser getSessionUser() {
+        if (!isUserAuthenticated()) {
+            return null;
+        }
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return (SessionUser) principal;
     }
 
     private void createUnableToCreateUserResult(Account account, Account facc, BindingResult bindingResult) {

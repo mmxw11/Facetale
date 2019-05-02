@@ -4,15 +4,18 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import wepa.ftale.domain.Account;
+import wepa.ftale.domain.SessionUser;
 import wepa.ftale.repository.AccountRepository;
 
+/**
+ * @author Matias
+ */
 @Service
 public class DbUserDetailsService implements UserDetailsService {
 
@@ -25,6 +28,6 @@ public class DbUserDetailsService implements UserDetailsService {
         if (account == null) {
             throw new UsernameNotFoundException("No such user: " + username);
         }
-        return new User(account.getUsername(), account.getPassword(), Arrays.asList(new SimpleGrantedAuthority("USER")));
+        return new SessionUser(account, Arrays.asList(new SimpleGrantedAuthority("USER")));
     }
 }
