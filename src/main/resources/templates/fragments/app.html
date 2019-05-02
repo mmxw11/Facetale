@@ -29,7 +29,7 @@
                         <button type="button" onclick="toggleMobileSearchBar();" class="nav-link ni-action"><i class="fas fa-arrow-left"></i></button>
                     </li>
                     <li class="nav-item ni-search-container">
-                        <form th:action="@{/}" th:method="POST" class="ni-search-form">
+                        <form th:action="@{/#}" th:method="POST" class="ni-search-form">
                             <input type="text" class="ni-search-bar" name="name" placeholder="Etsi käyttäjiä." autocomplete="off" required />
                             <input type="submit" class="ft-button" value="Hae" />
                         </form>
@@ -42,21 +42,21 @@
                     </li>
                     <li class="nav-item pos-relative-wrapper">
                         <div class="ni-account">
-                            <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
+                            <img th:src="@{${userSessionProfPicLocation}}" class="profile-picture-small" alt="Profile picture" />
                             <span onclick="toggleAccountDropdownMenu();" class="fas fa-chevron-down ni-action nia-dropdown-toggle"></span>
                         </div>
                         <div id="ni-account-dropdown-menu">
                             <div class="dm-account">
-                                <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
-                                <a href="#" class="dm-account-user-profile">
-                                    <h2 th:text="${username}">username</h2>
-                                    <h3 th:text="${profileTag}">profileTag</h3>
+                                <img th:src="@{${userSessionProfPicLocation}}" class="profile-picture-small" alt="Profile picture" />
+                                <a th:href="@{/me}" class="dm-account-user-profile">
+                                    <h2 th:text="${userSession.account.username}">username</h2>
+                                    <h3 th:text="${userSession.account.profileTag}">profileTag</h3>
                                 </a>
                             </div>
                             <ul>
-                                <li><a href="#" class="nav-link nl-padding"><i class="fas fa-user"></i>Sivuni</a></li>
+                                <li><a th:href="@{/me}" class="nav-link nl-padding"><i class="fas fa-user"></i>Sivuni</a></li>
                                 <li><a href="#" class="nav-link nl-padding"><i class="fas fa-user-friends"></i>Kaverit</a></li>
-                                <li><a href="#" class="nav-link nl-padding"><i class="fas fa-images"></i>Albumi</a></li>
+                                <li><a th:href="@{/me/album}" class="nav-link nl-padding"><i class="fas fa-images"></i>Albumi</a></li>
                                 <li><a href="#" class="nav-link nl-padding"><i class="fas fa-cog"></i>Asetukset</a></li>
                                 <li>
                                     <form th:action="@{/api/auth/logout}" th:method="POST">
@@ -69,9 +69,7 @@
                 </ul>
             </header>
         </div>
-        <main>
-            <!-- TODO -->
-        </main>
+        <main></main>
         <footer th:fragment="master-footer" id="master-footer">
             <h3>WORK IN PROGRESS University of Helsinki<br>Web-palvelinohjelmointi projekti, Spring 2019</h3>
         </footer>

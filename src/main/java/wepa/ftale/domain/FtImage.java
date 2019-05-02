@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -19,7 +20,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Image extends AbstractPersistable<UUID> {
+@EqualsAndHashCode(callSuper = false)
+public class FtImage extends AbstractPersistable<UUID> {
 
     private Long contentLength;
     private String contentType;

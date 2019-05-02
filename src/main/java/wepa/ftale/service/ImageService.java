@@ -14,7 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import wepa.ftale.domain.Image;
+import wepa.ftale.domain.Account;
+import wepa.ftale.domain.FtImage;
 import wepa.ftale.repository.ImageRepository;
 
 /**
@@ -30,20 +31,30 @@ public class ImageService {
     public void addImage() throws IOException {
         byte[] bytes = Files.readAllBytes(
                 Paths.get("src/main/resources/static/images/export.png"));
-        Image image = new Image((long) bytes.length, "image/png", bytes);
+        FtImage image = new FtImage((long) bytes.length, "image/png", bytes);
         imageRepository.save(image);
         System.out.println("UUID: " + image.getId());
     }
 
+    public String parseProfilePictureLocation(Account account) {
+        FtImage profilePicture = account.getProfilePicture();
+        if (profilePicture == null) {
+            return "/static/images/Portrait_Placeholder.png";
+        }
+        MediaType mediaType = MediaType.parseMediaType(profilePicture.getContentType());
+        String fullImageSignature = profilePicture.getId().toString() + "." + mediaType.getSubtype();
+        return "/api/images/" + fullImageSignature;
+    }
+
     public ResponseEntity<byte[]> getImage(UUID id, String type) {
-        Optional<Image> oimage = imageRepository.findById(id);
+        Optional<FtImage> oimage = imageRepository.findById(id);
         if (!oimage.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        Image image = oimage.get();
+        FtImage image = oimage.get();
         MediaType mediaType = MediaType.parseMediaType(image.getContentType());
         if (!mediaType.getSubtype().equals(type)) {
-            byte[] msg = "Image signature does not match!".getBytes();
+            byte[] msg = "FtImage signature does not match!".getBytes();
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .contentType(MediaType.TEXT_PLAIN)
                     .contentLength(msg.length)

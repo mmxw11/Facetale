@@ -2,6 +2,7 @@ package wepa.ftale.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -18,6 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class Account extends AbstractPersistable<Long> {
 
     @NotBlank
@@ -34,4 +37,6 @@ public class Account extends AbstractPersistable<Long> {
     @NotBlank
     @Size(min = 5, max = 256)
     private String password;
+    @OneToOne
+    private FtImage profilePicture;
 }

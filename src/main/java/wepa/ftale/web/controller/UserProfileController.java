@@ -8,8 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import wepa.ftale.domain.SessionUser;
-import wepa.ftale.service.AccountService;
+import wepa.ftale.domain.UserSession;
+import wepa.ftale.service.UserProfileService;
 
 /**
  * @author Matias
@@ -18,7 +18,7 @@ import wepa.ftale.service.AccountService;
 public class UserProfileController {
 
     @Autowired
-    private AccountService accountService;
+    private UserProfileService userService;
 
     @GetMapping(path = {"/me", "/me/{page}"})
     public String viewUserProfile(Model model, @PathVariable Optional<String> page) {
@@ -27,15 +27,12 @@ public class UserProfileController {
 
     @GetMapping(path = {"/users/{profileTag}", "/users/{profileTag}/{page}"})
     public String viewUserProfile(Model model, @PathVariable String profileTag, @PathVariable Optional<String> page) {
-        SessionUser suser = accountService.getSessionUser();
-        if (profileTag == null) {
-            profileTag = suser.getAccount().getProfileTag();
-        }
-        System.out.println("viewUserProfile: profileTag: " + profileTag);
-        System.out.println("PAGE: " + (page.isPresent() ? page.get() : "NOT AVAILABLE"));
-        model.addAttribute("username", suser.getUsername());
-        model.addAttribute("profileTag", "@test");
-        model.addAttribute("urlname", profileTag);
+        UserSession userSession = userService.getUserSession();
+        userService.updateUserSessionModel(model);
+        System.out.println("viewUserProfile");
+        System.out.println("PAGE: " + (page.isPresent() ? page.get() : "NOT AVAILABLE"));/*
+        model.addAttribute("username", userSession.getUsername());*/
+        model.addAttribute("urlname", "test");
         return "user-profile";
     }
 }

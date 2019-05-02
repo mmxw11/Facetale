@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import wepa.ftale.domain.Account;
-import wepa.ftale.domain.SessionUser;
+import wepa.ftale.domain.UserSession;
 import wepa.ftale.repository.AccountRepository;
 
 /**
@@ -28,6 +28,6 @@ public class DbUserDetailsService implements UserDetailsService {
         if (account == null) {
             throw new UsernameNotFoundException("No such user: " + username);
         }
-        return new SessionUser(account, Arrays.asList(new SimpleGrantedAuthority("USER")));
+        return new UserSession(account, Arrays.asList(new SimpleGrantedAuthority("USER")));
     }
 }

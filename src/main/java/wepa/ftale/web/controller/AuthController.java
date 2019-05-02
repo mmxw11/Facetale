@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import wepa.ftale.FormUtils;
 import wepa.ftale.domain.Account;
 import wepa.ftale.service.AccountService;
+import wepa.ftale.service.UserProfileService;
 
 /**
  * @author Matias
@@ -26,10 +27,12 @@ public class AuthController {
 
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private UserProfileService userService;
 
     @GetMapping("/login")
     public String viewLoginPage() {
-        if (accountService.isUserAuthenticated()) {
+        if (userService.isUserAuthenticated()) {
             // Redirect the user if they are already authenticated.
             return "redirect:/";
         }
@@ -38,7 +41,7 @@ public class AuthController {
 
     @GetMapping("/sign-up")
     public String viewSignUpPage(Model model) {
-        if (accountService.isUserAuthenticated()) {
+        if (userService.isUserAuthenticated()) {
             // Redirect the user if they are already authenticated.
             return "redirect:/";
         }
@@ -69,7 +72,7 @@ public class AuthController {
             // createAccount failed.
             return "redirect:/sign-up";
         }
-        // Sign up succeed. Login the user automatically.
+        // Sign up succeeded. Login the user automatically.
         request.login(account.getUsername(), originalPassword);
         return "redirect:/";
     }
