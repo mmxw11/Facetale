@@ -1,23 +1,24 @@
 package wepa.ftale.repository;
 
+import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import wepa.ftale.domain.Account;
-import wepa.ftale.domain.FriendRequest;
+import wepa.ftale.domain.Friendship;
 
 /**
  * @author Matias
  */
-public interface FriendRepository extends JpaRepository<FriendRequest, Long> {
+public interface FriendRepository extends JpaRepository<Friendship, Long> {
 
     /**
-     * Find friend request that is either accepted or pending.
-     * The sender and recipient can be either of the accounts but they both must match at least one of them.
-     * @param account
-     * @param account2
-     * @return FriendRequest
+     * Find friendship that is either accepted or pending.
+     * The friendship initiator and target can be either of the accounts but they both must match at least one of them.
+     * @param accountId
+     * @param accountId2
+     * @return Friendship
      */
-    @Query("SELECT r FROM FriendRequest r WHERE ((r.sender = :account OR r.recipient = :account) AND (r.sender = :account2 OR r.recipient = :account2)) AND (frequestStatus = 0 OR frequestStatus = 2)")
-    FriendRequest findActiveFriendRequest(Account account, Account account2);
+    @Query("SELECT r FROM Friendship r WHERE (r.initiator = :accountId OR r.target = :accountId) AND (r.initiator = :accountId2 OR r.target = :accountId2)")
+    Friendship findFriendship(UUID accountId, UUID accountId2);
 }

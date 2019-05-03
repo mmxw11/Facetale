@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import wepa.ftale.domain.Account;
 import wepa.ftale.domain.FtImage;
 import wepa.ftale.repository.ImageRepository;
+import wepa.ftale.web.AuthenticatedUser;
 
 /**
  * @author Matias
@@ -24,8 +25,11 @@ import wepa.ftale.repository.ImageRepository;
 @Service("imageService")
 public class ImageService {
 
+    private static final String DEFAULT_PROFILE_PICTURE = "/static/images/Portrait_Placeholder.png";
     @Autowired
     private ImageRepository imageRepository;
+    @Autowired
+    private UserService userService;
 
     @PostConstruct
     public void addImage() throws IOException {
@@ -36,14 +40,33 @@ public class ImageService {
         System.out.println("UUID: " + image.getId());
     }
 
-    public String parseProfilePictureLocation(Account account) {
+    public String getUserProfilePictureLocation(Account account) {
         FtImage profilePicture = account.getProfilePicture();
         if (profilePicture == null) {
-            return "/static/images/Portrait_Placeholder.png";
+            return DEFAULT_PROFILE_PICTURE;
         }
         MediaType mediaType = MediaType.parseMediaType(profilePicture.getContentType());
         String fullImageSignature = profilePicture.getId().toString() + "." + mediaType.getSubtype();
         return "/api/images/" + fullImageSignature;
+    }
+
+    public String getAuthenticatedUserProfilePictureLocation() {
+        AuthenticatedUser auser = userService.getAuthenticatedUser();
+        FtImage profilePicture = auser.getProfilePicture();
+        if (profilePicture == null) {
+            return DEFAULT_PROFILE_PICTURE;
+        }
+        MediaType mediaType = MediaType.parseMediaType(profilePicture.getContentType());
+        return "/api/auser/profile-picture" + "." + mediaType.getSubtype();
+    }
+
+    public ResponseEntity<byte[]> getAuthenticatedUserProfilePicture(String type) {
+        AuthenticatedUser auser = userService.getAuthenticatedUser();
+        FtImage ftImage = auser.getProfilePicture();
+        if (ftImage == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return createImageResponse(ftImage, type);
     }
 
     public ResponseEntity<byte[]> getImage(UUID id, String type) {
@@ -51,10 +74,14 @@ public class ImageService {
         if (!oimage.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        FtImage image = oimage.get();
-        MediaType mediaType = MediaType.parseMediaType(image.getContentType());
+        FtImage ftImage = oimage.get();
+        return createImageResponse(ftImage, type);
+    }
+
+    private ResponseEntity<byte[]> createImageResponse(FtImage ftImage, String type) {
+        MediaType mediaType = MediaType.parseMediaType(ftImage.getContentType());
         if (!mediaType.getSubtype().equals(type)) {
-            byte[] msg = "FtImage signature does not match!".getBytes();
+            byte[] msg = "Image signature does not match!".getBytes();
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .contentType(MediaType.TEXT_PLAIN)
                     .contentLength(msg.length)
@@ -62,7 +89,7 @@ public class ImageService {
         }
         return ResponseEntity.ok()
                 .contentType(mediaType)
-                .contentLength(image.getContentLength())
-                .body(image.getData());
+                .contentLength(ftImage.getContentLength())
+                .body(ftImage.getData());
     }
 }

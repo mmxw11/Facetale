@@ -23,4 +23,9 @@ public class ImageController {
     public ResponseEntity<byte[]> viewImage(@PathVariable UUID id, @PathVariable String type) {
         return imageService.getImage(id, type);
     }
+
+    @GetMapping("/api/auser/profile-picture.{type}")
+    public ResponseEntity<byte[]> viewAuthenticatedUsserProfilePicture(@PathVariable String type) {
+        return imageService.getAuthenticatedUserProfilePicture(type);
+    }
 }

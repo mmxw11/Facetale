@@ -1,7 +1,7 @@
 package wepa.ftale.web.profile;
 
 /**
- * This enum represents user's relationship to another other.
+ * This enum represents user's relationship to another user.
  * 
  * @author Matias
  */
