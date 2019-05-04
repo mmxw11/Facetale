@@ -3,10 +3,73 @@
     <head>
         <div th:replace="fragments/app :: head(title='Facetale')"></div>
         <link rel="stylesheet" type="text/css" th:href="@{/static/css/user-profile.css}">
+        <script th:inline="javascript">
+            var contextRoot = /*[[@{/}]]*/ "";
+            var profileUsername = /*[[${profileModel.user.username}]]*/ "";
+            var profileName = /*[[${profileModel.user.name}]]*/ "";
+            var profileTag = /*[[${profileModel.user.profileTag}]]*/ "";
+            var profileViewDisplayType = /*[[${profileModel.displayType.name()}]]*/ "";
+        </script>
         <script type="text/javascript" th:src="@{/static/js/user-profile.js}" defer></script>
     </head>
     <body>
-            <!--
+        <div th:replace="fragments/app :: master-head"></div>
+        <main>
+            <div id="main-container">
+                <div class="column secondary">
+                    <div id="user-profile-container">
+                        <div id="user-profile-wrapper">
+                            <img th:src="@{${profileModel.auserRelationship == T(wepa.ftale.web.profile.UserRelationship).ITSELF} ? ${@imageService.getAuthenticatedUserProfilePictureLocation()} :
+                            ${@imageService.getUserProfilePictureLocation(profileModel.user)}}" alt="Profile picture" />
+                            <form th:action="@{/api/user/resetprofilepic}" th:method="POST" class="reset-profile-picture-action"
+                                th:if="${profileModel.auserRelationship == T(wepa.ftale.web.profile.UserRelationship).ITSELF} and ${profileModel.user.profilePicture != null}">
+                                <input type="hidden" name="accountId" th:value="${profileModel.user.id}" />
+                                <button type="submit" class="ft-button nav-link">Poista profiilikuva</button>
+                            </form>
+                            <h1 th:text="${profileModel.user.name}">name</h1>
+                            <h2 th:text="${profileModel.user.profileTag}">profileTag</h2>
+                            <th:block th:switch="${profileModel.auserRelationship}">
+                                <p th:case="${T(wepa.ftale.web.profile.UserRelationship).ITSELF}"><i class="fas fa-user fa-sm"></i>Oma profiili</p>
+                                <p th:case="${T(wepa.ftale.web.profile.UserRelationship).FRIEND}"><i class="fas fa-user-friends fa-sm"></i>Kaveri</p>
+                                <p th:case="${T(wepa.ftale.web.profile.UserRelationship).FRIEND_REQ_SENT}">
+                                    <i class="fas fa-user-plus fa-sm"></i>Kaveripyyntö lähetetty</p>
+                                <p th:case="${T(wepa.ftale.web.profile.UserRelationship).FRIEND_REQ_RECEIVED}">
+                                    <i class="fas fa-user-clock fa-sm"></i>Odottava kaveripyyntö</p>
+                            </th:block>
+                            <ul id="user-profile-toolbar">
+                                <div class="flex-space-between-wrapper">
+                                    <li>
+                                        <button type="button" class="ft-button nav-link" onclick="changeProfileViewDisplayType();"
+                                            id="change-profileview-displaytype">displayType</button>
+                                    </li>
+                                    <li>
+                                        <th:block th:switch="${profileModel.auserRelationship == T(wepa.ftale.web.profile.UserRelationship).ITSELF} ? ${true} :
+                                        ${profileModel.auserRelationship == T(wepa.ftale.web.profile.UserRelationship).FRIEND}">
+                                            <a th:case="${true}" th:href="@{/users/{profileTag}/friends(profileTag=${profileModel.user.profileTag})}"
+                                                class="nav-link"><i class="fas fa-user-friends"></i>Kaverit</a>
+                                            <div th:case="${false}" class="pos-relative-wrapper">
+                                                <a href="javascript:void(0);" class="nav-link user-action-disabled">
+                                                    <i class="fas fa-user-friends"></i>Kaverit</a>
+                                                <p class="user-action-tooltip">Nähdäksesi toisten kaverit sinun täytyy olla kavereita heidän kanssa.
+                                                </p>
+                                            </div>
+                                        </th:block>
+                                    </li>
+                                </div>
+                                <li th:if="${profileModel.auserRelationship == T(wepa.ftale.web.profile.UserRelationship).STRANGER}">
+                                    <form th:action="@{/api/user/sendfriendreq}" th:method="POST">
+                                        <input type="hidden" name="senderId" th:value="${auser.id}" />
+                                        <input type="hidden" name="recipientId" th:value="${profileModel.user.id}" />
+                                        <button type="submit" class="ft-button nav-link user-action-disabled">
+                                            <i class="fas fa-user-plus"></i>Lähetä kaveripyyntö</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- TODO -->
+                <!--
             Profile status (own profile / friend etc)
             DISABLED (textfields & buttons) + TOOLTIPS / reason
             New comment
@@ -17,42 +80,8 @@
             cancel comment
             FORM ERROR!
             No posts notification
-            -->
-        <div th:replace="fragments/app :: master-head"></div>
-        <main>
-            <div id="main-container">
-                <div class="column secondary">
-                    <div id="user-profile-container">
-                        <div id="user-profile-wrapper">
-                            <img th:src="@{/static/images/maxresdefault.jpg}" alt="Profile picture" />
-                            <h1 th:text="${urlname}">name</h1>
-                            <h2 th:text="${urlname}">profileTag</h2>
-                            <p><i class="fas fa-user fa-sm"></i> Oma profiili</p>
-                            <p th:text="${profileModel.auserRelationship}"></p>
-                            <ul class="user-profile-actions">
-                                <div class="flex-space-between-wrapper">
-                                    <li><a href="#" class="nav-link"><i class="fas fa-images"></i>Albumi</a></li>
-                                    <li>
-                                        <div class="pos-relative-wrapper">
-                                            <a href="#" class="nav-link user-action-disabled"><i class="fas fa-user-friends"></i>Kaverit</a>
-                                            <p class="user-action-tooltip">Tooltip text Tooltip text</p>
-                                        </div>
-                                    </li>
-                                </div>
-                                <li>
-                                    <form th:action="@{/}" th:method="POST">
-                                        <div class="pos-relative-wrapper">
-                                            <button type="submit" class="ft-button nav-link user-action-disabled"><i class="fas fa-user-plus"></i>Lähetä
-                                                kaveripyyntö</button>
-                                            <p class="user-action-tooltip">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ante
-                                                lacus, mollis vel libero vel, luctus hendrerit odio. Proin quis bibendum velit. </p>
-                                        </div>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+          <img th:src="@{${@imageService.getUserProfilePictureLocation(auser.account)}}" class="profile-picture-small" alt="Profile picture" />    
+        -->
                 <div class="column primary">
                     <div id="posts-container">
                         <div id="posts-header" th:switch="${profileModel.displayType.name()}">
@@ -65,10 +94,12 @@
                                 <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
                                 <form th:action="@{/}" class="comment" th:method="POST">
                                     <textarea rows="1" placeholder="What's up?" class="comment-textarea" oninput="resizeCommentBoxTextarea(this);"
-                                        required></textarea> <!--class = fe-invalid-value attr = disabled-->
-                                    <div class="fsubmit-button-wrapper"><!-- pos-relative-wrapper">
+                                        required></textarea>
+                                    <!--class = fe-invalid-value attr = disabled-->
+                                    <div class="fsubmit-button-wrapper">
+                                        <!-- pos-relative-wrapper">
                                         <p class="fe-error-message">Voit julkaista vain kavereidesi seinällä.</p-->
-                                        <input type="submit" class="ft-button" value="Lähetä" />  <!-- user-action-disabled -->
+                                        <input type="submit" class="ft-button" value="Lähetä" /> <!-- user-action-disabled -->
                                         <!-- p class="user-action-tooltip">Tooltip text Tooltip text</p-->
                                     </div>
                                 </form>
@@ -83,7 +114,10 @@
                                 <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
                                 <div class="comment">
                                     <a href="#" class="comment-author-info">Test <span>@test</span></a>
-                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam diam enim, luctus at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo sagittis nisl mollis aliquet. Integer vel elit quis lorem consequat ultricies. Integer lacus felis, porta ac nunc id, suscipit congue purus. Suspendisse potenti.</p>
+                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam diam enim, luctus
+                                        at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo sagittis nisl mollis aliquet.
+                                        Integer vel elit quis lorem consequat ultricies. Integer lacus felis, porta ac nunc id, suscipit congue purus.
+                                        Suspendisse potenti.</p>
                                     <div class="comment-info-wrapper">
                                         <div class="flex-space-between-wrapper">
                                             <h3>6 Tykkäystä</h3>
@@ -106,7 +140,8 @@
                                                     <textarea rows="1" placeholder="Uusi kommentti." class="comment-textarea"
                                                         oninput="resizeCommentBoxTextarea(this);" required></textarea>
                                                     <div class="fsubmit-button-wrapper">
-                                                        <button type="reset" class="ft-button ftb-cancel" onclick="alert('peruutettu!')">Peruuta</button>
+                                                        <button type="reset" class="ft-button ftb-cancel"
+                                                            onclick="alert('peruutettu!')">Peruuta</button>
                                                         <input type="submit" class="ft-button" value="Kommentoi" />
                                                     </div>
                                                 </form>
@@ -118,7 +153,10 @@
                                                     alt="Profile picture" />
                                                 <div class="comment">
                                                     <a href="#" class="comment-author-info">Test <span>@test</span></a>
-                                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam diam enim, luctus at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo sagittis nisl mollis aliquet. Integer vel elit quis lorem consequat ultricies. Integer lacus felis, porta ac nunc id, suscipit congue purus. Suspendisse potenti.</p>
+                                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
+                                                        diam enim, luctus at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo
+                                                        sagittis nisl mollis aliquet. Integer vel elit quis lorem consequat ultricies. Integer lacus
+                                                        felis, porta ac nunc id, suscipit congue purus. Suspendisse potenti.</p>
                                                 </div>
                                             </li>
                                             <li class="commentbox">
@@ -126,7 +164,10 @@
                                                     alt="Profile picture" />
                                                 <div class="comment">
                                                     <a href="#" class="comment-author-info">Test <span>@test</span></a>
-                                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam diam enim, luctus at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo sagittis nisl mollis aliquet. Integer vel elit quis lorem consequat ultricies. Integer lacus felis, porta ac nunc id, suscipit congue purus. Suspendisse potenti.</p>
+                                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
+                                                        diam enim, luctus at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo
+                                                        sagittis nisl mollis aliquet. Integer vel elit quis lorem consequat ultricies. Integer lacus
+                                                        felis, porta ac nunc id, suscipit congue purus. Suspendisse potenti.</p>
                                                 </div>
                                             </li>
                                             <li class="commentbox">
@@ -134,18 +175,26 @@
                                                     alt="Profile picture" />
                                                 <div class="comment">
                                                     <a href="#" class="comment-author-info">Test <span>@test</span></a>
-                                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam diam enim, luctus at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo sagittis nisl mollis aliquet. Integer vel elit quis lorem consequat ultricies. Integer lacus felis, porta ac nunc id, suscipit congue purus. Suspendisse potenti.</p>
+                                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
+                                                        diam enim, luctus at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo
+                                                        sagittis nisl mollis aliquet. Integer vel elit quis lorem consequat ultricies. Integer lacus
+                                                        felis, porta ac nunc id, suscipit congue purus. Suspendisse potenti.</p>
                                                 </div>
                                             </li>
                                         </ul>
                                         <!-- LOAD MORE-->
                                         <div class="load-items">
-                                            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                                            <div class="lds-ring">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
                                             <p class="fe-error-message">Virhe ladattaessa kommentteja!</p>
                                             <button type="button" id="load-more-comments" class="ft-button" onclick="document.getElementsByClassName('lds-ring')[0].style.display='block';
                                             document.getElementById('load-more-comments').style.display='none';">Lataa lisää kommentteja</button>
                                         </div>
-                                       <!-- LOAD MORE-->
+                                        <!-- LOAD MORE-->
                                     </div>
                                     <!-- REPLIES END  -->
                                 </div>
@@ -153,7 +202,12 @@
                         </ul>
                         <!-- LOAD MORE-->
                         <div class="load-items">
-                            <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                            <div class="lds-ring">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
                             <!--p class="fe-error-message">Virhe ladattaessa kommentteja!</p-->
                             <button type="button" id="load-more-comments2" class="ft-button" onclick="document.getElementsByClassName('lds-ring')[1].style.display='block';
                             document.getElementById('load-more-comments2').style.display='none';">Lataa lisää kommentteja</button>

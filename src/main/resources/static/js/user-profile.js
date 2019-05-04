@@ -20,6 +20,59 @@ window.addEventListener("click", function (e) {
     }
 });
 
+window.addEventListener("load", function (e) {
+    var pathname = window.location.pathname.replace(/\/$/, "");
+    var locationInputs = document.getElementsByClassName("page-location-input");
+    for (let i = 0; i < locationInputs.length; i++) {
+        locationInputs[i].value = pathname;
+    }
+    updateStaticProfileViewDisplayElements(false);
+});
+
+function changeProfileViewDisplayType() {
+    if (profileViewDisplayType === "POSTS") {
+        profileViewDisplayType = "ALBUM";
+    } else if (profileViewDisplayType === "ALBUM") {
+        profileViewDisplayType = "POSTS";
+    } else {
+        return;
+    }
+    updateStaticProfileViewDisplayElements(true);
+    /* alert("CHANGE VIEW! username: " + username);
+       alert("name: " + name);
+       alert("profileTag: " + profileTag);
+       alert("profileViewDisplayType: " + profileViewDisplayType);*/
+    /* alert("contextRoot: " + contextRoot);*/
+}
+
+
+function updateStaticProfileViewDisplayElements(updateUrl) {
+    var cpvdisplayTypeButton = document.getElementById("change-profileview-displaytype");
+    var profileContextUrl;
+    if (updateUrl) {
+        var path = window.location.pathname.replace(/\/$/, "").split("/");
+        if (path[path.length - 1] === "me" || path[path.length - 2] === "me") {
+            profileContextUrl = contextRoot + "me";
+        } else {
+            profileContextUrl = contextRoot + "users/" + profileTag;
+        }
+    }
+    if (profileViewDisplayType === "POSTS") {
+        document.title = profileName + " (@" + profileTag + ") -  Julkaisut";
+        if (updateUrl) {
+            history.pushState({}, null, profileContextUrl + "/posts");
+        }
+        cpvdisplayTypeButton.innerHTML = "<i class='fas fa-images'></i>Albumi</li>";
+    } else if (profileViewDisplayType === "ALBUM") {
+        document.title = profileName + " (@" + profileTag + ") -  Albumi";
+        if (updateUrl) {
+            history.pushState({}, null, profileContextUrl + "/album");
+        }
+        cpvdisplayTypeButton.innerHTML = "<i class='fas fa-th-large'></i>Julkaisut</li>";
+    }
+}
+
+
 function resizeCommentBoxTextarea(e) {
     e.style.height = "auto";
 

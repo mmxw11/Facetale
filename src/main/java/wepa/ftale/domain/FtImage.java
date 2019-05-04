@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
@@ -22,6 +23,8 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class FtImage extends AbstractPersistable<UUID> {
 
+    @ManyToOne
+    private Account uploader;
     private Long contentLength;
     private String contentType;
     @Lob

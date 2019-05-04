@@ -1,12 +1,15 @@
 package wepa.ftale.service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -36,7 +39,6 @@ public class UserService {
             profileTag = auser.getProfileTag();
         }
         Account account = accountRepository.findByProfileTag(profileTag);
-        System.out.println("profileTag: " + profileTag);
         if (account == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found.");
         }
@@ -44,23 +46,37 @@ public class UserService {
     }
 
     public ProfileModel createProfileModel(Account account, ProfileViewDisplayType displayType) {
-        UserRelationship urelationship = findUserRelationship(getAuthenticatedUser().getId(), account.getId());
+        UserRelationship urelationship = findUserRelationship(accountRepository.getOne(getAuthenticatedUser().getId()), account);
         ProfileModel profileModel = new ProfileModel(account, displayType, urelationship);
         return profileModel;
+    }
+
+    @Transactional
+    @PreAuthorize("#senderId != #recipientId")
+    public Account sendFriendRequest(UUID senderId, UUID recipientId) throws ResponseStatusException {
+        Account sender = accountRepository.getOne(senderId);
+        Account recipient = accountRepository.getOne(recipientId);
+        if (friendRepository.findFriendship(sender, recipient) != null) {
+            // Users are already friends or there is an active friend request.
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        Friendship friendShip = new Friendship(LocalDateTime.now(), false, sender, recipient);
+        friendRepository.save(friendShip);
+        return recipient;
     }
 
     /**
      * Find the relationship between two users.
      * Mainly used to determine whether currently logged user is friends with the user whose profile they are viewing.
-     * @param accountId
-     * @param targetAccountId
+     * @param account
+     * @param target
      * @return UserRelationship
      */
-    public UserRelationship findUserRelationship(UUID accountId, UUID targetAccountId) {
-        if (accountId.equals(targetAccountId)) {
+    public UserRelationship findUserRelationship(Account account, Account target) {
+        if (account.equals(target)) {
             return UserRelationship.ITSELF;
         }
-        Friendship friendship = friendRepository.findFriendship(accountId, targetAccountId);
+        Friendship friendship = friendRepository.findFriendship(account, target);
         if (friendship == null) {
             return UserRelationship.STRANGER;
         }
@@ -68,7 +84,7 @@ public class UserService {
             return UserRelationship.FRIEND;
         }
         // There's a pending friend request.
-        return friendship.getInitiator().getId().equals(accountId) ? UserRelationship.FRIEND_REQ_SENT : UserRelationship.FRIEND_REQ_RECEIVED;
+        return friendship.getInitiator().equals(account) ? UserRelationship.FRIEND_REQ_SENT : UserRelationship.FRIEND_REQ_RECEIVED;
     }
 
     public void updateAuthenticatedUserToModel(Model model) {

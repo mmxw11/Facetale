@@ -1,21 +1,19 @@
 package wepa.ftale.service;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.UUID;
-
-import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import wepa.ftale.domain.Account;
 import wepa.ftale.domain.FtImage;
+import wepa.ftale.repository.AccountRepository;
 import wepa.ftale.repository.ImageRepository;
 import wepa.ftale.web.AuthenticatedUser;
 
@@ -29,15 +27,27 @@ public class ImageService {
     @Autowired
     private ImageRepository imageRepository;
     @Autowired
+    private AccountRepository accountRepository;
+    @Autowired
     private UserService userService;
 
-    @PostConstruct
-    public void addImage() throws IOException {
-        byte[] bytes = Files.readAllBytes(
-                Paths.get("src/main/resources/static/images/export.png"));
-        FtImage image = new FtImage((long) bytes.length, "image/png", bytes);
-        imageRepository.save(image);
-        System.out.println("UUID: " + image.getId());
+    @Transactional
+    public void setUserProfilePicture(UUID accountId, UUID imageId) throws ResponseStatusException {
+        Account account = accountRepository.getOne(accountId);
+        FtImage ftImage = null;
+        if (imageId != null) {
+            ftImage = imageRepository.getOne(imageId);
+            if (!ftImage.getUploader().equals(account)) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            }
+        } else if (account.getProfilePicture() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        account.setProfilePicture(ftImage);
+        AuthenticatedUser auser = userService.getAuthenticatedUser();
+        if (auser.getId().equals(accountId)) {
+            auser.setProfilePicture(ftImage);
+        }
     }
 
     public String getUserProfilePictureLocation(Account account) {
@@ -57,7 +67,7 @@ public class ImageService {
             return DEFAULT_PROFILE_PICTURE;
         }
         MediaType mediaType = MediaType.parseMediaType(profilePicture.getContentType());
-        return "/api/auser/profile-picture" + "." + mediaType.getSubtype();
+        return "/api/user/profile-picture" + "." + mediaType.getSubtype();
     }
 
     public ResponseEntity<byte[]> getAuthenticatedUserProfilePicture(String type) {

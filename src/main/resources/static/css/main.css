@@ -133,7 +133,7 @@ ul {
 .fe-error-message {
     display: inline-block;
     color: #D55246;
-    word-break: break-all;
+    word-break: break-word;
 }
 
 .ft-button {

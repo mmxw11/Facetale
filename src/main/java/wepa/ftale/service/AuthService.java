@@ -1,6 +1,11 @@
 package wepa.ftale.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,7 +15,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
 import wepa.ftale.domain.Account;
+import wepa.ftale.domain.FtImage;
 import wepa.ftale.repository.AccountRepository;
+import wepa.ftale.repository.ImageRepository;
 
 /**
  * @author Matias
@@ -22,6 +29,19 @@ public class AuthService {
     private AccountRepository accountRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private ImageRepository imageRepository;
+
+    @PostConstruct
+    public void addAccount() throws IOException {
+        Account account = new Account("testi", "testiFullName", "testTag", passwordEncoder.encode("testi"), null);
+        accountRepository.save(account);
+        System.out.println("UUID: " + account.getId());
+        byte[] bytes = Files.readAllBytes(
+                Paths.get("src/main/resources/static/images/export.png"));
+        FtImage image = new FtImage(account, (long) bytes.length, "image/png", bytes);
+        imageRepository.save(image);
+    }
 
     @Transactional
     public void createAccount(Account account, BindingResult bindingResult) {

@@ -83,7 +83,7 @@
     margin-bottom: 5px;
 }
 
-/* Tooltips for buttons */
+/* Tooltips for comment buttons */
 
 .new-comment .user-action-tooltip {
     right: 0;
@@ -200,6 +200,7 @@
 
 .comment .comment-replies .profile-picture-small {
     height: 30px;
+    max-width: 30px;
 }
 
 .comment .comment-replies .comment-text-content {
@@ -257,58 +258,77 @@
 #user-profile-wrapper h1 {
     font-size: 1.05em;
     font-weight: 700;
-    line-height: 1em;
 }
 
 #user-profile-wrapper h2 {
     font-size: 1em;
     font-weight: 400;
-    line-height: 1.5em;
 }
 
 #user-profile-wrapper > p {
     color: #bad7f1;
-    line-height: 1.5em;
     font-size: 1em;
+}
+
+#user-profile-wrapper svg {
+    padding-right: 5px;
+}
+
+#user-profile-wrapper .reset-profile-picture-action {
+    margin-bottom: 5px;
+}
+
+.reset-profile-picture-action .ft-button {
+    font-size: 0.9em;
+    background: none;
+    padding: 0;
+}
+
+.reset-profile-picture-action .ft-button:hover {
+    text-decoration: underline;
 }
 
 /* User profile actions */
 
-.user-profile-actions {
+#user-profile-toolbar {
     margin-top: 10px;
 }
 
-.user-profile-actions .flex-space-between-wrapper li {
+#user-profile-toolbar .flex-space-between-wrapper li {
     flex: 1;
 }
 
-.user-profile-actions .flex-space-between-wrapper li:not(:last-child) {
+#user-profile-toolbar .flex-space-between-wrapper li:not(:last-child) {
     margin-right: 5%;
 }
 
-.user-profile-actions .flex-space-between-wrapper a {
-    padding: 12px 0;
+#user-profile-toolbar .flex-space-between-wrapper a {
+    padding: 11px 0;
     justify-content: center;
 }
 
-.user-profile-actions .nav-link {
+#user-profile-toolbar .flex-space-between-wrapper .user-action-tooltip {
+    min-width: 140px;
+}
+
+#user-profile-toolbar .nav-link {
     font-size: 0.9em;
     background-color: #1e7bd2;
     margin-top: 10px;
 }
 
-.user-profile-actions .nav-link:not(.user-action-disabled):hover {
+#user-profile-toolbar .nav-link:not(.user-action-disabled):hover {
     filter: brightness(85%);
 }
 
-.user-profile-actions button {
+#user-profile-toolbar button {
     width: 100%;
     justify-content: center;
 }
 
 /* Buttons and links */
 
-.user-profile-actions .user-action-disabled,
+#user-profile-toolbar .user-action-disabled,
 .user-action-disabled {
     background-color: #5c5c5c;
     cursor: not-allowed;
@@ -332,7 +352,6 @@
     border-radius: 2px;
     box-sizing: border-box;
     bottom: 50px;
-    word-break: break-all;
     z-index: 1;
 }
 
