@@ -38,13 +38,7 @@ function changeProfileViewDisplayType() {
         return;
     }
     updateStaticProfileViewDisplayElements(true);
-    /* alert("CHANGE VIEW! username: " + username);
-       alert("name: " + name);
-       alert("profileTag: " + profileTag);
-       alert("profileViewDisplayType: " + profileViewDisplayType);*/
-    /* alert("contextRoot: " + contextRoot);*/
 }
-
 
 function updateStaticProfileViewDisplayElements(updateUrl) {
     var cpvdisplayTypeButton = document.getElementById("change-profileview-displaytype");
@@ -75,6 +69,73 @@ function updateStaticProfileViewDisplayElements(updateUrl) {
     }
 }
 
+function submitCreateNewCommentForm(form) {
+    // Find elements.
+    var formData = new FormData(form);
+    var commentElement = form.closest(".new-comment");
+    var buttonWrapper = commentElement.querySelector(".fsubmit-button-wrapper");
+    var formLoader = commentElement.querySelector(".form-loader-container .lds-ring");
+
+    // Disable user input and show loader.
+    updateAllFormInputs(form, "disabled", true);
+    buttonWrapper.style.display = "none";
+    formLoader.style.display = "block";
+
+    // HTTP Request.
+    var httpReq = new XMLHttpRequest();
+    httpReq.onreadystatechange = function () {
+        if (httpReq.readyState != 4) {
+            return;
+        }
+        // Enable user input and hide loader.
+        updateAllFormInputs(form, "disabled", false);
+        buttonWrapper.style.display = "block";
+        formLoader.style.display = "none";
+        // Check results.
+        if (httpReq.status != 201) {
+            newCommentCreationFail(form, "Nyt kävi niin, että jotain hajosi :/");
+        } else {
+            form.reset();
+            resetOldFormErrorMessage(form);
+        }
+        //TODO: DO SOMETHING WITH THE RESPONSE?
+        setTimeout(function () { alert(httpReq.status + " | " + httpReq.responseText) }, 200);
+    }
+    httpReq.open("POST", form.action);
+    httpReq.send(formData);
+    return false;
+}
+
+function toggleNewCommentVisibility(e) {
+    var commentElement = e.closest(".new-comment");
+    commentElement.style.display = commentElement.style.display == "none" ? "block" : "none";
+}
+
+function newCommentCreationFail(form, errorMsg) {
+    resetOldFormErrorMessage(form);
+    form.querySelectorAll(".comment-textarea").forEach(function (textArea) {
+        if (!textArea.classList.contains("fe-invalid-value")) {
+            textArea.classList.add("fe-invalid-value");
+        }
+    });
+    var buttonWrapper = form.querySelector(".fsubmit-button-wrapper");
+    var errorElement = document.createElement("p");
+    errorElement.classList.add("fe-error-message");
+    errorElement.appendChild(document.createTextNode(errorMsg));
+    buttonWrapper.insertBefore(errorElement, buttonWrapper.firstChild);
+}
+
+function resetOldFormErrorMessage(form, textarea) {
+    form.querySelectorAll(".comment-textarea").forEach(function (textArea) {
+        if (textArea.classList.contains("fe-invalid-value")) {
+            textArea.classList.remove("fe-invalid-value");
+        }
+    });
+    var buttonWrapper = form.querySelector(".fsubmit-button-wrapper");
+    buttonWrapper.querySelectorAll(".fe-error-message").forEach(function (errorElement) {
+        buttonWrapper.removeChild(errorElement);
+    });
+}
 
 function resizeCommentBoxTextarea(e) {
     e.style.height = "auto";

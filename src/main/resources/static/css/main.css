@@ -91,9 +91,9 @@ ul {
 
 /* End of Loading animation */
 
-/* Load items */
+/* Loader containers */
 
-.load-items {
+.load-items-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -101,9 +101,19 @@ ul {
     padding-bottom: 20px;
 }
 
-.load-items .lds-ring {
+.load-items-container .lds-ring {
     display: none;
     margin-right: 1em;
+}
+
+.form-loader-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.form-loader-container .lds-ring {
+    display: none;
 }
 
 /* Header */

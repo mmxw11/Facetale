@@ -10,6 +10,7 @@
             var profileTag = /*[[${profileModel.user.profileTag}]]*/ "";
             var profileViewDisplayType = /*[[${profileModel.displayType.name()}]]*/ "";
         </script>
+        <script type="text/javascript" th:src="@{/static/js/form-utilities.js}" defer></script>
         <script type="text/javascript" th:src="@{/static/js/user-profile.js}" defer></script>
     </head>
     <body>
@@ -60,7 +61,7 @@
                                     <form th:action="@{/api/user/sendfriendreq}" th:method="POST">
                                         <input type="hidden" name="senderId" th:value="${auser.id}" />
                                         <input type="hidden" name="recipientId" th:value="${profileModel.user.id}" />
-                                        <button type="submit" class="ft-button nav-link user-action-disabled">
+                                        <button type="submit" class="ft-button nav-link">
                                             <i class="fas fa-user-plus"></i>Lähetä kaveripyyntö</button>
                                     </form>
                                 </li>
@@ -84,23 +85,12 @@
                             cancel comment
                             FORM ERROR!
                             No posts notification
+                            (${post} ? 'new-post-' : 'new-comment-') +
                             <img th:src="@{${@imageService.getUserProfilePictureLocation(auser.account)}}" class="profile-picture-small" alt="Profile picture" /-->
-                        <div class="new-comment">
-                            <div class="commentbox">
-                                <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
-                                <form th:action="@{/}" class="comment" th:method="POST">
-                                    <textarea rows="1" placeholder="What's up?" class="comment-textarea" oninput="resizeCommentBoxTextarea(this);"
-                                        required></textarea>
-                                    <!--class = fe-invalid-value attr = disabled-->
-                                    <div class="fsubmit-button-wrapper">
-                                        <!-- pos-relative-wrapper">
-                                        <p class="fe-error-message">Voit julkaista vain kavereidesi seinällä.</p-->
-                                        <input type="submit" class="ft-button" value="Lähetä" /> <!-- user-action-disabled -->
-                                        <!-- p class="user-action-tooltip">Tooltip text Tooltip text</p-->
-                                    </div>
-                                </form>
-                            </div>
+                        <div th:replace="fragments/post :: new-comment(auserRelationship=${profileModel.auserRelationship},
+                        target = ${profileModel.user.id}, post=true)">
                         </div>
+                        <div th:replace="fragments/post :: new-image-post(imageCount = 9)"> </div>
                         <div id="no-posts-notification">
                             <p class="fe-error-message">Yhtään julkaisuja ei löytynyt.</p>
                         </div>
@@ -128,21 +118,7 @@
                                     </div>
                                     <!-- REPLIES -->
                                     <div class="comment-replies">
-                                        <div class="new-comment">
-                                            <div class="commentbox">
-                                                <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small"
-                                                    alt="Profile picture" />
-                                                <form th:action="@{/}" class="comment" th:method="POST">
-                                                    <textarea rows="1" placeholder="Uusi kommentti." class="comment-textarea"
-                                                        oninput="resizeCommentBoxTextarea(this);" required></textarea>
-                                                    <div class="fsubmit-button-wrapper">
-                                                        <button type="reset" class="ft-button ftb-cancel"
-                                                            onclick="alert('peruutettu!')">Peruuta</button>
-                                                        <input type="submit" class="ft-button" value="Kommentoi" />
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
+                                        <div th:replace="fragments/post :: new-comment(auserRelationship=${profileModel.auserRelationship}, target = 'COMMENT_ID_PLACEHOLDER', post=false)"></div>
                                         <ul class="posts-list">
                                             <li class="commentbox">
                                                 <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small"
@@ -179,7 +155,7 @@
                                             </li>
                                         </ul>
                                         <!-- LOAD MORE-->
-                                        <div class="load-items">
+                                        <div class="load-items-container">
                                             <div class="lds-ring">
                                                 <div></div>
                                                 <div></div>
@@ -197,7 +173,7 @@
                             </li>
                         </ul>
                         <!-- LOAD MORE-->
-                        <div class="load-items">
+                        <div class="load-items-container">
                             <div class="lds-ring">
                                 <div></div>
                                 <div></div>

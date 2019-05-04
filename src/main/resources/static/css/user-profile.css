@@ -147,6 +147,16 @@
     resize: none;
 }
 
+.comment .comment-image-uploader-notification {
+    display: block;
+    font-size: 0.95em;
+}
+
+.comment .comment-image-uploader {
+    margin-top: 2px;
+    margin-bottom: 10px;
+}
+
 .comment .comment-textarea.fe-invalid-value {
     border-color: #D55246;
 }

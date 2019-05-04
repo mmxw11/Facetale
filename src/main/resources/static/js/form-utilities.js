@@ -23,6 +23,25 @@ function registerFormGroupValidationListeners() {
     }
 }
 
+function updateAllFormInputs(form, key, value) {
+    var inputs = form.getElementsByTagName("input");
+    var selects = form.getElementsByTagName("select");
+    var textareas = form.getElementsByTagName("textarea");
+    var buttons = form.getElementsByTagName("button");
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i][key] = value;
+    }
+    for (let i = 0; i < selects.length; i++) {
+        selects[i][key] = value;
+    }
+    for (let i = 0; i < textareas.length; i++) {
+        textareas[i][key] = value;
+    }
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i][key] = value;
+    }
+}
+
 function setFormElementValid(event) {
     var felement = event.target;
     felement.classList.remove("fe-invalid-value");

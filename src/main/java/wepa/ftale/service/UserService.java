@@ -99,6 +99,10 @@ public class UserService {
         return !(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken);
     }
 
+    public Account getAuthenticatedUserAccount() {
+        return accountRepository.getOne(getAuthenticatedUser().getId());
+    }
+
     public AuthenticatedUser getAuthenticatedUser() {
         if (!isUserAuthenticated()) {
             return null;

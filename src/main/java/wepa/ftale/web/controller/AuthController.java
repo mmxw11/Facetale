@@ -45,7 +45,6 @@ public class AuthController {
             // Redirect the user if they are already authenticated.
             return "redirect:/";
         }
-        // Check if post redirect contains any errors.
         if (!model.containsAttribute("account")) {
             model.addAttribute("account", new Account());
         }

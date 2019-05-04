@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fi">
+    <head></head>
+    <body>
+        <main>
+            <!-- New Comment -->
+            <div th:fragment="new-comment(auserRelationship, target, post)" class="new-comment"
+                th:id="(${post} ? 'new-post-' : 'new-comment-') + ${target}" th:with="canPost=${auserRelationship == T(wepa.ftale.web.profile.UserRelationship).ITSELF} or
+                ${auserRelationship == T(wepa.ftale.web.profile.UserRelationship).FRIEND}">
+                <div class="commentbox">
+                    <img th:src="@{${@imageService.getAuthenticatedUserProfilePictureLocation()}}" class="profile-picture-small"
+                        alt="Profile picture" />
+                    <form th:action="@{/api/posts/add{type}(type=${post} ? 'post' : 'comment')}" class="comment" th:method="POST"
+                        onsubmit="return submitCreateNewCommentForm(this);">
+                        <input type="hidden" th:name="${post} ? 'targetUser' : 'post'" th:value="${target}" />
+                        <textarea rows="1" name="textContent" th:placeholder="${post} ? 'What\'s up?' : 'Uusi kommentti.'" class="comment-textarea"
+                            oninput="resizeCommentBoxTextarea(this);" th:disabled="${canPost} == false" required></textarea>
+                        <div class="fsubmit-button-wrapper">
+                            <p th:unless="${canPost}" class="fe-error-message" th:inline="text"> Voit [[${post ? 'julkaista' : 'kommentoida'}]] vain
+                                kavereidesi seinälle.</p>
+                            <button th:unless="${post}" type="reset" class="ft-button ftb-cancel"
+                                onclick="toggleNewCommentVisibility(this);">Peruuta</button>
+                            <input th:if="${canPost}" type="submit" class="ft-button" th:value="${post} ? 'Lähetä' : 'Kommentoi'" />
+                        </div>
+                        <div th:replace="fragments/post :: form-loader"></div>
+                    </form>
+                </div>
+            </div>
+            <!-- New Image Post  -->
+            <div th:fragment="new-image-post(imageCount)" class="new-comment" id="new-image-post">
+                <div class="commentbox">
+                    <img th:src="@{${@imageService.getAuthenticatedUserProfilePictureLocation()}}" class="profile-picture-small"
+                        alt="Profile picture" />
+                    <form th:action="@{/api/posts/addimagepost}" class="comment" th:method="POST" enctype="multipart/form-data"
+                        onsubmit="return submitCreateNewCommentForm(this);">
+                        <input type="hidden" name="targetUser" th:value="${auser.id}" />
+                        <span class="comment-image-uploader-notification">Huom! Maksimikoko 2MB!</span>
+                        <input type="file" name="file" class="comment-image-uploader" placeholder="test" accept="image/*"
+                            th:disabled="${imageCount} >= 10" required />
+                        <textarea rows="1" name="textContent" placeholder="Kuvaus." class="comment-textarea" oninput="resizeCommentBoxTextarea(this);"
+                            th:disabled="${imageCount} >= 10" required></textarea>
+                        <div class="fsubmit-button-wrapper">
+                            <p th:if="${imageCount} >= 10" class="fe-error-message">Albumissasi voi olla maksimissaan 10 kuvaa kerrallaan!</p>
+                            <input th:if="${imageCount} < 10" type="submit" class="ft-button" value="Lisää kuva" />
+                        </div>
+                        <div th:replace="fragments/post :: form-loader"></div>
+                    </form>
+                </div>
+            </div>
+            <!--Form loader -->
+            <div th:fragment="form-loader" class="form-loader-container">
+                <div class="lds-ring">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div th:fragment="test-fragment(test)">
+                <p th:text="${test}">Test</p>
+            </div>
+        </main>
+    </body>
+</html>
