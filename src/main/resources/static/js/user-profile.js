@@ -48,6 +48,7 @@ function changeProfileViewDisplayType() {
 
 function updateStaticProfileViewDisplayElements(updateUrl) {
     var cpvdisplayTypeButton = document.getElementById("change-profileview-displaytype");
+    var pvdisplaytypeTitle = document.getElementById("profileview-displaytype-title");
     var profileContextUrl;
     if (updateUrl) {
         var path = window.location.pathname.replace(/\/$/, "").split("/");
@@ -62,13 +63,15 @@ function updateStaticProfileViewDisplayElements(updateUrl) {
         if (updateUrl) {
             history.pushState({}, null, profileContextUrl + "/posts");
         }
-        cpvdisplayTypeButton.innerHTML = "<i class='fas fa-images'></i>Albumi</li>";
+        cpvdisplayTypeButton.innerHTML = "<i class='fas fa-images'></i>Albumi";
+        pvdisplaytypeTitle.innerHTML = "<i class='fas fa-th-large fa-sm'></i> Julkaisut";
     } else if (profileViewDisplayType === "ALBUM") {
         document.title = profileName + " (@" + profileTag + ") -  Albumi";
         if (updateUrl) {
             history.pushState({}, null, profileContextUrl + "/album");
         }
-        cpvdisplayTypeButton.innerHTML = "<i class='fas fa-th-large'></i>Julkaisut</li>";
+        cpvdisplayTypeButton.innerHTML = "<i class='fas fa-th-large'></i>Julkaisut";
+        pvdisplaytypeTitle.innerHTML = "<i class='fas fa-images fa-sm'></i> Albumi";
     }
 }
 

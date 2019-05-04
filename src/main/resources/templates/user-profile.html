@@ -68,27 +68,23 @@
                         </div>
                     </div>
                 </div>
-                <!-- TODO -->
-                <!--
-            Profile status (own profile / friend etc)
-            DISABLED (textfields & buttons) + TOOLTIPS / reason
-            New comment
-            Load replies
-            Load posts/album
-            Album/posts change button
-            Change title (posts-header) + page title Facetale | username - Posts | Album
-            cancel comment
-            FORM ERROR!
-            No posts notification
-          <img th:src="@{${@imageService.getUserProfilePictureLocation(auser.account)}}" class="profile-picture-small" alt="Profile picture" />    
-        -->
                 <div class="column primary">
                     <div id="posts-container">
-                        <div id="posts-header" th:switch="${profileModel.displayType.name()}">
-                            <h1 th:case="POSTS"><i class="fas fa-th-large fa-sm"></i> Julkaisut</h1>
-                            <h1 th:case="ALBUM"><i class="fas fa-images fa-sm"></i> Albumi</h1>
-                            <h1 th:case="*">unknown-profile-display-type</h1>
+                        <div id="posts-header">
+                            <h1 id="profileview-displaytype-title">displayType</h1>
                         </div>
+                        <!-- TODO 
+                            Profile status (own profile / friend etc)
+                            DISABLED (textfields & buttons) + TOOLTIPS / reason
+                            New comment
+                            Load replies
+                            Load posts/album
+                            Album/posts change button
+                            Change title (posts-header) + page title Facetale | username - Posts | Album
+                            cancel comment
+                            FORM ERROR!
+                            No posts notification
+                            <img th:src="@{${@imageService.getUserProfilePictureLocation(auser.account)}}" class="profile-picture-small" alt="Profile picture" /-->
                         <div class="new-comment">
                             <div class="commentbox">
                                 <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
