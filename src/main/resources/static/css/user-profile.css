@@ -199,6 +199,10 @@
 
 /* Replies */
 
+.comment .comment-replies .new-comment {
+    display: none;
+}
+
 .comment .comment-replies .commentbox {
     border-radius: 0;
     padding-left: 0;

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -61,7 +62,7 @@ public class UserService {
     public ProfileModel createProfileModel(Account account, ProfileViewDisplayType displayType) {
         Account requester = accountRepository.getOne(getAuthenticatedUser().getId());
         UserRelationship urelationship = findUserRelationship(requester, account);
-        Pageable pageable = PageRequest.of(0, 4);
+        Pageable pageable = PageRequest.of(0, 4, Sort.by("creationDate").descending());
         Page<Post> posts = messageService.getProfilePosts(account, pageable);
        // Post pp = posts.getContent().get(0);
       //  pp.getLikes().add(requester);

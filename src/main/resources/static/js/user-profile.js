@@ -69,6 +69,18 @@ function updateStaticProfileViewDisplayElements(updateUrl) {
     }
 }
 
+function toggleNewCommentVisibility(button) {
+    var newCommentElementId = button.getAttribute("data-newcommentid");
+    newCommentElement = document.getElementById(newCommentElementId);
+    var style = window.getComputedStyle(newCommentElement);
+    newCommentElement.style.display = style.display == "none" ? "block" : "none";
+}
+
+function likePost(button) {
+    var postId = button.getAttribute("data-postid");
+    alert("post id: " + postId);
+}
+
 function submitCreateNewCommentForm(form) {
     // Find elements.
     var formData = new FormData(form);
@@ -104,11 +116,6 @@ function submitCreateNewCommentForm(form) {
     httpReq.open("POST", form.action);
     httpReq.send(formData);
     return false;
-}
-
-function toggleNewCommentVisibility(e) {
-    var commentElement = e.closest(".new-comment");
-    commentElement.style.display = commentElement.style.display == "none" ? "block" : "none";
 }
 
 function newCommentCreationFail(form, errorMsg) {
