@@ -64,17 +64,18 @@ public class UserService {
         UserRelationship urelationship = findUserRelationship(requester, account);
         Pageable pageable = PageRequest.of(0, 4, Sort.by("creationDate").descending());
         Page<Post> posts = messageService.getProfilePosts(account, pageable);
-       // Post pp = posts.getContent().get(0);
-      //  pp.getLikes().add(requester);
-      //  postRepository.save(pp);
+        // Post pp = posts.getContent().get(0);
+        // pp.getLikes().add(requester);
+        // postRepository.save(pp);
         List<UserPostView> postViews = postRepository.fetchUserPostViews(requester, posts.getContent());
         Map<Long, UserPostView> userPostViews = new HashMap<>();
         for (UserPostView v : postViews) {
             userPostViews.put(v.getPostId(), v);
-        }/*
-        System.out.println("userPostViews: " + userPostViews);
-        postViews.forEach(e -> System.out.println("lieks: " + e.getLikeCount() + " | " + e.isPostRequesterAllowedToLike() + " | " + e.getPostId()));
-       */
+        } /*
+           * System.out.println("userPostViews: " + userPostViews); postViews.forEach(e ->
+           * System.out.println("lieks: " + e.getLikeCount() + " | " +
+           * e.isPostRequesterAllowedToLike() + " | " + e.getPostId()));
+           */
         /**
         Post pp = posts.get().findFirst().get();
         pp.getLikes().add(requester);
@@ -104,6 +105,10 @@ public class UserService {
         }*/
         ProfileModel profileModel = new ProfileModel(account, displayType, urelationship, posts, userPostViews);
         return profileModel;
+    }
+
+    public void saveAccount(Account account) {
+        accountRepository.save(account);
     }
 
     @Transactional
@@ -148,6 +153,10 @@ public class UserService {
             return;
         }
         model.addAttribute("auser", auser);
+    }
+
+    public Account getAccount(UUID id) {
+        return accountRepository.getOne(id);
     }
 
     public boolean isUserAuthenticated() {

@@ -1,3 +1,5 @@
+// @author Matias
+
 window.addEventListener("click", function (e) {
     if (!Element.prototype.matches) {
         // IE fix.

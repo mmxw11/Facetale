@@ -1,6 +1,7 @@
 package wepa.ftale.service;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,9 @@ import wepa.ftale.repository.ImageRepository;
 import wepa.ftale.repository.PostRepository;
 import wepa.ftale.web.profile.UserRelationship;
 
+/**
+ * @author Matias
+ */
 @Service
 public class MessageService {
 
@@ -37,7 +41,7 @@ public class MessageService {
     }
 
     @Transactional
-    @PostAuthorize("#post.getAuthor().equals(#post.getTargetUser())")
+    @PostAuthorize("#post.getAuthor().equals(#post.getTarget())")
     public void addPost(Post post, MultipartFile file) throws ResponseStatusException, IOException {
         post.setAuthor(userService.getAuthenticatedUserAccount());
         long imageCount = postRepository.albumImageCount(post.getTarget());
@@ -47,6 +51,48 @@ public class MessageService {
         FtImage image = new FtImage(post.getTarget(), file.getSize(), file.getContentType(), file.getBytes());
         post.setImage(image);
         imageRepository.save(image);
+        postRepository.save(post);
+    }
+
+    @Transactional
+    public void deleteImagePost(UUID accountId, Long postId) {
+        Post post = postRepository.getOne(postId);
+        FtImage image = post.getImage();
+        if (image == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This post does not contain an image!");
+        }
+        Account account = userService.getAccount(accountId);
+        if (!post.getAuthor().equals(account)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not the author!");
+        }
+        // Reset profile picture.
+        if (account.getProfilePicture() != null && account.getProfilePicture().equals(image)) {
+            account.setProfilePicture(null);
+        }
+        userService.saveAccount(account);
+        postRepository.delete(post);
+    }
+
+    @Transactional
+    public void likePost(UUID accountId, Long postId) throws ResponseStatusException {
+        Post post = postRepository.getOne(postId);
+        Account account = userService.getAccount(accountId);
+        checkFriendPermissions(account, post.getTarget());
+        if (post.getLikes().contains(account)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You can't like same post twice!");
+        }
+        post.getLikes().add(account);
+        postRepository.save(post);
+    }
+
+    @Transactional
+    public void removeLike(UUID accountId, Long postId) {
+        Post post = postRepository.getOne(postId);
+        Account account = userService.getAccount(accountId);
+        if (!post.getLikes().contains(account)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You don't have a like on this post!");
+        }
+        post.getLikes().remove(account);
         postRepository.save(post);
     }
 

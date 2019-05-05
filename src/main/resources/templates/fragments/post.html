@@ -62,9 +62,10 @@
                         [[${comment.author.name}]] <span>@[[${comment.author.profileTag}]]</span></a>
                     <!-- TODO IMAGE HERE -->
                     <p class="comment-text-content" th:text="${comment.textContent}"></p>
-                    <div class="comment-info-wrapper">
+                    <div class="comment-info-wrapper" th:id="${htmlId} + '-info-wrapper'">
                         <div class="flex-space-between-wrapper" th:styleappend="${post} == false ? 'justify-content: flex-end;'">
-                            <h3 th:if="${post}" th:inline="text">[[${view.getLikeCount()}]] Tykkäystä</h3>
+                            <h3 th:if="${post}" th:inline="text" th:id="${htmlId} + '-likecount'" th:data-postlikecount="${view.getLikeCount()}">
+                                [[${view.getLikeCount()}]] Tykkäystä</h3>
                             <h3 th:text="${#temporals.format(comment.creationDate, 'dd.MM.yyyy HH:mm')}">Date</h3>
                         </div>
                         <div th:if="${post}" class="comment-actions" th:with="imageActions=${auserRelationship == T(wepa.ftale.web.profile.UserRelationship).ITSELF} and ${comment.image != null},
@@ -79,8 +80,8 @@
                             <!-- Likes -->
                             <th:block th:switch="${canLike}">
                                     <th:block th:case="${true}">
-                                        <button th:if="${view.isPostRequesterAllowedToLike()}" type="button" class="ft-button" th:data-postid="${comment.id}" onclick="likePost(this);">Tykkää</button>
-                                        <button th:unless="${view.isPostRequesterAllowedToLike()}" type="button" class="ft-button ftb-cancel" th:data-postid="${comment.id}" onclick="likePost(this);">Poista tykkäys</button>
+                                        <button th:if="${view.isPostRequesterAllowedToLike()}" type="button" class="ft-button"  th:data-postid="${comment.id}" data-rateaction="LIKE" onclick="ratePost(this);">Tykkää</button>
+                                        <button th:unless="${view.isPostRequesterAllowedToLike()}" type="button" class="ft-button ftb-cancel" th:data-postid="${comment.id}" data-rateaction="REMOVE_LIKE" onclick="ratePost(this);">Poista tykkäys</button>
                                     </th:block>
                                     <th:block th:case="${false}">
                                         <button type="button" class="ft-button user-action-disabled" disabled>Tykkää</button>
@@ -89,11 +90,12 @@
                             </th:block>
                             <!-- Add comment -->
                             <button type="button" class="ft-button" th:data-newcommentid="'comment-' + ${comment.id} + '-new'" onclick="toggleNewCommentVisibility(this);">Kommentoi</button>
-                            <!-- Delete post (only if image) -->
-                            <button th:if="${imageActions}" type="button" class="ft-button ftb-cancel" th:data-postid="${comment.id}" onclick="alert('todo');">Poista kuva</button>
-                            <!-- Comments -->
-                            <button type="button" class="ft-button expand-comment-section-button">6 Kommenttia <i class="fas fa-chevron-down"></i></button>
+                            <!-- Delete post. (only if image) -->
+                            <button th:if="${imageActions}" type="button" class="ft-button ftb-cancel" th:data-postid="${comment.id}" onclick="deleteImagePost(this);">Poista kuva</button>
+                            <!--TODO: IMPLEMENT Comments -->
+                            <button type="button" class="ft-button expand-comment-section-button">??? Kommenttia <i class="fas fa-chevron-down"></i></button>
                         </div>
+                        <div th:include="fragments/post :: form-loader" class="form-loader-container"></div>
                     </div>
                     <div th:if="${post}" th:replace="fragments/post :: 
                     post-replies(auserRelationship = ${auserRelationship}, postId = ${comment.id})"></div>

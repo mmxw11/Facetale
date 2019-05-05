@@ -3,6 +3,7 @@ package wepa.ftale.domain;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -43,9 +44,9 @@ public class Post extends AbstractPersistable<Long> {
     @Column
     @NotBlank
     private String textContent;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private FtImage image;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinTable(
             joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "like_author_id", referencedColumnName = "id"))

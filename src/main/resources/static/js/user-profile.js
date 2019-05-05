@@ -1,3 +1,5 @@
+// @author Matias
+
 window.addEventListener("resize", function (e) {
     var commentboxes = document.getElementsByClassName("comment-textarea");
     for (let i = 0; i < commentboxes.length; i++) {
@@ -67,6 +69,11 @@ function updateStaticProfileViewDisplayElements(updateUrl) {
         cpvdisplayTypeButton.innerHTML = "<i class='fas fa-th-large'></i>Julkaisut";
         pvdisplaytypeTitle.innerHTML = "<i class='fas fa-images fa-sm'></i> Albumi";
     }
+    // TODO: CHANGE CONTENT
+    // TODO ADD AND REMOVE TO MAIN POST LIST
+    // LOAD MORE MAIN POSTLIST
+    // ADD COMMENT
+    // LOAD REPLIES
 }
 
 function toggleNewCommentVisibility(button) {
@@ -76,9 +83,69 @@ function toggleNewCommentVisibility(button) {
     newCommentElement.style.display = style.display == "none" ? "block" : "none";
 }
 
-function likePost(button) {
+function ratePost(button) {
     var postId = button.getAttribute("data-postid");
-    alert("post id: " + postId);
+    var rateAction = button.getAttribute("data-rateaction");
+    var postLikeCountElement = document.getElementById("post-" + postId + "-likecount");
+    var url = contextRoot + "api/posts/" + (rateAction === "LIKE" ? "likepost" : "removelike");
+
+    sendPostAction(postId, url, new FormData(), function (httpReq) {
+        if (httpReq.readyState != 4) {
+            return;
+        }
+        // Check results.
+        if (httpReq.status != 200) {
+            // Patenttiratkaisu.
+            alert("Jotain hajosi :( Virhekoodi: " + httpReq.status + ": " + httpReq.responseText);
+        } else {
+            var likeCount = parseInt(postLikeCountElement.getAttribute("data-postlikecount"));
+            if (rateAction === "LIKE") {
+                button.classList.add("ftb-cancel");
+                button.innerHTML = "Poista tykkäys";
+                button.setAttribute("data-rateaction", "REMOVE_LIKE");
+                likeCount++;
+            } else {
+                button.classList.remove("ftb-cancel");
+                button.innerHTML = "Tykkää";
+                button.setAttribute("data-rateaction", "LIKE");
+                likeCount--;
+            }
+            postLikeCountElement.setAttribute("data-postlikecount", likeCount);
+            postLikeCountElement.innerHTML = likeCount + " Tykkäystä";
+        }
+    });
+}
+
+function deleteImagePost(button) {
+    var postId = button.getAttribute("data-postid");
+
+    var postInfoWrapperElement = document.getElementById("post-" + postId + "-info-wrapper");
+    var commentActionsElement = postInfoWrapperElement.querySelector(".comment-actions");
+    var formLoader = postInfoWrapperElement.querySelector(".form-loader-container .lds-ring");
+
+    commentActionsElement.style.display = "none";
+    formLoader.style.display = "block";
+
+    var url = contextRoot + "api/posts/deleteimagepost";
+    sendPostAction(postId, url, new FormData(), function (httpReq) {
+        if (httpReq.readyState != 4) {
+            return;
+        }
+        // Check results.
+        if (httpReq.status != 200) {
+            commentActionsElement.style.display = "block";
+            formLoader.style.display = "none";
+            removeOldErrorMessages(commentActionsElement);
+            var errorElement = createErrorElement("Nyt kävi niin, että jotain hajosi :/");
+            commentActionsElement.appendChild(errorElement);
+            // Patenttiratkaisu.
+            setTimeout(function () { alert("Jotain hajosi :( Virhekoodi: " + httpReq.status + ": " + httpReq.responseText); }, 200);
+        } else {
+            alert("Success!");
+            //TODO: DELETE POST FROM LIST.
+        }
+        //TODO: DO SOMETHING WITH THE RESPONSE?
+    });
 }
 
 function submitCreateNewCommentForm(form) {
@@ -104,18 +171,33 @@ function submitCreateNewCommentForm(form) {
         buttonWrapper.style.display = "block";
         formLoader.style.display = "none";
         // Check results.
-        if (httpReq.status != 201) {
+        if (httpReq.status != 200) {
             newCommentCreationFail(form, "Nyt kävi niin, että jotain hajosi :/");
+            // Patenttiratkaisu.
+            setTimeout(function () { alert("Jotain hajosi :( Virhekoodi: " + httpReq.status + ": " + httpReq.responseText); }, 200);
         } else {
             form.reset();
             resetOldFormErrorMessage(form);
+            resizeCommentBoxTextarea(form.querySelector(".comment-textarea"));
         }
-        //TODO: DO SOMETHING WITH THE RESPONSE?
-        setTimeout(function () { alert(httpReq.status + " | " + httpReq.responseText) }, 200);
+        //TODO: ADD RESPONSE TO LIST
+        setTimeout(function () { alert("HTTPSTATUS: " + httpReq.status + " MSG: " + httpReq.responseText); }, 200);
     }
     httpReq.open("POST", form.action);
     httpReq.send(formData);
     return false;
+}
+
+function sendPostAction(postId, url, formData, eventListener) {
+    formData.append("accountId", auserId);
+    formData.append("postId", postId);
+    formData.append(_csrf_param_name, _csrf_token);
+
+    var httpReq = new XMLHttpRequest();
+    httpReq.onreadystatechange = function () { eventListener(httpReq); };
+
+    httpReq.open("POST", url);
+    httpReq.send(formData);
 }
 
 function newCommentCreationFail(form, errorMsg) {
@@ -126,10 +208,14 @@ function newCommentCreationFail(form, errorMsg) {
         }
     });
     var buttonWrapper = form.querySelector(".fsubmit-button-wrapper");
+    buttonWrapper.insertBefore(createErrorElement(errorMsg), buttonWrapper.firstChild);
+}
+
+function createErrorElement(errorMsg) {
     var errorElement = document.createElement("p");
     errorElement.classList.add("fe-error-message");
     errorElement.appendChild(document.createTextNode(errorMsg));
-    buttonWrapper.insertBefore(errorElement, buttonWrapper.firstChild);
+    return errorElement;
 }
 
 function resetOldFormErrorMessage(form, textarea) {
@@ -139,8 +225,12 @@ function resetOldFormErrorMessage(form, textarea) {
         }
     });
     var buttonWrapper = form.querySelector(".fsubmit-button-wrapper");
-    buttonWrapper.querySelectorAll(".fe-error-message").forEach(function (errorElement) {
-        buttonWrapper.removeChild(errorElement);
+    removeOldErrorMessages(buttonWrapper);
+}
+
+function removeOldErrorMessages(parent) {
+    parent.querySelectorAll(".fe-error-message").forEach(function (errorElement) {
+        parent.removeChild(errorElement);
     });
 }
 

@@ -1,3 +1,5 @@
+// @author Matias
+
 function formSubmitPasswordListener(event) {
     var passwordElement = document.getElementById('account-password');
     var passwordConfirmElement = document.getElementById('account-password-2');

@@ -13,7 +13,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import wepa.ftale.domain.Account;
 import wepa.ftale.domain.FtImage;
-import wepa.ftale.repository.AccountRepository;
 import wepa.ftale.repository.ImageRepository;
 import wepa.ftale.web.AuthenticatedUser;
 
@@ -27,13 +26,11 @@ public class ImageService {
     @Autowired
     private ImageRepository imageRepository;
     @Autowired
-    private AccountRepository accountRepository;
-    @Autowired
     private UserService userService;
 
     @Transactional
     public void setUserProfilePicture(UUID accountId, UUID imageId) throws ResponseStatusException {
-        Account account = accountRepository.getOne(accountId);
+        Account account = userService.getAccount(accountId);
         FtImage ftImage = null;
         if (imageId != null) {
             ftImage = imageRepository.getOne(imageId);

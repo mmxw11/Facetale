@@ -114,6 +114,7 @@ ul {
 
 .form-loader-container .lds-ring {
     display: none;
+    margin-top: 5px;
 }
 
 /* Header */

@@ -5,6 +5,9 @@
         <link rel="stylesheet" type="text/css" th:href="@{/static/css/user-profile.css}">
         <script th:inline="javascript">
             var contextRoot = /*[[@{/}]]*/ "";
+            var _csrf_token = /*[[${_csrf.token}]]*/ '';
+            var _csrf_param_name = /*[[${_csrf.parameterName}]]*/ '';
+            var auserId = /*[[${auser.id}]]*/ "";
             var profileUsername = /*[[${profileModel.user.username}]]*/ "";
             var profileName = /*[[${profileModel.user.name}]]*/ "";
             var profileTag = /*[[${profileModel.user.profileTag}]]*/ "";
@@ -52,7 +55,8 @@
                                             <div th:case="${false}" class="pos-relative-wrapper">
                                                 <a href="javascript:void(0);" class="nav-link user-action-disabled">
                                                     <i class="fas fa-user-friends"></i>Kaverit</a>
-                                                <p class="user-action-tooltip">Nähdäksesi toisten kaverit sinun täytyy olla kavereita heidän kanssa.</p>
+                                                <p class="user-action-tooltip">Nähdäksesi toisten kaverit sinun täytyy olla kavereita heidän kanssa.
+                                                </p>
                                             </div>
                                         </th:block>
                                     </li>
