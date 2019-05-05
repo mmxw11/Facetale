@@ -47,6 +47,33 @@
                     </form>
                 </div>
             </div>
+            <!-- Comments list -->
+            <ul th:fragment="comment-list(comments)" th:each="comment : ${comments}" class="posts-list">
+                <div th:replace="fragments/post :: comment(${comment})"></div>
+            </ul>
+            <!-- Comment -->
+            <li th:fragment="comment(comment)" class="commentbox">
+                <img th:src="@{${@imageService.getUserProfilePictureLocation(comment.author)}}" class="profile-picture-small" alt="Profile picture" />
+                <div class="comment">
+                    <a th:href="@{/users/{user}(user=${comment.author.profileTag})}" class="comment-author-info" th:inline="text">
+                        [[${comment.author.name}]] <span>@[[${comment.author.profileTag}]]</span></a>
+                    <!-- TODO IMAGE HERE -->
+                    <p class="comment-text-content" th:text="${comment.textContent}"></p>
+                    <div class="comment-info-wrapper">
+                        <div class="flex-space-between-wrapper">
+                            <h3>6 Tykkäystä</h3> <!-- TODO HERE -->
+                            <h3 th:text="${#temporals.format(comment.creationDate, 'dd.MM.yyyy HH:mm')}">Date</h3>
+                        </div>
+                        <div class="comment-actions">
+                            <button type="button" class="ft-button">Tykkää</button>
+                            <button type="button" class="ft-button">Kommentoi</button>
+                            <button type="button" class="ft-button expand-comment-section-button">6 Kommenttia <i
+                                    class="fas fa-chevron-down"></i></button>
+                        </div>
+                    </div>
+                    <!-- TODO REPLIES   -->
+                </div>
+            </li>
             <!--Form loader -->
             <div th:fragment="form-loader" class="form-loader-container">
                 <div class="lds-ring">

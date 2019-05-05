@@ -34,8 +34,10 @@ public class AuthService {
 
     @PostConstruct
     public void addAccount() throws IOException {
+        Account account2 = new Account("jorma", "jorma Ojala", "jormala", passwordEncoder.encode("testi"), null);
         Account account = new Account("testi", "testiFullName", "testTag", passwordEncoder.encode("testi"), null);
         accountRepository.save(account);
+        accountRepository.save(account2);
         System.out.println("UUID: " + account.getId());
         byte[] bytes = Files.readAllBytes(
                 Paths.get("src/main/resources/static/images/export.png"));

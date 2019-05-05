@@ -91,11 +91,14 @@
                         target = ${profileModel.user.id}, post=true)">
                         </div>
                         <div th:replace="fragments/post :: new-image-post(imageCount = 9)"> </div>
-                        <div id="no-posts-notification">
+                        <div id="no-posts-notification" th:styleappend="${!profileModel.posts.empty} ? 'display:none;'">
                             <p class="fe-error-message">Yhtään julkaisuja ei löytynyt.</p>
                         </div>
-                        <ul class="posts-list">
-                            <!-- PRIMARY -->
+
+                        <div th:replace="fragments/post :: comment-list(comments=${profileModel.posts})"></div>
+
+                        <!--ul class="posts-list">
+                            <!-- PRIMARY --
                             <li class="commentbox">
                                 <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
                                 <div class="comment">
@@ -116,7 +119,7 @@
                                                     class="fas fa-chevron-down"></i></button>
                                         </div>
                                     </div>
-                                    <!-- REPLIES -->
+                                    <!-- REPLIES --
                                     <div class="comment-replies">
                                         <div th:replace="fragments/post :: new-comment(auserRelationship=${profileModel.auserRelationship}, target = 'COMMENT_ID_PLACEHOLDER', post=false)"></div>
                                         <ul class="posts-list">
@@ -154,7 +157,7 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                        <!-- LOAD MORE-->
+                                        <!-- LOAD MORE--
                                         <div class="load-items-container">
                                             <div class="lds-ring">
                                                 <div></div>
@@ -166,9 +169,9 @@
                                             <button type="button" id="load-more-comments" class="ft-button" onclick="document.getElementsByClassName('lds-ring')[0].style.display='block';
                                             document.getElementById('load-more-comments').style.display='none';">Lataa lisää kommentteja</button>
                                         </div>
-                                        <!-- LOAD MORE-->
+                                        <!-- LOAD MORE--
                                     </div>
-                                    <!-- REPLIES END  -->
+                                    <!-- REPLIES END  --
                                 </div>
                             </li>
                         </ul>

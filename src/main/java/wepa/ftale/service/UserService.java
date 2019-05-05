@@ -1,6 +1,9 @@
 package wepa.ftale.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import wepa.ftale.domain.Account;
 import wepa.ftale.domain.Friendship;
+import wepa.ftale.domain.Post;
 import wepa.ftale.repository.AccountRepository;
 import wepa.ftale.repository.FriendRepository;
 import wepa.ftale.web.AuthenticatedUser;
@@ -47,7 +51,25 @@ public class UserService {
 
     public ProfileModel createProfileModel(Account account, ProfileViewDisplayType displayType) {
         UserRelationship urelationship = findUserRelationship(accountRepository.getOne(getAuthenticatedUser().getId()), account);
-        ProfileModel profileModel = new ProfileModel(account, displayType, urelationship);
+        List<Post> posts = new ArrayList<>();
+        Account jorma = accountRepository.findByUsername("jorma");
+        Random r = new Random();
+        for (int i = 0; i < 5; i++) {
+            Post post = new Post();
+            post.setAuthor(r.nextBoolean() ? jorma : account);
+            post.setTargetUser(account);
+            post.setTextContent(i
+                    + ". Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
+                    + "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, "
+                    + "when an unknown printer took a galley of type and scrambled it to make a type "
+                    + "specimen book. It has survived not only five centuries, but also the leap into "
+                    + "electronic typesetting, remaining essentially unchanged. It was popularised in the "
+                    + "1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more "
+                    + "recently with desktop publishing software like Aldus PageMaker including versions of "
+                    + "Lorem Ipsum.");
+            posts.add(post);
+        }
+        ProfileModel profileModel = new ProfileModel(account, displayType, urelationship, posts);
         return profileModel;
     }
 
