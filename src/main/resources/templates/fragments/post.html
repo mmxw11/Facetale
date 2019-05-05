@@ -27,13 +27,13 @@
                 </div>
             </div>
             <!-- New Image Post -->
-            <div th:fragment="new-image-post(imageCount)" class="new-comment" id="new-post">
+            <div th:fragment="new-image-post(imageCount, target)" class="new-comment" id="new-post">
                 <div class="commentbox">
                     <img th:src="@{${@imageService.getAuthenticatedUserProfilePictureLocation()}}" class="profile-picture-small"
                         alt="Profile picture" />
                     <form th:action="@{/api/posts/addimagepost}" class="comment" th:method="POST" enctype="multipart/form-data"
                         onsubmit="return submitCreateNewCommentForm(this);">
-                        <input type="hidden" name="target" th:value="${auser.id}" />
+                        <input type="hidden" name="target" th:value="${target}" />
                         <span class="comment-image-uploader-notification">Huom! Maksimikoko 2MB!</span>
                         <input type="file" name="file" class="comment-image-uploader" placeholder="test" accept="image/*"
                             th:disabled="${imageCount} >= 10" required />
@@ -54,7 +54,8 @@
                 </div>
             </ul>
             <!-- Comment -->
-            <li th:fragment="comment(comment, view, post, auserRelationship)" class="commentbox" th:id="${htmlId}" th:with="htmlId=(${post} ? 'post-' : 'comment-') + ${comment.id}">
+            <li th:fragment="comment(comment, view, post, auserRelationship)" class="commentbox" th:id="${htmlId}"
+                th:with="htmlId=(${post} ? 'post-' : 'comment-') + ${comment.id}">
                 <img th:src="@{${@imageService.getUserProfilePictureLocation(comment.author)}}" class="profile-picture-small" alt="Profile picture" />
                 <div class="comment">
                     <a th:href="@{/users/{user}(user=${comment.author.profileTag})}" class="comment-author-info" th:inline="text">
@@ -66,15 +67,32 @@
                             <h3 th:if="${post}" th:inline="text">[[${view.getLikeCount()}]] Tykkäystä</h3>
                             <h3 th:text="${#temporals.format(comment.creationDate, 'dd.MM.yyyy HH:mm')}">Date</h3>
                         </div>
-                        <div th:if="${post}" class="comment-actions">
-                            <!-- TODO LIKES +  ONLY IF FRIEND!!-->
-                            <button th:if="${view.isPostRequesterAllowedToLike()}" type="button" class="ft-button"
-                            th:data-postid="${comment.id}" onclick="likePost(this);">Tykkää</button>
-                            <button th:unless="${view.isPostRequesterAllowedToLike()}" type="button" class="ft-button ftb-cancel"
-                            th:data-postid="${comment.id}" onclick="likePost(this);">Poista tykkäys</button>
+                        <div th:if="${post}" class="comment-actions" th:with="imageActions=${auserRelationship == T(wepa.ftale.web.profile.UserRelationship).ITSELF} and ${comment.image != null},
+                        canLike=${auserRelationship == T(wepa.ftale.web.profile.UserRelationship).ITSELF} or ${auserRelationship == T(wepa.ftale.web.profile.UserRelationship).FRIEND}"
+                        th:classappend="${canLike} == false ? 'pos-relative-wrapper'">
+                            <!-- Set profile pic -->
+                            <form th:if="${imageActions}" th:action="@{/api/user/setprofilepic}" th:method="POST" class="profile-picture-action">
+                                <input type="hidden" name="accountId" th:value="${comment.target.id}" />
+                                <input type="hidden" name="imageId" th:value="${comment.image.id}" />
+                                <button type="submit" class="ft-button nav-link">Aseta profiilikuvaksi</button>
+                            </form>
+                            <!-- Likes -->
+                            <th:block th:switch="${canLike}">
+                                    <th:block th:case="${true}">
+                                        <button th:if="${view.isPostRequesterAllowedToLike()}" type="button" class="ft-button" th:data-postid="${comment.id}" onclick="likePost(this);">Tykkää</button>
+                                        <button th:unless="${view.isPostRequesterAllowedToLike()}" type="button" class="ft-button ftb-cancel" th:data-postid="${comment.id}" onclick="likePost(this);">Poista tykkäys</button>
+                                    </th:block>
+                                    <th:block th:case="${false}">
+                                        <button type="button" class="ft-button user-action-disabled" disabled>Tykkää</button>
+                                        <p class="user-action-tooltip">Tykätäksesi sinun täytyy olla profiilin omistajan kaveri.</p>
+                                    </th:block>
+                            </th:block>
+                            <!-- Add comment -->
                             <button type="button" class="ft-button" th:data-newcommentid="'comment-' + ${comment.id} + '-new'" onclick="toggleNewCommentVisibility(this);">Kommentoi</button>
-                            <button type="button" class="ft-button expand-comment-section-button">6 Kommenttia <i
-                                    class="fas fa-chevron-down"></i></button>
+                            <!-- Delete post (only if image) -->
+                            <button th:if="${imageActions}" type="button" class="ft-button ftb-cancel" th:data-postid="${comment.id}" onclick="alert('todo');">Poista kuva</button>
+                            <!-- Comments -->
+                            <button type="button" class="ft-button expand-comment-section-button">6 Kommenttia <i class="fas fa-chevron-down"></i></button>
                         </div>
                     </div>
                     <div th:if="${post}" th:replace="fragments/post :: 

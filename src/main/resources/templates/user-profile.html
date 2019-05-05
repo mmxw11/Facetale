@@ -22,8 +22,9 @@
                         <div id="user-profile-wrapper">
                             <img th:src="@{${profileModel.auserRelationship == T(wepa.ftale.web.profile.UserRelationship).ITSELF} ? ${@imageService.getAuthenticatedUserProfilePictureLocation()} :
                             ${@imageService.getUserProfilePictureLocation(profileModel.user)}}" alt="Profile picture" />
-                            <form th:action="@{/api/user/resetprofilepic}" th:method="POST" class="reset-profile-picture-action"
-                                th:if="${profileModel.auserRelationship == T(wepa.ftale.web.profile.UserRelationship).ITSELF} and ${profileModel.user.profilePicture != null}">
+                            <form
+                                th:if="${profileModel.auserRelationship == T(wepa.ftale.web.profile.UserRelationship).ITSELF} and ${profileModel.user.profilePicture != null}"
+                                th:action="@{/api/user/resetprofilepic}" th:method="POST" class="profile-picture-action">
                                 <input type="hidden" name="accountId" th:value="${profileModel.user.id}" />
                                 <button type="submit" class="ft-button nav-link">Poista profiilikuva</button>
                             </form>
@@ -51,8 +52,7 @@
                                             <div th:case="${false}" class="pos-relative-wrapper">
                                                 <a href="javascript:void(0);" class="nav-link user-action-disabled">
                                                     <i class="fas fa-user-friends"></i>Kaverit</a>
-                                                <p class="user-action-tooltip">Nähdäksesi toisten kaverit sinun täytyy olla kavereita heidän kanssa.
-                                                </p>
+                                                <p class="user-action-tooltip">Nähdäksesi toisten kaverit sinun täytyy olla kavereita heidän kanssa.</p>
                                             </div>
                                         </th:block>
                                     </li>
@@ -90,13 +90,16 @@
                         <div th:replace="fragments/post :: new-comment(auserRelationship=${profileModel.auserRelationship},
                         target = ${profileModel.user.id}, post=true)">
                         </div>
-                        <div th:replace="fragments/post :: new-image-post(imageCount = 9)"> </div>
+                        <div th:replace="fragments/post :: new-image-post(imageCount = 9, target = ${auser.id})"> </div>
                         <div id="total-post-count-notification">
-                                <p th:styleappend="${profileModel.posts.getTotalElements()} == 0 ? 'display:none;'" id="total-post-count" th:inline="text">[[${profileModel.posts.getTotalElements()}]] Julkaisua</p>
-                                <p th:styleappend="${profileModel.posts.getTotalElements()} != 0 ? 'display:none;'" class="fe-error-message">Yhtään julkaisuja ei löytynyt.</p>
+                            <p th:styleappend="${profileModel.posts.getTotalElements()} == 0 ? 'display:none;'" id="total-post-count"
+                                th:inline="text">[[${profileModel.posts.getTotalElements()}]] Julkaisua</p>
+                            <p th:styleappend="${profileModel.posts.getTotalElements()} != 0 ? 'display:none;'" class="fe-error-message">Yhtään
+                                julkaisuja ei löytynyt.</p>
                         </div>
-                   
-                        <div th:replace="fragments/post :: post-list(auserRelationship=${profileModel.auserRelationship}, comments=${profileModel.posts}, viewMap=${profileModel.userPostViews})"></div>
+                        <div
+                            th:replace="fragments/post :: post-list(auserRelationship=${profileModel.auserRelationship}, comments=${profileModel.posts}, viewMap=${profileModel.userPostViews})">
+                        </div>
                         <!--ul class="posts-list">
                             <!-- PRIMARY --
                             <li class="commentbox">

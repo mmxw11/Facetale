@@ -285,17 +285,17 @@
     padding-right: 5px;
 }
 
-#user-profile-wrapper .reset-profile-picture-action {
+#user-profile-wrapper .profile-picture-action {
     margin-bottom: 5px;
 }
 
-.reset-profile-picture-action .ft-button {
+.profile-picture-action .ft-button {
     font-size: 0.9em;
     background: none;
     padding: 0;
 }
 
-.reset-profile-picture-action .ft-button:hover {
+.profile-picture-action .ft-button:hover {
     text-decoration: underline;
 }
 
