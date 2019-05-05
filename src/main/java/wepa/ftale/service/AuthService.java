@@ -3,7 +3,9 @@ package wepa.ftale.service;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 
@@ -16,8 +18,10 @@ import org.springframework.validation.FieldError;
 
 import wepa.ftale.domain.Account;
 import wepa.ftale.domain.FtImage;
+import wepa.ftale.domain.Post;
 import wepa.ftale.repository.AccountRepository;
 import wepa.ftale.repository.ImageRepository;
+import wepa.ftale.repository.PostRepository;
 
 /**
  * @author Matias
@@ -31,6 +35,8 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private ImageRepository imageRepository;
+    @Autowired
+    private PostRepository postRepository;
 
     @PostConstruct
     public void addAccount() throws IOException {
@@ -38,6 +44,24 @@ public class AuthService {
         Account account = new Account("testi", "testiFullName", "testTag", passwordEncoder.encode("testi"), null);
         accountRepository.save(account);
         accountRepository.save(account2);
+        List<Post> posts = new ArrayList<>();
+        Random r = new Random();
+        for (int i = 0; i < 5; i++) {
+            Post post = new Post();
+            post.setAuthor(r.nextBoolean() ? account2 : account);
+            post.setTarget(account);
+            post.setTextContent(i
+                    + ". Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
+                    + "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, "
+                    + "when an unknown printer took a galley of type and scrambled it to make a type "
+                    + "specimen book. It has survived not only five centuries, but also the leap into "
+                    + "electronic typesetting, remaining essentially unchanged. It was popularised in the "
+                    + "1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more "
+                    + "recently with desktop publishing software like Aldus PageMaker including versions of "
+                    + "Lorem Ipsum.");
+            posts.add(post);
+        }
+        postRepository.saveAll(posts);
         System.out.println("UUID: " + account.getId());
         byte[] bytes = Files.readAllBytes(
                 Paths.get("src/main/resources/static/images/export.png"));

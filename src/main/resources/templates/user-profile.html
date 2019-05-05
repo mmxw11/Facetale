@@ -91,12 +91,12 @@
                         target = ${profileModel.user.id}, post=true)">
                         </div>
                         <div th:replace="fragments/post :: new-image-post(imageCount = 9)"> </div>
-                        <div id="no-posts-notification" th:styleappend="${!profileModel.posts.empty} ? 'display:none;'">
-                            <p class="fe-error-message">Yhtään julkaisuja ei löytynyt.</p>
+                        <div id="total-post-count-notification">
+                                <p th:styleappend="${profileModel.posts.getTotalElements()} == 0 ? 'display:none;'" id="total-post-count" th:inline="text">[[${profileModel.posts.getTotalElements()}]] Julkaisua</p>
+                                <p th:styleappend="${profileModel.posts.getTotalElements()} != 0 ? 'display:none;'" class="fe-error-message">Yhtään julkaisuja ei löytynyt.</p>
                         </div>
-
-                        <div th:replace="fragments/post :: comment-list(comments=${profileModel.posts})"></div>
-
+                   
+                        <div th:replace="fragments/post :: post-list(auserRelationship=${profileModel.auserRelationship}, comments=${profileModel.posts}, viewMap=${profileModel.userPostViews})"></div>
                         <!--ul class="posts-list">
                             <!-- PRIMARY --
                             <li class="commentbox">

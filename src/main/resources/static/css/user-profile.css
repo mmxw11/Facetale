@@ -48,12 +48,9 @@
     font-size: 1.2em;
 }
 
-#no-posts-notification {
-    /* display: none */
+#total-post-count-notification {
     background-color: #232323;
-    text-align: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px 0 10px 20px;
 }
 
 /* Comments */

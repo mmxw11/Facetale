@@ -3,6 +3,8 @@ package wepa.ftale.service;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Service;
@@ -30,7 +32,7 @@ public class MessageService {
     @Transactional
     public void addPost(Post post) throws ResponseStatusException {
         post.setAuthor(userService.getAuthenticatedUserAccount());
-        checkFriendPermissions(post.getAuthor(), post.getTargetUser());
+        checkFriendPermissions(post.getAuthor(), post.getTarget());
         postRepository.save(post);
     }
 
@@ -38,14 +40,18 @@ public class MessageService {
     @PostAuthorize("#post.getAuthor().equals(#post.getTargetUser())")
     public void addPost(Post post, MultipartFile file) throws ResponseStatusException, IOException {
         post.setAuthor(userService.getAuthenticatedUserAccount());
-        long imageCount = postRepository.albumImageCount(post.getTargetUser());
+        long imageCount = postRepository.albumImageCount(post.getTarget());
         if (imageCount >= 10) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Image limit of 10 exceeded!");
         }
-        FtImage image = new FtImage(post.getTargetUser(), file.getSize(), file.getContentType(), file.getBytes());
+        FtImage image = new FtImage(post.getTarget(), file.getSize(), file.getContentType(), file.getBytes());
         post.setImage(image);
         imageRepository.save(image);
         postRepository.save(post);
+    }
+
+    public Page<Post> getProfilePosts(Account target, Pageable pageable) {
+        return postRepository.findAllByTarget(target, pageable);
     }
 
     private void checkFriendPermissions(Account account, Account target) throws ResponseStatusException {
