@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 import wepa.ftale.domain.Post;
 import wepa.ftale.service.MessageService;
 import wepa.ftale.web.FormUtils;
+import wepa.ftale.web.profile.ProfileViewDisplayType;
 
 /**
  * @author Matias
@@ -31,16 +33,21 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
+    @GetMapping("/api/posts")
+    @PreAuthorize("#page >= 0")
+    public String getPosts(@RequestParam UUID target, @RequestParam ProfileViewDisplayType type, @RequestParam int page, @RequestParam int count, Model model) {
+        messageService.buildProfilePostsView(target, type, page, count, model);
+        return "fragments/post :: list-comments";
+    }
+
     // TODO: ADD COMMENT
     @PostMapping("/api/posts/addpost")
     public String handleAddPost(@Valid @ModelAttribute Post post, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, FormUtils.formatBindingResultErrors(bindingResult));
         }
-        messageService.addPost(post);
-        // TODO: RETURN LIST ITEMs
-        model.addAttribute("test", "attributti!");
-        return "fragments/post :: test-fragment";
+        messageService.addPost(post, model);
+        return "fragments/post :: comment";
     }
 
     @PostMapping(path = "/api/posts/addimagepost", consumes = "multipart/form-data")

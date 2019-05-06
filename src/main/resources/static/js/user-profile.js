@@ -76,6 +76,63 @@ function updateStaticProfileViewDisplayElements(updateUrl) {
     // LOAD REPLIES
 }
 
+function loadComments(postListLoader) {
+    var loaderElement = document.getElementById(postListLoader);
+    var isPost = postListLoader === "main-post-list-loader";
+    var target = loaderElement.getAttribute("data-postlisttarget");
+
+    var postTargetArray = document.getElementById(isPost ? "main-post-list" : "post-replies-" + target);
+    if (!isPost) {
+        postTargetArray = postTargetArray.querySelector(".posts-list ul");
+    }
+    var nextPage = parseInt(postTargetArray.getAttribute("data-page")) + 1;
+    var totalPostCountElement;
+    if (isPost) {
+        totalPostCountElement = document.getElementById("total-post-count");
+    } else {
+        totalPostCountElement = document.getElementById("post-" + target + "-total-comment-count");
+    }
+    var postCount = parseInt(totalPostCountElement.getAttribute("data-totalcount"));
+
+
+    var loaderButton = loaderElement.querySelector("button");
+    var formLoader = loaderElement.querySelector(".lds-ring");
+    loaderButton.style.display = "none";
+    formLoader.style.display = "block";
+
+    alert("target: " + target + " | nextPage: " + nextPage + " | totalPostCountElement: " + totalPostCountElement + " | postCount: " + postCount);
+
+    var httpReq = new XMLHttpRequest();
+    httpReq.onreadystatechange = function () {
+        if (httpReq.readyState != 4) {
+            return;
+        }
+        // Hide loader.
+        formLoader.style.display = "none";
+        // Check results.
+        if (httpReq.status != 200) {
+            removeOldErrorMessages(loaderElement);
+            var errorElement = createErrorElement("Nyt kävi niin, että jotain hajosi :/");
+            loaderElement.insertBefore(errorElement, buttonWrapper.firstChild);
+            // Patenttiratkaisu.
+            setTimeout(function () { alert("Jotain hajosi :( Virhekoodi: " + httpReq.status + ": " + httpReq.responseText); }, 200);
+        } else {
+            // Add to comment/post list.
+            postTargetArray.insertAdjacentHTML("beforeend", httpReq.responseText);
+            postTargetArray.setAttribute("data-page", nextPage);
+            // TODO: CHECK IF MORE COMMENTS, UPDATE PAGE
+            loaderButton.style.display = "inline";
+
+
+        }
+        alert("Request returned: " + httpReq.status + " text: " + httpReq.responseText);
+    }
+    var params = "target=" + target + "&type=" + profileViewDisplayType + "&page=" + nextPage + "&count=10";
+    var url = contextRoot + "api/posts";
+    httpReq.open("GET", url + "?" + params);
+    httpReq.send();
+}
+
 function toggleNewCommentVisibility(button) {
     var newCommentElementId = button.getAttribute("data-newcommentid");
     newCommentElement = document.getElementById(newCommentElementId);
@@ -150,10 +207,15 @@ function deleteImagePost(button) {
 
 function submitCreateNewCommentForm(form) {
     // Find elements.
-    var formData = new FormData(form);
     var commentElement = form.closest(".new-comment");
     var buttonWrapper = commentElement.querySelector(".fsubmit-button-wrapper");
     var formLoader = commentElement.querySelector(".form-loader-container .lds-ring");
+    var formData = new FormData(form);
+
+    var isPost = commentElement.id === "new-post";
+    var isImage = isPost ? formData.has("file") : false;
+    var postTarget = document.getElementById(isPost ? "main-post-list" : "post-replies-" + formData.get("post"));
+    var postTargetArray = isPost ? postTarget : postTarget.querySelector(".posts-list ul");
 
     // Disable user input and show loader.
     updateAllFormInputs(form, "disabled", true);
@@ -166,22 +228,41 @@ function submitCreateNewCommentForm(form) {
         if (httpReq.readyState != 4) {
             return;
         }
-        // Enable user input and hide loader.
-        updateAllFormInputs(form, "disabled", false);
+        // Hide loader.
         buttonWrapper.style.display = "block";
         formLoader.style.display = "none";
         // Check results.
         if (httpReq.status != 200) {
+            // Enable user input.
+            updateAllFormInputs(form, "disabled", false);
             newCommentCreationFail(form, "Nyt kävi niin, että jotain hajosi :/");
             // Patenttiratkaisu.
             setTimeout(function () { alert("Jotain hajosi :( Virhekoodi: " + httpReq.status + ": " + httpReq.responseText); }, 200);
         } else {
             form.reset();
-            resetOldFormErrorMessage(form);
+            resetFormErrorMessages(form);
             resizeCommentBoxTextarea(form.querySelector(".comment-textarea"));
+            // Add to comment/post list.
+            postTargetArray.insertAdjacentHTML("afterbegin", httpReq.responseText);
+            // Update comment/post count.
+            var totalPostCountElement;
+            if (isPost) {
+                totalPostCountElement = document.getElementById("total-post-count");
+            } else {
+                totalPostCountElement = document.getElementById("post-" + formData.get("post") + "-total-comment-count");
+            }
+            var postCount = parseInt(totalPostCountElement.getAttribute("data-totalcount")) + 1;
+            totalPostCountElement.setAttribute("data-totalcount", postCount);
+            totalPostCountElement.innerHTML = postCount + (isImage ? " Kuvaa" : " Julkaisua");
+            if (isImage && postCount >= 10) {
+                var errorElement = createErrorElement("Albumissasi voi olla maksimissaan 10 kuvaa kerrallaan!");
+                buttonWrapper.insertBefore(errorElement, buttonWrapper.firstChild);
+                setInputsDisplay(buttonWrapper, "none");
+            } else {
+                // Enable user input.
+                updateAllFormInputs(form, "disabled", false);
+            }
         }
-        //TODO: ADD RESPONSE TO LIST
-        setTimeout(function () { alert("HTTPSTATUS: " + httpReq.status + " MSG: " + httpReq.responseText); }, 200);
     }
     httpReq.open("POST", form.action);
     httpReq.send(formData);
@@ -201,7 +282,7 @@ function sendPostAction(postId, url, formData, eventListener) {
 }
 
 function newCommentCreationFail(form, errorMsg) {
-    resetOldFormErrorMessage(form);
+    resetFormErrorMessages(form);
     form.querySelectorAll(".comment-textarea").forEach(function (textArea) {
         if (!textArea.classList.contains("fe-invalid-value")) {
             textArea.classList.add("fe-invalid-value");
@@ -218,7 +299,7 @@ function createErrorElement(errorMsg) {
     return errorElement;
 }
 
-function resetOldFormErrorMessage(form, textarea) {
+function resetFormErrorMessages(form, textarea) {
     form.querySelectorAll(".comment-textarea").forEach(function (textArea) {
         if (textArea.classList.contains("fe-invalid-value")) {
             textArea.classList.remove("fe-invalid-value");
@@ -229,8 +310,16 @@ function resetOldFormErrorMessage(form, textarea) {
 }
 
 function removeOldErrorMessages(parent) {
-    parent.querySelectorAll(".fe-error-message").forEach(function (errorElement) {
+    var messageElements = parent.querySelectorAll(".fe-error-message");
+    messageElements.forEach(function (errorElement) {
         parent.removeChild(errorElement);
+    });
+}
+
+function setInputsDisplay(parent, display) {
+    var inputs = parent.querySelectorAll("input, button");
+    inputs.forEach(function (input) {
+        input.style.display = display;
     });
 }
 

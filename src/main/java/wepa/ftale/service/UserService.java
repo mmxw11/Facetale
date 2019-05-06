@@ -1,8 +1,6 @@
 package wepa.ftale.service;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -20,13 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.server.ResponseStatusException;
 
+import wepa.ftale.Pair;
 import wepa.ftale.domain.Account;
 import wepa.ftale.domain.Friendship;
 import wepa.ftale.domain.Post;
 import wepa.ftale.domain.UserPostView;
 import wepa.ftale.repository.AccountRepository;
 import wepa.ftale.repository.FriendRepository;
-import wepa.ftale.repository.PostRepository;
 import wepa.ftale.web.AuthenticatedUser;
 import wepa.ftale.web.profile.ProfileModel;
 import wepa.ftale.web.profile.ProfileViewDisplayType;
@@ -38,8 +36,6 @@ import wepa.ftale.web.profile.UserRelationship;
 @Service
 public class UserService {
 
-    @Autowired
-    private PostRepository postRepository;
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
@@ -62,48 +58,9 @@ public class UserService {
     public ProfileModel createProfileModel(Account account, ProfileViewDisplayType displayType) {
         Account requester = accountRepository.getOne(getAuthenticatedUser().getId());
         UserRelationship urelationship = findUserRelationship(requester, account);
-        Pageable pageable = PageRequest.of(0, 4, Sort.by("creationDate").descending());
-        Page<Post> posts = messageService.getProfilePosts(account, pageable);
-        // Post pp = posts.getContent().get(0);
-        // pp.getLikes().add(requester);
-        // postRepository.save(pp);
-        List<UserPostView> postViews = postRepository.fetchUserPostViews(requester, posts.getContent());
-        Map<Long, UserPostView> userPostViews = new HashMap<>();
-        for (UserPostView v : postViews) {
-            userPostViews.put(v.getPostId(), v);
-        } /*
-           * System.out.println("userPostViews: " + userPostViews); postViews.forEach(e ->
-           * System.out.println("lieks: " + e.getLikeCount() + " | " +
-           * e.isPostRequesterAllowedToLike() + " | " + e.getPostId()));
-           */
-        /**
-        Post pp = posts.get().findFirst().get();
-        pp.getLikes().add(requester);
-        postRepository.save(pp);
-        posts = messageService.getProfilePostsForRequester(account, requester, pageable);*/
-        // posts.forEach(p -> System.out.println("hasPostRequesterLiked: " +
-        // p.getHasPostRequesterLiked()));
-        // new PageImpl<>(new ArrayList<>());
-        /* posts.forEach(System.out::println); */
-        // List<Post> posts = new ArrayList<>();
-        /**Account jorma = accountRepository.findByUsername("jorma");
-        Random r = new Random();
-        for (int i = 0; i < 5; i++) {
-            Post post = new Post();
-            post.setAuthor(r.nextBoolean() ? jorma : account);
-            post.setTarget(account);
-            post.setTextContent(i
-                    + ". Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
-                    + "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, "
-                    + "when an unknown printer took a galley of type and scrambled it to make a type "
-                    + "specimen book. It has survived not only five centuries, but also the leap into "
-                    + "electronic typesetting, remaining essentially unchanged. It was popularised in the "
-                    + "1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more "
-                    + "recently with desktop publishing software like Aldus PageMaker including versions of "
-                    + "Lorem Ipsum.");
-            posts.add(post);
-        }*/
-        ProfileModel profileModel = new ProfileModel(account, displayType, urelationship, posts, userPostViews);
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("creationDate").descending());
+        Pair<Page<Post>, Map<Long, UserPostView>> postsPair = messageService.generateRequesterPostViews(account, requester, ProfileViewDisplayType.POSTS, pageable);
+        ProfileModel profileModel = new ProfileModel(account, displayType, urelationship, postsPair.getKey(), postsPair.getValue());
         return profileModel;
     }
 

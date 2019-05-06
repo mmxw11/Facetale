@@ -96,13 +96,16 @@
                         </div>
                         <div th:replace="fragments/post :: new-image-post(imageCount = 9, target = ${auser.id})"> </div>
                         <div id="total-post-count-notification">
-                            <p th:styleappend="${profileModel.posts.getTotalElements()} == 0 ? 'display:none;'" id="total-post-count"
-                                th:inline="text">[[${profileModel.posts.getTotalElements()}]] Julkaisua</p>
+                            <p id="total-post-count" th:with="totalpostcount=${profileModel.posts.getTotalElements()}" th:data-totalcount="${profileModel.posts.getTotalElements()}"
+                            th:text="${totalpostcount} > 0 ? ${totalpostcount} + ' Julkaisua' : 'Yhtään julkaisuja ei löytynyt.'">
+                                
+                               </p>
+                            <!--     //  [[${profileModel.posts.getTotalElements()}]] Julkaisua</p>
                             <p th:styleappend="${profileModel.posts.getTotalElements()} != 0 ? 'display:none;'" class="fe-error-message">Yhtään
-                                julkaisuja ei löytynyt.</p>
+                                julkaisuja ei löytynyt.</p> -->
                         </div>
                         <div
-                            th:replace="fragments/post :: post-list(auserRelationship=${profileModel.auserRelationship}, comments=${profileModel.posts}, viewMap=${profileModel.userPostViews})">
+                            th:replace="fragments/post :: main-post-list(auserRelationship=${profileModel.auserRelationship}, comments=${profileModel.posts}, viewMap=${profileModel.userPostViews})">
                         </div>
                         <!--ul class="posts-list">
                             <!-- PRIMARY --
@@ -183,16 +186,17 @@
                             </li>
                         </ul>
                         <!-- LOAD MORE-->
-                        <div class="load-items-container">
+                        <div class="load-items-container" id ="main-post-list-loader" th:data-postlisttarget="${auser.id}">
+                            <!-- id = "main-post-list-loader">-->
                             <div class="lds-ring">
                                 <div></div>
                                 <div></div>
                                 <div></div>
                                 <div></div>
                             </div>
-                            <!--p class="fe-error-message">Virhe ladattaessa kommentteja!</p-->
-                            <button type="button" id="load-more-comments2" class="ft-button" onclick="document.getElementsByClassName('lds-ring')[1].style.display='block';
-                            document.getElementById('load-more-comments2').style.display='none';">Lataa lisää kommentteja</button>
+                            <!--p class="fe-error-message">Virhe ladattaessa kommentteja!document.getElementsByClassName('lds-ring')[1].style.display='block';
+                            document.getElementById('load-more-comments2').style.display='none';"</p-->
+                            <button type="button" class="ft-button" onclick="loadComments('main-post-list-loader');">Lataa lisää kommentteja</button>
                         </div>
                         <!-- LOAD MORE-->
                     </div>

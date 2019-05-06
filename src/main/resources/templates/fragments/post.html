@@ -41,18 +41,26 @@
                             th:disabled="${imageCount} >= 10" required></textarea>
                         <div class="fsubmit-button-wrapper">
                             <p th:if="${imageCount} >= 10" class="fe-error-message">Albumissasi voi olla maksimissaan 10 kuvaa kerrallaan!</p>
-                            <input th:if="${imageCount} < 10" type="submit" class="ft-button" value="Lisää kuva" />
+                            <input type="submit" class="ft-button" th:styleappend="${imageCount} <= 10 ? 'display:none;'" value="Lisää kuva" />
                         </div>
                         <div th:include="fragments/post :: form-loader" class="form-loader-container"></div>
                     </form>
                 </div>
             </div>
-            <!-- Posts list -->
-            <ul th:fragment="post-list(auserRelationship, comments, viewMap)" th:each="comment : ${comments}" class="posts-list">
-                <div th:replace="fragments/post :: comment(comment = ${comment}, 
-                view = ${viewMap.get(comment.id)}, post = true, auserRelationship = ${auserRelationship})">
-                </div>
+            <!-- Main Posts list -->
+            <ul th:fragment="main-post-list(auserRelationship, comments, viewMap)" class="posts-list" data-page="0" id="main-post-list">
+                <th:block th:each="comment : ${comments}">
+                    <div th:replace="fragments/post :: comment(comment = ${comment}, 
+                        view = ${viewMap.get(comment.id)}, post = true, auserRelationship = ${auserRelationship})">
+                    </div>
+                </th:block>
             </ul>
+            <!-- List comments -->
+            <th:block th:fragment="list-comments(auserRelationship, comments, post, viewMap)" th:each="comment : ${comments}">
+                <div th:replace="fragments/post :: comment(comment = ${comment}, 
+                    view = ${viewMap.get(comment.id)}, post = ${post}, auserRelationship = ${auserRelationship})">
+                </div>
+            </th:block>
             <!-- Comment -->
             <li th:fragment="comment(comment, view, post, auserRelationship)" class="commentbox" th:id="${htmlId}"
                 th:with="htmlId=(${post} ? 'post-' : 'comment-') + ${comment.id}">
@@ -93,7 +101,8 @@
                             <!-- Delete post. (only if image) -->
                             <button th:if="${imageActions}" type="button" class="ft-button ftb-cancel" th:data-postid="${comment.id}" onclick="deleteImagePost(this);">Poista kuva</button>
                             <!--TODO: IMPLEMENT Comments -->
-                            <button type="button" class="ft-button expand-comment-section-button">??? Kommenttia <i class="fas fa-chevron-down"></i></button>
+                            <button type="button" th:id="${htmlId} + '-total-comment-count'" th:data-totalcount="0" class="ft-button expand-comment-section-button"
+                            th:inline="text">0 Kommenttia <i class="fas fa-chevron-down"></i></button>
                         </div>
                         <div th:include="fragments/post :: form-loader" class="form-loader-container"></div>
                     </div>
@@ -105,16 +114,15 @@
             <div th:fragment="post-replies(auserRelationship, postId)" class="comment-replies" th:id="'post-replies-' + ${postId}">
                 <div th:replace="fragments/post :: new-comment(auserRelationship=${auserRelationship}, target = ${postId}, post=false)">
                 </div>
-                <ul class="posts-list"></ul>
+                <ul class="posts-list" data-page="-1"></ul>
                 <!-- TODO COMMENT LOADER -->
-                <div class="load-items-container">
+                <div class="load-items-container" th:with="loaderId='post-list-loader-' + ${postId}" th:id="${loaderId}" th:data-postlisttarget="${postId}">
                     <div th:replace="fragments/post :: form-loader"></div>
-                    <p class="fe-error-message">Virhe ladattaessa kommentteja!</p>
-                    <button type="button" class="ft-button" onclick="document.getElementsByClassName('lds-ring')[0].style.display='block';
-                            document.getElementById('load-more-comments').style.display='none';">Lataa lisää kommentteja</button>
+                    <!--p class="fe-error-message">Virhe ladattaessa kommentteja!</p-->
+                    <button type="button" class="ft-button" th:data-postlistloader="${loaderId}" onclick="loadComments(this.getAttribute('data-postlistloader'));">Lataa lisää kommentteja</button>
                 </div>
             </div>
-            <!--Form loader -->
+            <!-- Form Loader -->
             <div th:fragment="form-loader" th:remove="tag">
                 <div class="lds-ring">
                     <div></div>
@@ -122,9 +130,6 @@
                     <div></div>
                     <div></div>
                 </div>
-            </div>
-            <div th:fragment="test-fragment(test)">
-                <p th:text="${test}">Test</p>
             </div>
         </main>
     </body>
