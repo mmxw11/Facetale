@@ -29,7 +29,7 @@
                         <button type="button" onclick="toggleMobileSearchBar();" class="nav-link ni-action"><i class="fas fa-arrow-left"></i></button>
                     </li>
                     <li class="nav-item ni-search-container">
-                        <form th:action="@{/#}" th:method="POST" class="ni-search-form">
+                        <form th:action="@{/search}" th:method="GET" class="ni-search-form">
                             <input type="text" class="ni-search-bar" name="name" placeholder="Etsi käyttäjiä." autocomplete="off" required />
                             <input type="submit" class="ft-button" value="Hae" />
                         </form>
@@ -57,7 +57,6 @@
                                 <li><a th:href="@{/me}" class="nav-link nl-padding"><i class="fas fa-user"></i>Sivuni</a></li>
                                 <li><a href="#" class="nav-link nl-padding"><i class="fas fa-user-friends"></i>Kaverit</a></li>
                                 <li><a th:href="@{/me/album}" class="nav-link nl-padding"><i class="fas fa-images"></i>Albumi</a></li>
-                                <li><a href="#" class="nav-link nl-padding"><i class="fas fa-cog"></i>Asetukset</a></li>
                                 <li>
                                     <form th:action="@{/api/auth/logout}" th:method="POST">
                                         <button type="submit" class="nav-link nl-padding"><i class="fas fa-sign-out-alt"></i>Kirjaudu ulos</button>
@@ -71,7 +70,7 @@
         </div>
         <main></main>
         <footer th:fragment="master-footer" id="master-footer">
-            <h3>WORK IN PROGRESS University of Helsinki<br>Web-palvelinohjelmointi projekti, Spring 2019</h3>
+            <h3>University of Helsinki<br>Web-palvelinohjelmointi projekti, Spring 2019</h3>
         </footer>
     </body>
 </html>

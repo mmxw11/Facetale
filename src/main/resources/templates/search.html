@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fi">
+    <head>
+        <div th:replace="fragments/app :: head(title='Facetale - Search')"></div>
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/search.css}">
+        </script>
+    </head>
+    <body>
+        <div th:replace="fragments/app :: master-head"></div>
+        <main>
+            <div id="main-container">
+                <div class="column primary">
+                    <div id="search-title">
+                        <h1 th:inline="text">Hakutulokset (Yhteensä [[${users.getTotalElements()}]])</h1>
+                        <h2 th:inline="text">Näytetään [[${users.getContent().size()}]]</h1>
+                    </div>
+                    <div class="results-bar"
+                        th:styleappend="${users.getTotalElements()} == 0 ? 'background-color:#D55246;' : 'background-color:#1e7bd2;'">
+                        <p th:if="${users.getTotalElements()} == 0">Yhtään hakutuloksia ei löytynyt</p>
+                        <p th:if="${users.getTotalElements()} > 0"><i class="fas fa-users"></i>Käyttäjät</p>
+                    </div>
+                    <div th:if="${users.getTotalElements()} > 0" id="search-results">
+                        <ul>
+                            <li th:each="user : ${users}" class="search-user-result">
+                                <div class="user-info-container">
+                                    <img th:src="@{${@imageService.getUserProfilePictureLocation(user)}}" class="profile-picture-small"
+                                        alt="Profile picture" />
+                                    <div class="search-user-info">
+                                        <a th:href="@{/users/{user}(user=${user.profileTag})}" th:inline="text" class="search-user-name">
+                                            [[${user.name}]]</a>
+                                        <h3>@[[${user.profileTag}]]</h3>
+                                    </div>
+                                </div>
+                                <a th:href="@{/users/{user}(user=${user.profileTag})}" class="ft-button">
+                                    <i class="fas fa-user fa-sm"></i>Profiiliin</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="fragments/app :: master-footer"></footer>
+    </body>
+</html>

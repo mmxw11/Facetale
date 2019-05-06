@@ -170,6 +170,7 @@
 .comment .comment-image-uploader {
     margin-top: 2px;
     margin-bottom: 10px;
+    width: 100%;
 }
 
 .comment .comment-textarea.fe-invalid-value {

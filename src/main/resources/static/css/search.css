@@ -1,0 +1,104 @@
+.column.primary {
+    width: 60%;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 1500px) {
+    .column.primary {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .column.primary {
+        width: 96%;
+        min-width: 0;
+        margin: 0 auto 20px auto;
+    }
+}
+
+#search-title h1 {
+    color: black;
+    font-weight: 700;
+    font-size: 1.4em;
+}
+
+#search-title h2 {
+    color: black;
+    font-weight: 400;
+    font-size: 1em;
+}
+
+.results-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 46px;
+    color: white;
+    font-size: 1.1em;
+    margin-top: 40px;
+    border-radius: 4px 4px 0 0;
+}
+
+.results-bar svg,
+.search-user-result .ft-button svg {
+    padding-right: 5px;
+}
+
+#search-results {
+    background-color: white;
+    border-style: solid;
+    border-width: 0 1px 1px 1px;
+    border-color: #d8d8d8;
+    border-radius: 0 0 10px 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+#search-results .search-user-result {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #232323;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 15px 20px 20px 20px;
+    margin-bottom: 20px;
+}
+
+.search-user-result .ft-button {
+    justify-content: center;
+    text-decoration: none;
+    background-color: #1e7bd2;
+    display: flex;
+    align-items: center;
+}
+
+.search-user-result .user-info-container {
+    display: flex;
+}
+
+.user-info-container .search-user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.user-info-container .search-user-info h3 {
+    font-weight: 400;
+    font-size: 1em;
+}
+
+.user-info-container .search-user-name {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+}
+
+.user-info-container .search-user-name:hover {
+    border-color: #1e7bd2;
+}

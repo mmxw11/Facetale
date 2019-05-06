@@ -40,15 +40,17 @@ public class AuthService {
 
     @PostConstruct
     public void addAccount() throws IOException {
-        Account account2 = new Account("jorma", "jorma Ojala", "jormala", passwordEncoder.encode("testi"), null);
         Account account = new Account("testi", "testiFullName", "testTag", passwordEncoder.encode("testi"), null);
         account = accountRepository.save(account);
-        account2 = accountRepository.save(account2);
+        for (int i = 0; i < 10; i++) {
+            Account account2 = new Account("jorma" + i, "jorma Ojala" + i, "jormala" + i, passwordEncoder.encode("testi"), null);
+            accountRepository.save(account2);
+        }
         List<Post> posts = new ArrayList<>();
         Random r = new Random();
         for (int i = 0; i < 5; i++) {
             Post post = new Post();
-            post.setAuthor(r.nextBoolean() ? account2 : account);
+            post.setAuthor(account);
             post.setTarget(account);
             post.setTextContent(i
                     + ". Lorem Ipsum is simply dummy text of the printing and typesetting industry. "

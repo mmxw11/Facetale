@@ -48,7 +48,7 @@ public class UserService {
         if (profileTag == null || profileTag.equals(auser.getProfileTag())) {
             profileTag = auser.getProfileTag();
         }
-        Account account = accountRepository.findByProfileTag(profileTag);
+        Account account = accountRepository.findByProfileTagIgnoreCase(profileTag);
         if (account == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found.");
         }
@@ -114,6 +114,11 @@ public class UserService {
 
     public Account getAccount(UUID id) {
         return accountRepository.getOne(id);
+    }
+
+    public Page<Account> findUsersWithSimilarName(String name) {
+        Pageable pageable = PageRequest.of(0, 100, Sort.by("name").ascending());
+        return accountRepository.findAllByNameIgnoreCaseContaining(name, pageable);
     }
 
     public boolean isUserAuthenticated() {
