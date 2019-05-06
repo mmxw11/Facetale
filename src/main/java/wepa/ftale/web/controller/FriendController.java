@@ -26,7 +26,6 @@ public class FriendController {
 
     @GetMapping("/friends")
     public String getFriends(@RequestParam String user, Model model) {
-        model.addAttribute("user", userService.getAuthenticatedUserAccount());
         userService.updateAuthenticatedUserToModel(model);
         userService.buildFriendsView(user, model);
         return "friends";

@@ -23,9 +23,12 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Page<Post> findAllByTargetAndImageIsNotNull(Account target, Pageable pageable);
 
+    /**
+     * LIke count not working :/ 
+     */
     @Query(value = "SELECT Post.id AS postId, COUNT(post_likes.post_id) AS likeCount, COUNT(comment.post_id) AS commentCount, (SELECT CASE WHEN post_likes.like_author_id = :requester THEN false ELSE true end) AS postRequesterAllowedToLike FROM Post"
             + " LEFT JOIN post_likes ON post_likes.post_id = Post.id"
             + " LEFT JOIN comment ON comment.post_id = Post.id"
-            + " WHERE Post.id IN (:posts) GROUP BY Post.id", nativeQuery = true)
+            + " WHERE Post.id IN (:posts) GROUP BY Post.id, post_likes.like_author_id", nativeQuery = true)
     List<UserPostView> fetchUserPostViews(Account requester, List<Post> posts);
 }

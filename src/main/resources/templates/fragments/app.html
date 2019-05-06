@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
         <title th:text="${title}">Title</title>
+        <link rel="icon" type="image/png" th:href="@{/static/favicon.png}">
         <link rel="stylesheet" type="text/css" th:href="@{/static/css/main.css}">
         <link rel="stylesheet" type="text/css" th:href="@{/static/css/app.css}">
         <script type="text/javascript" th:src="@{/static/js/app.js}" defer></script>
@@ -42,12 +43,14 @@
                     </li>
                     <li class="nav-item pos-relative-wrapper">
                         <div class="ni-account">
-                            <img th:src="@{${@imageService.getAuthenticatedUserProfilePictureLocation()}}" class="profile-picture-small" alt="Profile picture" />
+                            <img th:src="@{${@imageService.getAuthenticatedUserProfilePictureLocation()}}" class="profile-picture-small"
+                                alt="Profile picture" />
                             <span onclick="toggleAccountDropdownMenu();" class="fas fa-chevron-down ni-action nia-dropdown-toggle"></span>
                         </div>
                         <div id="ni-account-dropdown-menu">
                             <div class="dm-account">
-                                <img th:src="@{${@imageService.getAuthenticatedUserProfilePictureLocation()}}" class="profile-picture-small" alt="Profile picture" />
+                                <img th:src="@{${@imageService.getAuthenticatedUserProfilePictureLocation()}}" class="profile-picture-small"
+                                    alt="Profile picture" />
                                 <a th:href="@{/me}" class="dm-account-user-profile">
                                     <h2 th:text="${auser.username}">username</h2>
                                     <h3 th:text="${auser.profileTag}">profileTag</h3>
@@ -55,7 +58,8 @@
                             </div>
                             <ul>
                                 <li><a th:href="@{/me}" class="nav-link nl-padding"><i class="fas fa-user"></i>Sivuni</a></li>
-                                <li><a th:href="@{/friends?user={profileTag}(profileTag=${auser.profileTag})}" class="nav-link nl-padding"><i class="fas fa-user-friends"></i>Kaverit</a></li>
+                                <li><a th:href="@{/friends?user={profileTag}(profileTag=${auser.profileTag})}" class="nav-link nl-padding"><i
+                                            class="fas fa-user-friends"></i>Kaverit</a></li>
                                 <li><a th:href="@{/me/album}" class="nav-link nl-padding"><i class="fas fa-images"></i>Albumi</a></li>
                                 <li>
                                     <form th:action="@{/api/auth/logout}" th:method="POST">
