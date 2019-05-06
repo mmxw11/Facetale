@@ -29,12 +29,12 @@ public class UserProfileController {
     private UserService userService;
 
     @GetMapping(path = {"/me", "/me/{displayType}"})
-    public String viewUserProfile(Model model, @PathVariable Optional<String> displayType) {
-        return viewUserProfile(model, null, displayType);
+    public String viewUserProfile(@PathVariable Optional<String> displayType, Model model) {
+        return viewUserProfile(null, displayType, model);
     }
 
     @GetMapping(path = {"/users/{profileTag}", "/users/{profileTag}/{displayType}"})
-    public String viewUserProfile(Model model, @PathVariable String profileTag, @PathVariable Optional<String> displayType) {
+    public String viewUserProfile(@PathVariable String profileTag, @PathVariable Optional<String> displayType, Model model) {
         ProfileViewDisplayType pvdisplayType = displayType.isPresent() ? ProfileViewDisplayType.parse(displayType.get()) : ProfileViewDisplayType.POSTS;
         if (pvdisplayType == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "DisplayType " + displayType.get() + " not found.");
@@ -43,6 +43,14 @@ public class UserProfileController {
         userService.updateAuthenticatedUserToModel(model);
         model.addAttribute("profileModel", profileModel);
         return "user-profile";
+    }
+
+    @GetMapping("/api/user/profile")
+    public String getUserProfileViewContent(@RequestParam String profileTag, @RequestParam ProfileViewDisplayType displayType, Model model) {
+        ProfileModel profileModel = userService.createProfileModel(profileTag, displayType);
+        userService.updateAuthenticatedUserToModel(model);
+        model.addAttribute("profileModel", profileModel);
+        return "fragments/post :: page-content";
     }
 
     @PostMapping("/api/user/sendfriendreq")

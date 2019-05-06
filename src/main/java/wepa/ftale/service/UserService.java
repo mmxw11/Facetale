@@ -59,7 +59,7 @@ public class UserService {
         Account requester = accountRepository.getOne(getAuthenticatedUser().getId());
         UserRelationship urelationship = findUserRelationship(requester, account);
         Pageable pageable = PageRequest.of(0, 10, Sort.by("creationDate").descending());
-        Pair<Page<Post>, Map<Long, UserPostView>> postsPair = messageService.generateRequesterPostViews(account, requester, ProfileViewDisplayType.POSTS, pageable);
+        Pair<Page<Post>, Map<Long, UserPostView>> postsPair = messageService.generateRequesterPostViews(account, requester, displayType, pageable);
         ProfileModel profileModel = new ProfileModel(account, displayType, urelationship, postsPair.getKey(), postsPair.getValue());
         return profileModel;
     }

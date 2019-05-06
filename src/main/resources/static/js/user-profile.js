@@ -40,12 +40,44 @@ function changeProfileViewDisplayType() {
         return;
     }
     updateStaticProfileViewDisplayElements(true);
+    var pvdisplaytypeLoader = document.getElementById("profileview-displaytype-loader");
+    var pvDynamicContent = document.getElementById("profileview-dynamic-content");
+    pvdisplaytypeLoader.style.display = "flex";
+    pvDynamicContent.innerHTML = "";
+
+    var httpReq = new XMLHttpRequest();
+    httpReq.onreadystatechange = function () {
+        if (httpReq.readyState != 4) {
+            return;
+        }
+        var htmlContent;
+        // Check results.
+        if (httpReq.status != 200) {
+            // Patenttiratkaisu.
+            var errorElement = createErrorElement("Nyt kävi niin, että jotain hajosi :/"
+                + "<br>Virhekoodi: " + httpReq.status + "<br>" + httpReq.responseText);
+            htmlContent = errorElement;
+            pvDynamicContent.style.color = "black";
+            pvDynamicContent.style.wordBreak = "break-all";
+        } else {
+            htmlContent = httpReq.responseText;
+        }
+        // Swap the page content.
+        pvdisplaytypeLoader.style.display = "none";
+        pvDynamicContent.insertAdjacentHTML("afterbegin", httpReq.responseText);
+    }
+    var params = "profileTag=" + profileTag + "&displayType=" + profileViewDisplayType;
+    var url = contextRoot + "api/user/profile";
+    httpReq.open("GET", url + "?" + params);
+    httpReq.send();
 }
 
 function updateStaticProfileViewDisplayElements(updateUrl) {
     var cpvdisplayTypeButton = document.getElementById("change-profileview-displaytype");
     var pvdisplaytypeTitle = document.getElementById("profileview-displaytype-title");
+
     var profileContextUrl;
+
     if (updateUrl) {
         var path = window.location.pathname.replace(/\/$/, "").split("/");
         if (path[path.length - 1] === "me" || path[path.length - 2] === "me") {
@@ -69,8 +101,6 @@ function updateStaticProfileViewDisplayElements(updateUrl) {
         cpvdisplayTypeButton.innerHTML = "<i class='fas fa-th-large'></i>Julkaisut";
         pvdisplaytypeTitle.innerHTML = "<i class='fas fa-images fa-sm'></i> Albumi";
     }
-    // TODO: CHANGE CONTENT
-    // TODO REMOVE TO MAIN POST LIST
 }
 
 function togglePostComments(button) {
@@ -79,13 +109,13 @@ function togglePostComments(button) {
     var postTargetArray = postRepliesElement.querySelector(".posts-list ul");
     var nextPage = parseInt(postTargetArray.getAttribute("data-page"));
     if (nextPage == -1 || postTargetArray.style.display === "none") {
-        showPostComments(button, postRepliesElement, postTargetArray, nextPage, 10);
+        showPostComments(button, postId, postRepliesElement, postTargetArray, nextPage, 10);
     } else {
-        hidePostComments(postRepliesElement, postTargetArray);
+        hidePostComments(postId, postRepliesElement, postTargetArray);
     }
 }
 
-function showPostComments(button, postRepliesElement, postTargetArray, nextPage, commentsPerQuery) {
+function showPostComments(button, postId, postRepliesElement, postTargetArray, nextPage, commentsPerQuery) {
     var commentCount = parseInt(button.getAttribute("data-totalcount"));
     if (commentCount == 0) {
         var postCountNotificationElement = postRepliesElement.querySelector(".post-count-notification");
@@ -93,20 +123,21 @@ function showPostComments(button, postRepliesElement, postTargetArray, nextPage,
     }
     postTargetArray.style.display = "block";
     if (commentCount > 0) {
-        var loadItemsContainer = postRepliesElement.querySelector(".load-items-container");
+        var loadItemsContainer = document.getElementById("post-list-loader-" + postId);
         if (nextPage == -1 || commentsPerQuery * (nextPage + 1) < commentCount) {
             loadItemsContainer.style.display = "flex";
         }
         if (nextPage == -1) {
+            // Trigger commnet loader button click.
             loadItemsContainer.querySelector("button").click();
         }
     }
 }
 
-function hidePostComments(postRepliesElement, postTargetArray) {
+function hidePostComments(postId, postRepliesElement, postTargetArray) {
     hideNoCommentsNotification(postRepliesElement);
     postTargetArray.style.display = "none";
-    var loadItemsContainer = postRepliesElement.querySelector(".load-items-container");
+    var loadItemsContainer = document.getElementById("post-list-loader-" + postId);
     if (loadItemsContainer) {
         loadItemsContainer.style.display = "none";
     }
@@ -226,7 +257,9 @@ function ratePost(button) {
 }
 
 function deleteImagePost(button) {
+    var postTargetArray = document.getElementById("main-post-list");
     var postId = button.getAttribute("data-postid");
+    var postElement = document.getElementById("post-" + postId);
 
     var postInfoWrapperElement = document.getElementById("post-" + postId + "-info-wrapper");
     var commentActionsElement = postInfoWrapperElement.querySelector(".comment-actions");
@@ -250,10 +283,22 @@ function deleteImagePost(button) {
             // Patenttiratkaisu.
             setTimeout(function () { alert("Jotain hajosi :( Virhekoodi: " + httpReq.status + ": " + httpReq.responseText); }, 200);
         } else {
-            alert("Success!");
-            //TODO: DELETE POST FROM LIST.
+            // Remove element from list.
+            postTargetArray.removeChild(postElement);
+            // Update post count.
+            var totalPostCountElement = document.getElementById("total-post-count");
+            var postCount = parseInt(totalPostCountElement.getAttribute("data-totalcount")) - 1;
+            totalPostCountElement.setAttribute("data-totalcount", postCount);
+            totalPostCountElement.innerHTML = postCount == 0 ? "Albumissa ei ole yhtään kuvia." : postCount + " Kuvaa";
+            // New post.
+            if (postCount == 9) {
+                var newPostElement = document.getElementById("new-post");
+                var newPostButtonWrapper = newPostElement.querySelector(".fsubmit-button-wrapper");
+                removeOldErrorMessages(newPostButtonWrapper);
+                updateAllFormInputs(newPostElement.querySelector("form"), "disabled", false);
+                setInputsDisplay(newPostButtonWrapper, "inline");
+            }
         }
-        //TODO: DO SOMETHING WITH THE RESPONSE?
     });
 }
 

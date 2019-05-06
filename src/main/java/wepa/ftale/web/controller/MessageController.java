@@ -66,9 +66,8 @@ public class MessageController {
         if (bindingResult.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, FormUtils.formatBindingResultErrors(bindingResult));
         }
-        messageService.addPost(post, file);
-        // TODO: RETURN LIST ITEM
-        throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        messageService.addPost(post, file, model);
+        return "fragments/post :: comment";
     }
 
     @PostMapping("/api/posts/addcomment")

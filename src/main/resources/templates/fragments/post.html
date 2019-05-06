@@ -41,7 +41,7 @@
                             th:disabled="${imageCount} >= 10" required></textarea>
                         <div class="fsubmit-button-wrapper">
                             <p th:if="${imageCount} >= 10" class="fe-error-message">Albumissasi voi olla maksimissaan 10 kuvaa kerrallaan!</p>
-                            <input type="submit" class="ft-button" th:styleappend="${imageCount} <= 10 ? 'display:none;'" value="Lisää kuva" />
+                            <input type="submit" class="ft-button" th:styleappend="${imageCount} >= 10 ? 'display:none;'" value="Lisää kuva" />
                         </div>
                         <div th:include="fragments/post :: form-loader" class="form-loader-container"></div>
                     </form>
@@ -68,7 +68,10 @@
                 <div class="comment">
                     <a th:href="@{/users/{user}(user=${comment.author.profileTag})}" class="comment-author-info" th:inline="text">
                         [[${comment.author.name}]] <span>@[[${comment.author.profileTag}]]</span></a>
-                    <!-- TODO IMAGE HERE -->
+                    <div th:if="${post} and ${comment.image != null}" class="comment-album-image-container">
+                        <img th:src="@{/api/images/{id}.{type}(id=${comment.image.id}, type=${comment.image.getContentSubType()})}"
+                            alt="Album image" />
+                    </div>
                     <p class="comment-text-content" th:text="${comment.textContent}"></p>
                     <div class="comment-info-wrapper" th:id="${htmlId} + '-info-wrapper'">
                         <div class="flex-space-between-wrapper" th:styleappend="${post} == false ? 'justify-content: flex-end;'">
@@ -113,7 +116,8 @@
                         <div th:if="${post}" th:include="fragments/post :: form-loader" class="form-loader-container"></div>
                     </div>
                     <th:block th:if="${post}">
-                        <div th:replace="fragments/post :: post-replies(auserRelationship = ${auserRelationship}, postId = ${comment.id}, view=${view})">
+                        <div
+                            th:replace="fragments/post :: post-replies(auserRelationship = ${auserRelationship}, postId = ${comment.id}, view=${view})">
                         </div>
                     </th:block>
                 </div>
@@ -141,6 +145,53 @@
                     <div></div>
                     <div></div>
                     <div></div>
+                </div>
+            </div>
+            <!-- Page Fragment -->
+            <div th:fragment="page-content(profileModel, auser)" th:remove="tag">
+                <th:block th:switch="${profileModel.displayType}">
+                    <th:block th:case="${T(wepa.ftale.web.profile.ProfileViewDisplayType).POSTS}">
+                        <div
+                            th:replace="fragments/post :: new-comment(auserRelationship=${profileModel.auserRelationship}, target = ${profileModel.user.id}, post=true)">
+                        </div>
+                        <div class="post-count-notification">
+                            <p id="total-post-count" th:with="totalpostcount=${profileModel.posts.getTotalElements()}"
+                                th:data-totalcount="${profileModel.posts.getTotalElements()}"
+                                th:text="${totalpostcount} > 0 ? ${totalpostcount} + ' Julkaisua' : 'Yhtään julkaisuja ei löytynyt.'">
+                            </p>
+                        </div>
+                    </th:block>
+                    <th:block th:case="${T(wepa.ftale.web.profile.ProfileViewDisplayType).ALBUM}">
+                        <th:block th:if="${profileModel.auserRelationship == T(wepa.ftale.web.profile.UserRelationship).ITSELF}">
+                            <div
+                                th:replace="fragments/post :: new-image-post(imageCount = ${profileModel.posts.getTotalElements()}, target = ${auser.id})">
+                            </div>
+                        </th:block>
+                        <div class="post-count-notification">
+                            <p id="total-post-count" th:with="totalpostcount=${profileModel.posts.getTotalElements()}"
+                                th:data-totalcount="${profileModel.posts.getTotalElements()}"
+                                th:text="${totalpostcount} > 0 ? ${totalpostcount} + ' Kuvaa' : 'Albumissa ei ole yhtään kuvia.'">
+                            </p>
+                        </div>
+                    </th:block>
+                </th:block>
+                <div th:replace="fragments/post :: main-post-list(auserRelationship=${profileModel.auserRelationship}, comments=${profileModel.posts}, viewMap=${profileModel.userPostViews})">
+                </div>
+                <!-- Post Loader -->
+                <div th:if="${profileModel.posts.getTotalElements()} > 10" class="load-items-container" id="main-post-list-loader"
+                    th:data-postlisttarget="${auser.id}">
+                    <div class="lds-ring">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <th:block th:switch="${profileModel.displayType}">
+                        <button th:case="${T(wepa.ftale.web.profile.ProfileViewDisplayType).POSTS}" type="button" class="ft-button"
+                            onclick="loadComments('main-post-list-loader');">Lataa lisää julkaisuja</button>
+                        <button th:case="${T(wepa.ftale.web.profile.ProfileViewDisplayType).ALBUM}" type="button" class="ft-button"
+                            onclick="loadComments('main-post-list-loader');">Lataa lisää kuvia</button>
+                    </th:block>
                 </div>
             </div>
         </main>

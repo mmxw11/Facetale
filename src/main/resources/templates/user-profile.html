@@ -78,37 +78,17 @@
                         <div id="posts-header">
                             <h1 id="profileview-displaytype-title">displayType</h1>
                         </div>
-                        <div th:replace="fragments/post :: new-comment(auserRelationship=${profileModel.auserRelationship},
-                        target = ${profileModel.user.id}, post=true)">
-                        </div>
-                        <div th:replace="fragments/post :: new-image-post(imageCount = 9, target = ${auser.id})"> </div>
-                        <div class="post-count-notification">
-                            <p id="total-post-count" th:with="totalpostcount=${profileModel.posts.getTotalElements()}"
-                                th:data-totalcount="${profileModel.posts.getTotalElements()}"
-                                th:text="${totalpostcount} > 0 ? ${totalpostcount} + ' Julkaisua' : 'Yhtään julkaisuja ei löytynyt.'">
-                            </p>
-                            <!--     //  [[${profileModel.posts.getTotalElements()}]] Julkaisua</p>
-                            <p th:styleappend="${profileModel.posts.getTotalElements()} != 0 ? 'display:none;'" class="fe-error-message">Yhtään
-                                julkaisuja ei löytynyt.</p> -->
-                        </div>
-                        <div
-                            th:replace="fragments/post :: main-post-list(auserRelationship=${profileModel.auserRelationship}, comments=${profileModel.posts}, viewMap=${profileModel.userPostViews})">
-                        </div>
-                        <!-- LOAD MORE-->
-                        <div th:if="${profileModel.posts.getTotalElements()} > 10" class="load-items-container" id="main-post-list-loader"
-                            th:data-postlisttarget="${auser.id}">
-                            <!-- id = "main-post-list-loader">-->
+                        <div class="load-items-container" id="profileview-displaytype-loader" style="display:none;">
                             <div class="lds-ring">
                                 <div></div>
                                 <div></div>
                                 <div></div>
                                 <div></div>
                             </div>
-                            <!--p class="fe-error-message">Virhe ladattaessa kommentteja!document.getElementsByClassName('lds-ring')[1].style.display='block';
-                            document.getElementById('load-more-comments2').style.display='none';"</p-->
-                            <button type="button" class="ft-button" onclick="loadComments('main-post-list-loader');">Lataa lisää kommentteja</button>
                         </div>
-                        <!-- LOAD MORE-->
+                        <div id="profileview-dynamic-content">
+                            <div th:replace="fragments/post :: page-content(profileModel = ${profileModel}, auser = ${auser})"></div>
+                        </div>
                     </div>
                 </div>
             </div>

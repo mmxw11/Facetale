@@ -58,7 +58,7 @@ public class MessageService {
 
     @Transactional
     @PostAuthorize("#post.getAuthor().equals(#post.getTarget())")
-    public Post addPost(Post post, MultipartFile file) throws ResponseStatusException, IOException {
+    public Post addPost(Post post, MultipartFile file, Model model) throws ResponseStatusException, IOException {
         post.setAuthor(userService.getAuthenticatedUserAccount());
         long imageCount = postRepository.albumImageCount(post.getTarget());
         if (imageCount >= 10) {
@@ -66,7 +66,9 @@ public class MessageService {
         }
         FtImage image = new FtImage(post.getTarget(), file.getSize(), file.getContentType(), file.getBytes());
         post.setImage(imageRepository.save(image));
-        return postRepository.save(post);
+        post = postRepository.save(post);
+        updateNewPostModel(post, model);
+        return post;
     }
 
     @Transactional
@@ -144,9 +146,9 @@ public class MessageService {
 
     public Page<Post> getProfilePosts(Account target, ProfileViewDisplayType pvDisplayType, Pageable pageable) {
         if (pvDisplayType == ProfileViewDisplayType.POSTS) {
-            return postRepository.findAllByTarget(target, pageable);
+            return postRepository.findAllByTargetAndImageIsNull(target, pageable);
         } else if (pvDisplayType == ProfileViewDisplayType.ALBUM) {
-            return postRepository.findAllImageNotNullByTarget(target, pageable);
+            return postRepository.findAllByTargetAndImageIsNotNull(target, pageable);
         }
         throw new RuntimeException("Unsupported DisplayType '" + pvDisplayType + "'!");
     }

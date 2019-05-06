@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
@@ -22,6 +23,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class Friendship extends AbstractPersistable<Long> {
 
+    @NotNull
     private LocalDateTime creationDate;
     /** 
      * Whether this friendship is active. (users are friends)
@@ -30,8 +32,10 @@ public class Friendship extends AbstractPersistable<Long> {
      * the entire database record will be deleted.
      * */
     private boolean active;
+    @NotNull
     @ManyToOne
     private Account initiator;
+    @NotNull
     @ManyToOne
     private Account target;
 }

@@ -19,9 +19,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT COUNT(*) FROM Post WHERE author = :account AND image IS NOT NULL")
     long albumImageCount(Account account);
 
-    Page<Post> findAllByTarget(Account target, Pageable pageable);
+    Page<Post> findAllByTargetAndImageIsNull(Account target, Pageable pageable);
 
-    Page<Post> findAllImageNotNullByTarget(Account target, Pageable pageable);
+    Page<Post> findAllByTargetAndImageIsNotNull(Account target, Pageable pageable);
 
     @Query(value = "SELECT Post.id AS postId, COUNT(post_likes.post_id) AS likeCount, COUNT(comment.post_id) AS commentCount, (SELECT CASE WHEN post_likes.like_author_id = :requester THEN false ELSE true end) AS postRequesterAllowedToLike FROM Post"
             + " LEFT JOIN post_likes ON post_likes.post_id = Post.id"
