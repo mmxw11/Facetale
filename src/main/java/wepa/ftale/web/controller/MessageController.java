@@ -81,21 +81,21 @@ public class MessageController {
 
     @PostMapping(path = "/api/posts/deleteimagepost")
     @PreAuthorize("authentication.principal.id == #accountId")
-    public ResponseEntity<?> handleDeleteImagePost(@RequestParam UUID accountId, @RequestParam Long postId) {
+    public ResponseEntity<?> handleDeleteImagePost(@RequestParam UUID accountId, @RequestParam long postId) {
         messageService.deleteImagePost(accountId, postId);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(path = "/api/posts/likepost")
     @PreAuthorize("authentication.principal.id == #accountId")
-    public ResponseEntity<?> handleLikePost(@RequestParam UUID accountId, @RequestParam Long postId) {
+    public ResponseEntity<?> handleLikePost(@RequestParam UUID accountId, @RequestParam long postId) {
         messageService.likePost(accountId, postId);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(path = "/api/posts/removelike")
     @PreAuthorize("authentication.principal.id == #accountId")
-    public ResponseEntity<?> handleRemoveLike(@RequestParam UUID accountId, @RequestParam Long postId) {
+    public ResponseEntity<?> handleRemoveLike(@RequestParam UUID accountId, @RequestParam long postId) {
         messageService.removeLike(accountId, postId);
         return ResponseEntity.ok().build();
     }

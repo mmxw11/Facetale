@@ -50,7 +50,7 @@
                                     <li>
                                         <th:block th:switch="${profileModel.auserRelationship == T(wepa.ftale.web.profile.UserRelationship).ITSELF} ? ${true} :
                                         ${profileModel.auserRelationship == T(wepa.ftale.web.profile.UserRelationship).FRIEND}">
-                                            <a th:case="${true}" th:href="@{/users/{profileTag}/friends(profileTag=${profileModel.user.profileTag})}"
+                                            <a th:case="${true}" th:href="@{/friends?user={profileTag}(profileTag=${profileModel.user.profileTag})}"
                                                 class="nav-link"><i class="fas fa-user-friends"></i>Kaverit</a>
                                             <div th:case="${false}" class="pos-relative-wrapper">
                                                 <a href="javascript:void(0);" class="nav-link user-action-disabled">

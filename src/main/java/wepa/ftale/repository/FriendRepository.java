@@ -1,5 +1,7 @@
 package wepa.ftale.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -20,4 +22,8 @@ public interface FriendRepository extends JpaRepository<Friendship, Long> {
      */
     @Query("SELECT r FROM Friendship r WHERE (r.initiator = :account OR r.target = :account) AND (r.initiator = :account2 OR r.target = :account2)")
     Friendship findFriendship(Account account, Account account2);
+
+    List<Friendship> findAllByInitiatorOrTargetAndActiveTrue(Account initiator, Account target);
+    
+    List<Friendship> findAllByInitiatorOrTarget(Account initiator, Account target);
 }

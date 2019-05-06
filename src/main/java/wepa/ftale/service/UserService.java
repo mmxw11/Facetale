@@ -1,6 +1,8 @@
 package wepa.ftale.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -82,6 +84,32 @@ public class UserService {
         return recipient;
     }
 
+    @Transactional
+    public Account handleFriendRequest(UUID accountId, String action, long friendRequestId) throws ResponseStatusException {
+        Account account = getAccount(accountId);
+        Friendship friendship = friendRepository.getOne(friendRequestId);
+        if (action.equals("ACCEPT")) {
+            if (friendship.isActive()) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are already friends!");
+            } else if (!friendship.getTarget().equals(account)) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "This friend request was not sent to you!");
+            }
+            friendship.setActive(true);
+            friendRepository.save(friendship);
+        } else if (action.equals("DENY")) {
+            if (friendship.isActive()) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are already friends!");
+            }
+            friendRepository.delete(friendship);
+        } else if (action.equals("CANCEL")) {
+            if (!friendship.getInitiator().equals(account)) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You didn't send this friend request!");
+            }
+            friendRepository.delete(friendship);
+        }
+        return account;
+    }
+
     /**
      * Find the relationship between two users.
      * Mainly used to determine whether currently logged user is friends with the user whose profile they are viewing.
@@ -102,6 +130,42 @@ public class UserService {
         }
         // There's a pending friend request.
         return friendship.getInitiator().equals(account) ? UserRelationship.FRIEND_REQ_SENT : UserRelationship.FRIEND_REQ_RECEIVED;
+    }
+
+    public void buildFriendsView(String profileTag, Model model) throws ResponseStatusException {
+        Account target = accountRepository.findByProfileTagIgnoreCase(profileTag);
+        if (target == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found.");
+        }
+        Account auser = getAuthenticatedUserAccount();
+        UserRelationship urelationship = findUserRelationship(auser, target);
+        if (urelationship != UserRelationship.ITSELF && urelationship != UserRelationship.FRIEND) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        model.addAttribute("user", target);
+        model.addAttribute("ownProfile", target.equals(auser));
+        List<Account> friends = new ArrayList<>();
+        if (target.equals(auser)) {
+            List<Friendship> friendships = friendRepository.findAllByInitiatorOrTarget(auser, auser);
+            List<Friendship> friendRequestsSent = new ArrayList<>(), friendRequestsReceived = new ArrayList<>();
+            friendships.forEach(f -> {
+                if (f.isActive()) {
+                    friends.add(f.getInitiator().equals(auser) ? f.getTarget() : f.getInitiator());
+                } else {
+                    if (f.getInitiator().equals(auser)) {
+                        friendRequestsSent.add(f);
+                    } else {
+                        friendRequestsReceived.add(f);
+                    }
+                }
+            });
+            model.addAttribute("friendRequestsSent", friendRequestsSent);
+            model.addAttribute("friendRequestsReceived", friendRequestsReceived);
+        } else {
+            friendRepository.findAllByInitiatorOrTargetAndActiveTrue(target, target)
+                    .forEach(f -> friends.add(f.getInitiator().equals(target) ? f.getTarget() : f.getInitiator()));
+        }
+        model.addAttribute("friends", friends);
     }
 
     public void updateAuthenticatedUserToModel(Model model) {

@@ -122,7 +122,7 @@
                     </th:block>
                 </div>
             </li>
-            <!-- Post Reply -->
+            <!-- Post Replies -->
             <div th:fragment="post-replies(auserRelationship, postId, view)" class="comment-replies" th:id="'post-replies-' + ${postId}">
                 <div th:replace="fragments/post :: new-comment(auserRelationship=${auserRelationship}, target = ${postId}, post=false)">
                 </div>

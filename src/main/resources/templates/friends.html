@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fi">
+    <head>
+        <div th:replace="fragments/app :: head(title='Facetale - Friends')"></div>
+        <link rel="stylesheet" type="text/css" th:href="@{/static/css/list-styles.css}">
+    </head>
+    <body>
+        <div th:replace="fragments/app :: master-head"></div>
+        <main>
+            <div id="main-container">
+                <div class="column primary">
+                    <div class="list-title">
+                        <h1 th:inline="text">Kaverit ([[${user.name}]])</h1>
+                    </div>
+                    <!-- Received friend requests -->
+                    <div th:if="${ownProfile}" th:with="hasFriendRequests=${friendRequestsReceived.size()} > 0" class="friend-data-container">
+                        <div class="results-bar"
+                            th:styleappend="${hasFriendRequests} == false ? 'background-color:#D55246;' : 'background-color:#1e7bd2;'">
+                            <p th:if="${hasFriendRequests} == false">Ei uusia kaveripyyntöjä</p>
+                            <p th:if="${hasFriendRequests}" th:inline="text"><i class="fas fa-user-plus"></i> [[${friendRequestsReceived.size()}]]
+                                uutta kaveripyyntöä</p>
+                        </div>
+                        <ul th:if="${hasFriendRequests}" class="common-list">
+                            <li th:each="friendRequest : ${friendRequestsReceived}" class="common-list-item">
+                                <div class="user-info-container">
+                                    <img th:src="@{${@imageService.getUserProfilePictureLocation(friendRequest.initiator)}}"
+                                        class="profile-picture-small" alt="Profile picture" />
+                                    <div class="user-profile-info">
+                                        <a th:href="@{/users/{user}(user=${friendRequest.initiator.profileTag})}" th:inline="text"
+                                            class="upi-username"> [[${friendRequest.initiator.name}]]</a>
+                                        <h3>@[[${friendRequest.initiator.profileTag}]]</h3>
+                                    </div>
+                                    <h3 th:text="${#temporals.format(friendRequest.creationDate, 'dd.MM.yyyy HH:mm')}" style="padding-left:5px;">Date</h3>
+                                </div>
+                                <div class="friend-request-actions">
+                                    <form th:action="@{/api/user/friendreq}" th:method="POST">
+                                        <input type="hidden" name="accountId" th:value="${auser.id}" />
+                                        <input type="hidden" name="action" value="ACCEPT" />
+                                        <input type="hidden" name="friendRequestId" th:value="${friendRequest.id}" />
+                                        <button type="submit" class="ft-button ftb-accept">
+                                            <i class="fas fa-user-plus"></i>Hyväksy</button>
+                                    </form>
+                                    <form th:action="@{/api/user/friendreq}" th:method="POST">
+                                        <input type="hidden" name="accountId" th:value="${auser.id}" />
+                                        <input type="hidden" name="action" value="DENY" />
+                                        <input type="hidden" name="friendRequestId" th:value="${friendRequest.id}" />
+                                        <button type="submit" class="ft-button ftb-cancel">
+                                            <i class="fas fa-user-plus"></i>Hylkää</button>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Sent friend requests -->
+                    <div th:if="${ownProfile}" th:with="hasSentFriendrequests=${friendRequestsSent.size()} > 0" class="friend-data-container">
+                        <div class="results-bar"
+                            th:styleappend="${hasSentFriendrequests} == false ? 'background-color:#D55246;' : 'background-color:#1e7bd2;'">
+                            <p th:if="${hasSentFriendrequests} == false">Et ole lähettänyt kaveripyyntöjä</p>
+                            <p th:if="${hasSentFriendrequests}" th:inline="text"><i class="fas fa-user-plus"></i> [[${friendRequestsSent.size()}]]
+                                aktiivisia lähetettyjä kaveripyyntöjä</p>
+                        </div>
+                        <ul th:if="${hasSentFriendrequests}" class="common-list">
+                            <li th:each="friendRequest : ${friendRequestsSent}" class="common-list-item">
+                                <div class="user-info-container">
+                                    <img th:src="@{${@imageService.getUserProfilePictureLocation(friendRequest.target)}}"
+                                        class="profile-picture-small" alt="Profile picture" />
+                                    <div class="user-profile-info">
+                                        <a th:href="@{/users/{user}(user=${friendRequest.target.profileTag})}" th:inline="text"
+                                            class="upi-username"></a> [[${friendRequest.target.name}]]</a>
+                                        <h3>@[[${friendRequest.target.profileTag}]]</h3>
+                                    </div>
+                                    <h3 th:text="${#temporals.format(friendRequest.creationDate, 'dd.MM.yyyy HH:mm')}" style="padding-left:5px;">Date</h3>
+                                </div>
+                                <div class="friend-request-actions">
+                                    <form th:action="@{/api/user/friendreq}" th:method="POST">
+                                        <input type="hidden" name="accountId" th:value="${auser.id}" />
+                                        <input type="hidden" name="action" value="CANCEL" />
+                                        <input type="hidden" name="friendRequestId" th:value="${friendRequest.id}" />
+                                        <button type="submit" class="ft-button ftb-cancel">
+                                            <i class="fas fa-user-plus"></i>Peruuta</button>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Friends -->
+                    <div th:with="hasFriends=${friends.size()} > 0" class="friend-data-container">
+                        <div class="results-bar" th:styleappend="${hasFriends} == false ? 'background-color:#D55246;' : 'background-color:#1e7bd2;'">
+                            <p th:if="${hasFriends} == false">Sinulla ei ole yhtään kaveria</p>
+                            <p th:if="${hasFriends}" th:inline="text"><i class="fas fa-user"></i> [[${friends.size()}]] Kaveria</p>
+                        </div>
+                        <ul th:if="${hasFriends}" class="common-list">
+                            <li th:each="friend : ${friends}" class="common-list-item">
+                                <div class="user-info-container">
+                                    <img th:src="@{${@imageService.getUserProfilePictureLocation(friend)}}" class="profile-picture-small"
+                                        alt="Profile picture" />
+                                    <div class="user-profile-info">
+                                        <a th:href="@{/users/{user}(user=${friend.profileTag})}" th:inline="text" class="upi-username">
+                                            [[${friend.name}]]</a>
+                                        <h3>@[[${friend.profileTag}]]</h3>
+                                    </div>
+                                </div>
+                                <a th:href="@{/users/{user}(user=${user.profileTag})}" class="ft-button"><i
+                                        class="fas fa-user fa-sm"></i>Profiiliin</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="fragments/app :: master-footer"></footer>
+    </body>
+</html>

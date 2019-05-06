@@ -3,6 +3,7 @@ package wepa.ftale.service;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,9 +18,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
 import wepa.ftale.domain.Account;
+import wepa.ftale.domain.Friendship;
 import wepa.ftale.domain.FtImage;
 import wepa.ftale.domain.Post;
 import wepa.ftale.repository.AccountRepository;
+import wepa.ftale.repository.FriendRepository;
 import wepa.ftale.repository.ImageRepository;
 import wepa.ftale.repository.PostRepository;
 
@@ -37,6 +40,8 @@ public class AuthService {
     private ImageRepository imageRepository;
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private FriendRepository frepository;
 
     @PostConstruct
     public void addAccount() throws IOException {
@@ -44,7 +49,8 @@ public class AuthService {
         account = accountRepository.save(account);
         for (int i = 0; i < 10; i++) {
             Account account2 = new Account("jorma" + i, "jorma Ojala" + i, "jormala" + i, passwordEncoder.encode("testi"), null);
-            accountRepository.save(account2);
+            account2 = accountRepository.save(account2);
+            frepository.save(new Friendship(LocalDateTime.now(), false, account2, account));
         }
         List<Post> posts = new ArrayList<>();
         Random r = new Random();

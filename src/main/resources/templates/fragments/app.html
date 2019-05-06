@@ -55,7 +55,7 @@
                             </div>
                             <ul>
                                 <li><a th:href="@{/me}" class="nav-link nl-padding"><i class="fas fa-user"></i>Sivuni</a></li>
-                                <li><a href="#" class="nav-link nl-padding"><i class="fas fa-user-friends"></i>Kaverit</a></li>
+                                <li><a th:href="@{/friends?user={profileTag}(profileTag=${auser.profileTag})}" class="nav-link nl-padding"><i class="fas fa-user-friends"></i>Kaverit</a></li>
                                 <li><a th:href="@{/me/album}" class="nav-link nl-padding"><i class="fas fa-images"></i>Albumi</a></li>
                                 <li>
                                     <form th:action="@{/api/auth/logout}" th:method="POST">

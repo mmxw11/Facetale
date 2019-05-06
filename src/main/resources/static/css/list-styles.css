@@ -17,13 +17,13 @@
     }
 }
 
-#search-title h1 {
+.list-title h1 {
     color: black;
     font-weight: 700;
     font-size: 1.4em;
 }
 
-#search-title h2 {
+.list-title h2 {
     color: black;
     font-weight: 400;
     font-size: 1em;
@@ -41,11 +41,11 @@
 }
 
 .results-bar svg,
-.search-user-result .ft-button svg {
+.common-list-item .ft-button svg {
     padding-right: 5px;
 }
 
-#search-results {
+.common-list {
     background-color: white;
     border-style: solid;
     border-width: 0 1px 1px 1px;
@@ -55,7 +55,7 @@
     margin-bottom: 20px;
 }
 
-#search-results .search-user-result {
+.common-list .common-list-item {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -66,19 +66,37 @@
     margin-bottom: 20px;
 }
 
-.search-user-result .ft-button {
-    justify-content: center;
-    text-decoration: none;
-    background-color: #1e7bd2;
+.common-list-item .ft-button {
     display: flex;
     align-items: center;
+    justify-content: center;
+    font-size: 0.9em;
+    text-decoration: none;
+    background-color: #1e7bd2;
 }
 
-.search-user-result .user-info-container {
+.common-list-item .ft-button a {
+    padding: 10px 0;
+}
+
+.common-list-item .ft-button.ftb-cancel {
+    background-color: #D55246;
+}
+
+.common-list-item .ft-button.ftb-accept {
+    background-color: #51965c;
+}
+
+.user-info-container {
     display: flex;
 }
 
-.user-info-container .search-user-info {
+.user-info-container h3 {
+    font-weight: 400;
+    font-size: 1em;
+}
+
+.user-info-container .user-profile-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -87,18 +105,30 @@
     margin-left: 10px;
 }
 
-.user-info-container .search-user-info h3 {
-    font-weight: 400;
-    font-size: 1em;
-}
-
-.user-info-container .search-user-name {
+.user-profile-info .upi-username {
     color: inherit;
     font-weight: 700;
     text-decoration: none;
     border-bottom: 2px solid transparent;
 }
 
-.user-info-container .search-user-name:hover {
+.user-profile-info .upi-username:hover {
     border-color: #1e7bd2;
+}
+
+.friend-data-container {
+    margin: 40px 0;
+}
+
+.friend-request-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap-reverse;
+}
+
+.friend-request-actions .ft-button {
+    margin-left: 5px;
+    margin-bottom: 5px;
 }
