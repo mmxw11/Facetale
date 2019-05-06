@@ -97,6 +97,8 @@ ul {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
     padding-top: 20px;
     padding-bottom: 20px;
 }
@@ -104,6 +106,11 @@ ul {
 .load-items-container .lds-ring {
     display: none;
     margin-right: 1em;
+}
+
+.load-items-container .fe-error-message {
+    flex: 0 1 100%;
+    text-align: center;
 }
 
 .form-loader-container {

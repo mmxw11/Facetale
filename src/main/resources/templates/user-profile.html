@@ -186,7 +186,7 @@
                             </li>
                         </ul>
                         <!-- LOAD MORE-->
-                        <div class="load-items-container" id ="main-post-list-loader" th:data-postlisttarget="${auser.id}">
+                        <div th:if="${profileModel.posts.getTotalElements()} > 10" class="load-items-container" id ="main-post-list-loader" th:data-postlisttarget="${auser.id}">
                             <!-- id = "main-post-list-loader">-->
                             <div class="lds-ring">
                                 <div></div>

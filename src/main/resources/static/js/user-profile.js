@@ -85,6 +85,7 @@ function loadComments(postListLoader) {
     if (!isPost) {
         postTargetArray = postTargetArray.querySelector(".posts-list ul");
     }
+    var postsPerQuery = 10;
     var nextPage = parseInt(postTargetArray.getAttribute("data-page")) + 1;
     var totalPostCountElement;
     if (isPost) {
@@ -94,40 +95,41 @@ function loadComments(postListLoader) {
     }
     var postCount = parseInt(totalPostCountElement.getAttribute("data-totalcount"));
 
-
     var loaderButton = loaderElement.querySelector("button");
     var formLoader = loaderElement.querySelector(".lds-ring");
     loaderButton.style.display = "none";
     formLoader.style.display = "block";
-
-    alert("target: " + target + " | nextPage: " + nextPage + " | totalPostCountElement: " + totalPostCountElement + " | postCount: " + postCount);
 
     var httpReq = new XMLHttpRequest();
     httpReq.onreadystatechange = function () {
         if (httpReq.readyState != 4) {
             return;
         }
+        removeOldErrorMessages(loaderElement);
         // Hide loader.
         formLoader.style.display = "none";
+        loaderButton.style.display = "inline";
+
         // Check results.
         if (httpReq.status != 200) {
-            removeOldErrorMessages(loaderElement);
             var errorElement = createErrorElement("Nyt kävi niin, että jotain hajosi :/");
-            loaderElement.insertBefore(errorElement, buttonWrapper.firstChild);
+            errorElement.style.display = "block";
+            loaderElement.appendChild(errorElement);
             // Patenttiratkaisu.
             setTimeout(function () { alert("Jotain hajosi :( Virhekoodi: " + httpReq.status + ": " + httpReq.responseText); }, 200);
         } else {
             // Add to comment/post list.
-            postTargetArray.insertAdjacentHTML("beforeend", httpReq.responseText);
-            postTargetArray.setAttribute("data-page", nextPage);
-            // TODO: CHECK IF MORE COMMENTS, UPDATE PAGE
-            loaderButton.style.display = "inline";
-
-
+            if (httpReq.responseText.length > 0) {
+                postTargetArray.insertAdjacentHTML("beforeend", httpReq.responseText);
+                postTargetArray.setAttribute("data-page", nextPage);
+            }
+            if (postsPerQuery * (nextPage + 1) >= postCount) {
+                // No more posts.
+                loaderElement.style.display = "none";
+            }
         }
-        alert("Request returned: " + httpReq.status + " text: " + httpReq.responseText);
     }
-    var params = "target=" + target + "&type=" + profileViewDisplayType + "&page=" + nextPage + "&count=10";
+    var params = "target=" + target + "&type=" + profileViewDisplayType + "&page=" + nextPage + "&count=" + postsPerQuery;
     var url = contextRoot + "api/posts";
     httpReq.open("GET", url + "?" + params);
     httpReq.send();
