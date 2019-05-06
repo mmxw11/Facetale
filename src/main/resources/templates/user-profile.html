@@ -78,28 +78,15 @@
                         <div id="posts-header">
                             <h1 id="profileview-displaytype-title">displayType</h1>
                         </div>
-                        <!-- TODO 
-                            Profile status (own profile / friend etc)
-                            DISABLED (textfields & buttons) + TOOLTIPS / reason
-                            New comment
-                            Load replies
-                            Load posts/album
-                            Album/posts change button
-                            Change title (posts-header) + page title Facetale | username - Posts | Album
-                            cancel comment
-                            FORM ERROR!
-                            No posts notification
-                            (${post} ? 'new-post-' : 'new-comment-') +
-                            <img th:src="@{${@imageService.getUserProfilePictureLocation(auser.account)}}" class="profile-picture-small" alt="Profile picture" /-->
                         <div th:replace="fragments/post :: new-comment(auserRelationship=${profileModel.auserRelationship},
                         target = ${profileModel.user.id}, post=true)">
                         </div>
                         <div th:replace="fragments/post :: new-image-post(imageCount = 9, target = ${auser.id})"> </div>
                         <div class="post-count-notification">
-                            <p id="total-post-count" th:with="totalpostcount=${profileModel.posts.getTotalElements()}" th:data-totalcount="${profileModel.posts.getTotalElements()}"
-                            th:text="${totalpostcount} > 0 ? ${totalpostcount} + ' Julkaisua' : 'Yhtään julkaisuja ei löytynyt.'">
-                                
-                               </p>
+                            <p id="total-post-count" th:with="totalpostcount=${profileModel.posts.getTotalElements()}"
+                                th:data-totalcount="${profileModel.posts.getTotalElements()}"
+                                th:text="${totalpostcount} > 0 ? ${totalpostcount} + ' Julkaisua' : 'Yhtään julkaisuja ei löytynyt.'">
+                            </p>
                             <!--     //  [[${profileModel.posts.getTotalElements()}]] Julkaisua</p>
                             <p th:styleappend="${profileModel.posts.getTotalElements()} != 0 ? 'display:none;'" class="fe-error-message">Yhtään
                                 julkaisuja ei löytynyt.</p> -->
@@ -107,86 +94,9 @@
                         <div
                             th:replace="fragments/post :: main-post-list(auserRelationship=${profileModel.auserRelationship}, comments=${profileModel.posts}, viewMap=${profileModel.userPostViews})">
                         </div>
-                        <!--ul class="posts-list">
-                            <!-- PRIMARY --
-                            <li class="commentbox">
-                                <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small" alt="Profile picture" />
-                                <div class="comment">
-                                    <a href="#" class="comment-author-info">Test <span>@test</span></a>
-                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam diam enim, luctus
-                                        at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo sagittis nisl mollis aliquet.
-                                        Integer vel elit quis lorem consequat ultricies. Integer lacus felis, porta ac nunc id, suscipit congue purus.
-                                        Suspendisse potenti.</p>
-                                    <div class="comment-info-wrapper">
-                                        <div class="flex-space-between-wrapper">
-                                            <h3>6 Tykkäystä</h3>
-                                            <h3>30.4.2019 15:00</h3>
-                                        </div>
-                                        <div class="comment-actions">
-                                            <button type="button" class="ft-button">Tykkää</button>
-                                            <button type="button" class="ft-button">Kommentoi</button>
-                                            <button type="button" class="ft-button expand-comment-section-button">6 Kommenttia <i
-                                                    class="fas fa-chevron-down"></i></button>
-                                        </div>
-                                    </div>
-                                    <!-- REPLIES --
-                                    <div class="comment-replies">
-                                        <div th:replace="fragments/post :: new-comment(auserRelationship=${profileModel.auserRelationship}, target = 'COMMENT_ID_PLACEHOLDER', post=false)"></div>
-                                        <ul class="posts-list">
-                                            <li class="commentbox">
-                                                <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small"
-                                                    alt="Profile picture" />
-                                                <div class="comment">
-                                                    <a href="#" class="comment-author-info">Test <span>@test</span></a>
-                                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-                                                        diam enim, luctus at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo
-                                                        sagittis nisl mollis aliquet. Integer vel elit quis lorem consequat ultricies. Integer lacus
-                                                        felis, porta ac nunc id, suscipit congue purus. Suspendisse potenti.</p>
-                                                </div>
-                                            </li>
-                                            <li class="commentbox">
-                                                <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small"
-                                                    alt="Profile picture" />
-                                                <div class="comment">
-                                                    <a href="#" class="comment-author-info">Test <span>@test</span></a>
-                                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-                                                        diam enim, luctus at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo
-                                                        sagittis nisl mollis aliquet. Integer vel elit quis lorem consequat ultricies. Integer lacus
-                                                        felis, porta ac nunc id, suscipit congue purus. Suspendisse potenti.</p>
-                                                </div>
-                                            </li>
-                                            <li class="commentbox">
-                                                <img th:src="@{/static/images/Portrait_placeholder.png}" class="profile-picture-small"
-                                                    alt="Profile picture" />
-                                                <div class="comment">
-                                                    <a href="#" class="comment-author-info">Test <span>@test</span></a>
-                                                    <p class="comment-text-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
-                                                        diam enim, luctus at tempor nec, laoreet a augue. Cras ac ligula sem. Donec facilisis justo
-                                                        sagittis nisl mollis aliquet. Integer vel elit quis lorem consequat ultricies. Integer lacus
-                                                        felis, porta ac nunc id, suscipit congue purus. Suspendisse potenti.</p>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        <!-- LOAD MORE--
-                                        <div class="load-items-container">
-                                            <div class="lds-ring">
-                                                <div></div>
-                                                <div></div>
-                                                <div></div>
-                                                <div></div>
-                                            </div>
-                                            <p class="fe-error-message">Virhe ladattaessa kommentteja!</p>
-                                            <button type="button" id="load-more-comments" class="ft-button" onclick="document.getElementsByClassName('lds-ring')[0].style.display='block';
-                                            document.getElementById('load-more-comments').style.display='none';">Lataa lisää kommentteja</button>
-                                        </div>
-                                        <!-- LOAD MORE--
-                                    </div>
-                                    <!-- REPLIES END  --
-                                </div>
-                            </li>
-                        </ul>
                         <!-- LOAD MORE-->
-                        <div th:if="${profileModel.posts.getTotalElements()} > 10" class="load-items-container" id ="main-post-list-loader" th:data-postlisttarget="${auser.id}">
+                        <div th:if="${profileModel.posts.getTotalElements()} > 10" class="load-items-container" id="main-post-list-loader"
+                            th:data-postlisttarget="${auser.id}">
                             <!-- id = "main-post-list-loader">-->
                             <div class="lds-ring">
                                 <div></div>

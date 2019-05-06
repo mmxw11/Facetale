@@ -76,9 +76,10 @@
                                 [[${view.getLikeCount()}]] Tykkäystä</h3>
                             <h3 th:text="${#temporals.format(comment.creationDate, 'dd.MM.yyyy HH:mm')}">Date</h3>
                         </div>
-                        <div th:if="${post}" class="comment-actions" th:with="imageActions=${auserRelationship == T(wepa.ftale.web.profile.UserRelationship).ITSELF} and ${comment.image != null},
+                        <div th:if="${post}" class="comment-actions"
+                            th:with="imageActions=${auserRelationship == T(wepa.ftale.web.profile.UserRelationship).ITSELF} and ${comment.image != null},
                         canLike=${auserRelationship == T(wepa.ftale.web.profile.UserRelationship).ITSELF} or ${auserRelationship == T(wepa.ftale.web.profile.UserRelationship).FRIEND}"
-                        th:classappend="${canLike} == false ? 'pos-relative-wrapper'">
+                            th:classappend="${canLike} == false ? 'pos-relative-wrapper'">
                             <!-- Set profile pic -->
                             <form th:if="${imageActions}" th:action="@{/api/user/setprofilepic}" th:method="POST" class="profile-picture-action">
                                 <input type="hidden" name="accountId" th:value="${comment.target.id}" />
@@ -87,31 +88,34 @@
                             </form>
                             <!-- Likes -->
                             <th:block th:switch="${canLike}">
-                                    <th:block th:case="${true}">
-                                        <button th:if="${view.isPostRequesterAllowedToLike()}" type="button" class="ft-button"  th:data-postid="${comment.id}" data-rateaction="LIKE" onclick="ratePost(this);">Tykkää</button>
-                                        <button th:unless="${view.isPostRequesterAllowedToLike()}" type="button" class="ft-button ftb-cancel" th:data-postid="${comment.id}" data-rateaction="REMOVE_LIKE" onclick="ratePost(this);">Poista tykkäys</button>
-                                    </th:block>
-                                    <th:block th:case="${false}">
-                                        <button type="button" class="ft-button user-action-disabled" disabled>Tykkää</button>
-                                        <p class="user-action-tooltip">Tykätäksesi sinun täytyy olla profiilin omistajan kaveri.</p>
-                                    </th:block>
+                                <th:block th:case="${true}">
+                                    <button th:if="${view.isPostRequesterAllowedToLike()}" type="button" class="ft-button"
+                                        th:data-postid="${comment.id}" data-rateaction="LIKE" onclick="ratePost(this);">Tykkää</button>
+                                    <button th:unless="${view.isPostRequesterAllowedToLike()}" type="button" class="ft-button ftb-cancel"
+                                        th:data-postid="${comment.id}" data-rateaction="REMOVE_LIKE" onclick="ratePost(this);">Poista tykkäys</button>
+                                </th:block>
+                                <th:block th:case="${false}">
+                                    <button type="button" class="ft-button user-action-disabled" disabled>Tykkää</button>
+                                    <p class="user-action-tooltip">Tykätäksesi sinun täytyy olla profiilin omistajan kaveri.</p>
+                                </th:block>
                             </th:block>
                             <!-- Add comment -->
-                            <button type="button" class="ft-button" th:data-newcommentid="'comment-' + ${comment.id} + '-new'" onclick="toggleNewCommentVisibility(this);">Kommentoi</button>
+                            <button type="button" class="ft-button" th:data-newcommentid="'comment-' + ${comment.id} + '-new'"
+                                onclick="toggleNewCommentVisibility(this);">Kommentoi</button>
                             <!-- Delete post. (only if image) -->
-                            <button th:if="${imageActions}" type="button" class="ft-button ftb-cancel" th:data-postid="${comment.id}" onclick="deleteImagePost(this);">Poista kuva</button>
-                            <!--TODO: IMPLEMENT Comments --> 
-                            <button type="button" th:id="${htmlId} + '-total-comment-count'" th:data-totalcount="${view.getCommentCount()}" th:data-postid="${comment.id}"
-                            class="ft-button expand-comment-section-button" onclick="togglePostComments(this);" th:inline="text">
-                            [[${view.getCommentCount()}]] Kommenttia <i class="fas fa-chevron-down"></i></button>
+                            <button th:if="${imageActions}" type="button" class="ft-button ftb-cancel" th:data-postid="${comment.id}"
+                                onclick="deleteImagePost(this);">Poista kuva</button>
+                            <!-- Comments -->
+                            <button type="button" th:id="${htmlId} + '-total-comment-count'" th:data-totalcount="${view.getCommentCount()}"
+                                th:data-postid="${comment.id}" class="ft-button expand-comment-section-button" onclick="togglePostComments(this);"
+                                th:inline="text"> [[${view.getCommentCount()}]] Kommenttia <i class="fas fa-chevron-down"></i></button>
                         </div>
                         <div th:if="${post}" th:include="fragments/post :: form-loader" class="form-loader-container"></div>
                     </div>
-                    <th:block  th:if="${post}">
-                            <div th:replace="fragments/post :: 
-                            post-replies(auserRelationship = ${auserRelationship}, postId = ${comment.id}, view=${view})"></div>
+                    <th:block th:if="${post}">
+                        <div th:replace="fragments/post :: post-replies(auserRelationship = ${auserRelationship}, postId = ${comment.id}, view=${view})">
+                        </div>
                     </th:block>
-                  
                 </div>
             </li>
             <!-- Post Reply -->
@@ -122,10 +126,12 @@
                     <p>Ei kommentteja.</p>
                 </div>
                 <ul class="posts-list" style="display:none;" th:data-page="${view.getCommentCount()} > 0 ? -1 : 0"></ul>
-                <!-- TODO COMMENT LOADER -->
-                <div class="load-items-container" style="display:none;" th:with="loaderId='post-list-loader-' + ${postId}" th:id="${loaderId}" th:data-postlisttarget="${postId}">
+                <!-- Comment loader -->
+                <div class="load-items-container" style="display:none;" th:with="loaderId='post-list-loader-' + ${postId}" th:id="${loaderId}"
+                    th:data-postlisttarget="${postId}">
                     <div th:replace="fragments/post :: form-loader"></div>
-                    <button type="button" class="ft-button" th:data-postlistloader="${loaderId}" onclick="loadComments(this.getAttribute('data-postlistloader'));">Lataa lisää kommentteja</button>
+                    <button type="button" class="ft-button" th:data-postlistloader="${loaderId}"
+                        onclick="loadComments(this.getAttribute('data-postlistloader'));">Lataa lisää kommentteja</button>
                 </div>
             </div>
             <!-- Form Loader -->

@@ -127,9 +127,19 @@ public class MessageService {
         Pageable pageable = PageRequest.of(page, count, Sort.by("creationDate").descending());
         Pair<Page<Post>, Map<Long, UserPostView>> postsPair = generateRequesterPostViews(targetAccount, requester, type, pageable);
         model.addAttribute("auserRelationship", urelationship);
-        model.addAttribute("post", true);
         model.addAttribute("comments", postsPair.getKey());
+        model.addAttribute("post", true);
         model.addAttribute("viewMap", postsPair.getValue());
+    }
+
+    public void buildCommentsView(long postId, int page, int count, Model model) {
+        Post post = postRepository.getOne(postId);
+        Pageable pageable = PageRequest.of(page, count, Sort.by("creationDate").descending());
+        Page<Comment> comments = commentRepository.findAllByPost(post, pageable);
+        model.addAttribute("auserRelationship", null);
+        model.addAttribute("comments", comments);
+        model.addAttribute("post", false);
+        model.addAttribute("viewMap", new HashMap<>());
     }
 
     public Page<Post> getProfilePosts(Account target, ProfileViewDisplayType pvDisplayType, Pageable pageable) {

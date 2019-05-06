@@ -41,6 +41,13 @@ public class MessageController {
         return "fragments/post :: list-comments";
     }
 
+    @GetMapping("/api/posts/comments")
+    @PreAuthorize("#page >= 0")
+    public String getComments(@RequestParam long postId, @RequestParam int page, @RequestParam int count, Model model) {
+        messageService.buildCommentsView(postId, page, count, model);
+        return "fragments/post :: list-comments";
+    }
+
     @PostMapping("/api/posts/addpost")
     public String handleAddPost(@Valid @ModelAttribute Post post, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {

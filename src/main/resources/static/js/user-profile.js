@@ -70,10 +70,7 @@ function updateStaticProfileViewDisplayElements(updateUrl) {
         pvdisplaytypeTitle.innerHTML = "<i class='fas fa-images fa-sm'></i> Albumi";
     }
     // TODO: CHANGE CONTENT
-    // TODO ADD AND REMOVE TO MAIN POST LIST
-    // LOAD MORE MAIN POSTLIST
-    // ADD COMMENT
-    // LOAD REPLIES
+    // TODO REMOVE TO MAIN POST LIST
 }
 
 function togglePostComments(button) {
@@ -83,12 +80,9 @@ function togglePostComments(button) {
     var nextPage = parseInt(postTargetArray.getAttribute("data-page"));
     if (nextPage == -1 || postTargetArray.style.display === "none") {
         showPostComments(button, postRepliesElement, postTargetArray, nextPage, 10);
-        alert("Show posts!");
     } else {
-        alert("Hide posts!");
         hidePostComments(postRepliesElement, postTargetArray);
     }
-    alert(" nextPage: " + nextPage + " | toggle comments!");
 }
 
 function showPostComments(button, postRepliesElement, postTargetArray, nextPage, commentsPerQuery) {
@@ -104,7 +98,6 @@ function showPostComments(button, postRepliesElement, postTargetArray, nextPage,
             loadItemsContainer.style.display = "flex";
         }
         if (nextPage == -1) {
-            alert("TRIGGER LOAD!");
             loadItemsContainer.querySelector("button").click();
         }
     }
@@ -179,8 +172,15 @@ function loadComments(postListLoader) {
             }
         }
     }
-    var params = "target=" + target + "&type=" + profileViewDisplayType + "&page=" + nextPage + "&count=" + postsPerQuery;
+    var params = (isPost ? "target" : "postId") + "=" + target;
+    if (isPost) {
+        params += "&type=" + profileViewDisplayType;
+    }
+    params += "&page=" + nextPage + "&count=" + postsPerQuery;
     var url = contextRoot + "api/posts";
+    if (!isPost) {
+        url += "/comments";
+    }
     httpReq.open("GET", url + "?" + params);
     httpReq.send();
 }
