@@ -95,7 +95,7 @@
                         target = ${profileModel.user.id}, post=true)">
                         </div>
                         <div th:replace="fragments/post :: new-image-post(imageCount = 9, target = ${auser.id})"> </div>
-                        <div id="total-post-count-notification">
+                        <div class="post-count-notification">
                             <p id="total-post-count" th:with="totalpostcount=${profileModel.posts.getTotalElements()}" th:data-totalcount="${profileModel.posts.getTotalElements()}"
                             th:text="${totalpostcount} > 0 ? ${totalpostcount} + ' Julkaisua' : 'Yhtään julkaisuja ei löytynyt.'">
                                 

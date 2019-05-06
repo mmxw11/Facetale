@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import wepa.ftale.domain.Comment;
 import wepa.ftale.domain.Post;
 import wepa.ftale.service.MessageService;
 import wepa.ftale.web.FormUtils;
@@ -40,7 +41,6 @@ public class MessageController {
         return "fragments/post :: list-comments";
     }
 
-    // TODO: ADD COMMENT
     @PostMapping("/api/posts/addpost")
     public String handleAddPost(@Valid @ModelAttribute Post post, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -61,8 +61,16 @@ public class MessageController {
         }
         messageService.addPost(post, file);
         // TODO: RETURN LIST ITEM
-        model.addAttribute("test", "attributti!");
-        return "fragments/post :: test-fragment";
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+    }
+
+    @PostMapping("/api/posts/addcomment")
+    public String handleAddComment(@Valid @ModelAttribute Comment comment, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, FormUtils.formatBindingResultErrors(bindingResult));
+        }
+        messageService.addComment(comment, model);
+        return "fragments/post :: comment";
     }
 
     @PostMapping(path = "/api/posts/deleteimagepost")

@@ -9,5 +9,7 @@ public interface UserPostView {
 
     long getLikeCount();
 
+    long getCommentCount();
+
     boolean isPostRequesterAllowedToLike();
 }

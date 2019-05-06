@@ -100,25 +100,31 @@
                             <button type="button" class="ft-button" th:data-newcommentid="'comment-' + ${comment.id} + '-new'" onclick="toggleNewCommentVisibility(this);">Kommentoi</button>
                             <!-- Delete post. (only if image) -->
                             <button th:if="${imageActions}" type="button" class="ft-button ftb-cancel" th:data-postid="${comment.id}" onclick="deleteImagePost(this);">Poista kuva</button>
-                            <!--TODO: IMPLEMENT Comments -->
-                            <button type="button" th:id="${htmlId} + '-total-comment-count'" th:data-totalcount="0" class="ft-button expand-comment-section-button"
-                            th:inline="text">0 Kommenttia <i class="fas fa-chevron-down"></i></button>
+                            <!--TODO: IMPLEMENT Comments --> 
+                            <button type="button" th:id="${htmlId} + '-total-comment-count'" th:data-totalcount="${view.getCommentCount()}" th:data-postid="${comment.id}"
+                            class="ft-button expand-comment-section-button" onclick="togglePostComments(this);" th:inline="text">
+                            [[${view.getCommentCount()}]] Kommenttia <i class="fas fa-chevron-down"></i></button>
                         </div>
-                        <div th:include="fragments/post :: form-loader" class="form-loader-container"></div>
+                        <div th:if="${post}" th:include="fragments/post :: form-loader" class="form-loader-container"></div>
                     </div>
-                    <div th:if="${post}" th:replace="fragments/post :: 
-                    post-replies(auserRelationship = ${auserRelationship}, postId = ${comment.id})"></div>
+                    <th:block  th:if="${post}">
+                            <div th:replace="fragments/post :: 
+                            post-replies(auserRelationship = ${auserRelationship}, postId = ${comment.id}, view=${view})"></div>
+                    </th:block>
+                  
                 </div>
             </li>
             <!-- Post Reply -->
-            <div th:fragment="post-replies(auserRelationship, postId)" class="comment-replies" th:id="'post-replies-' + ${postId}">
+            <div th:fragment="post-replies(auserRelationship, postId, view)" class="comment-replies" th:id="'post-replies-' + ${postId}">
                 <div th:replace="fragments/post :: new-comment(auserRelationship=${auserRelationship}, target = ${postId}, post=false)">
                 </div>
-                <ul class="posts-list" data-page="-1"></ul>
+                <div th:if="${view.getCommentCount()} <= 0" class="post-count-notification" style="display:none;">
+                    <p>Ei kommentteja.</p>
+                </div>
+                <ul class="posts-list" style="display:none;" th:data-page="${view.getCommentCount()} > 0 ? -1 : 0"></ul>
                 <!-- TODO COMMENT LOADER -->
-                <div class="load-items-container" th:with="loaderId='post-list-loader-' + ${postId}" th:id="${loaderId}" th:data-postlisttarget="${postId}">
+                <div class="load-items-container" style="display:none;" th:with="loaderId='post-list-loader-' + ${postId}" th:id="${loaderId}" th:data-postlisttarget="${postId}">
                     <div th:replace="fragments/post :: form-loader"></div>
-                    <!--p class="fe-error-message">Virhe ladattaessa kommentteja!</p-->
                     <button type="button" class="ft-button" th:data-postlistloader="${loaderId}" onclick="loadComments(this.getAttribute('data-postlistloader'));">Lataa lisää kommentteja</button>
                 </div>
             </div>

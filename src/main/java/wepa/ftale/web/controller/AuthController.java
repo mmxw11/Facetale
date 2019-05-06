@@ -66,7 +66,7 @@ public class AuthController {
             return "redirect:/sign-up";
         }
         final String originalPassword = account.getPassword();
-        accountService.createAccount(account, bindingResult);
+        account = accountService.createAccount(account, bindingResult);
         if (FormUtils.redirectBindingResult("account", account, bindingResult, rdAttributes)) {
             // createAccount failed.
             return "redirect:/sign-up";

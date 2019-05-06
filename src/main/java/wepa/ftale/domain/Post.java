@@ -12,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -46,6 +47,8 @@ public class Post extends AbstractPersistable<Long> {
     private String textContent;
     @OneToOne(cascade = CascadeType.REMOVE)
     private FtImage image;
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Comment> comments;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinTable(
             joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),

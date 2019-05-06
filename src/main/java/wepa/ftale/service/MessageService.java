@@ -22,9 +22,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import wepa.ftale.Pair;
 import wepa.ftale.domain.Account;
+import wepa.ftale.domain.Comment;
 import wepa.ftale.domain.FtImage;
 import wepa.ftale.domain.Post;
 import wepa.ftale.domain.UserPostView;
+import wepa.ftale.repository.CommentRepository;
 import wepa.ftale.repository.ImageRepository;
 import wepa.ftale.repository.PostRepository;
 import wepa.ftale.web.profile.ProfileViewDisplayType;
@@ -39,30 +41,41 @@ public class MessageService {
     @Autowired
     private PostRepository postRepository;
     @Autowired
+    private CommentRepository commentRepository;
+    @Autowired
     private ImageRepository imageRepository;
     @Autowired
     private UserService userService;
 
     @Transactional
-    public void addPost(Post post, Model model) throws ResponseStatusException {
+    public Post addPost(Post post, Model model) throws ResponseStatusException {
         post.setAuthor(userService.getAuthenticatedUserAccount());
         checkFriendPermissions(post.getAuthor(), post.getTarget());
-        postRepository.save(post);
+        post = postRepository.save(post);
         updateNewPostModel(post, model);
+        return post;
     }
 
     @Transactional
     @PostAuthorize("#post.getAuthor().equals(#post.getTarget())")
-    public void addPost(Post post, MultipartFile file) throws ResponseStatusException, IOException {
+    public Post addPost(Post post, MultipartFile file) throws ResponseStatusException, IOException {
         post.setAuthor(userService.getAuthenticatedUserAccount());
         long imageCount = postRepository.albumImageCount(post.getTarget());
         if (imageCount >= 10) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Image limit of 10 exceeded!");
         }
         FtImage image = new FtImage(post.getTarget(), file.getSize(), file.getContentType(), file.getBytes());
-        post.setImage(image);
-        imageRepository.save(image);
-        postRepository.save(post);
+        post.setImage(imageRepository.save(image));
+        return postRepository.save(post);
+    }
+
+    @Transactional
+    public void addComment(Comment comment, Model model) throws ResponseStatusException {
+        comment.setAuthor(userService.getAuthenticatedUserAccount());
+        Post post = comment.getPost();
+        checkFriendPermissions(comment.getAuthor(), post.getTarget());
+        comment = commentRepository.save(comment);
+        updateNewCommentModel(comment, model);
     }
 
     @Transactional
@@ -85,7 +98,7 @@ public class MessageService {
     }
 
     @Transactional
-    public void likePost(UUID accountId, Long postId) throws ResponseStatusException {
+    public Post likePost(UUID accountId, Long postId) throws ResponseStatusException {
         Post post = postRepository.getOne(postId);
         Account account = userService.getAccount(accountId);
         checkFriendPermissions(account, post.getTarget());
@@ -93,18 +106,18 @@ public class MessageService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You can't like same post twice!");
         }
         post.getLikes().add(account);
-        postRepository.save(post);
+        return postRepository.save(post);
     }
 
     @Transactional
-    public void removeLike(UUID accountId, Long postId) {
+    public Post removeLike(UUID accountId, Long postId) {
         Post post = postRepository.getOne(postId);
         Account account = userService.getAccount(accountId);
         if (!post.getLikes().contains(account)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You don't have a like on this post!");
         }
         post.getLikes().remove(account);
-        postRepository.save(post);
+        return postRepository.save(post);
     }
 
     public void buildProfilePostsView(UUID target, ProfileViewDisplayType type, int page, int count, Model model) {
@@ -136,6 +149,13 @@ public class MessageService {
             userPostViews.put(v.getPostId(), v);
         }
         return new Pair<>(posts, userPostViews);
+    }
+
+    private void updateNewCommentModel(Comment comment, Model model) {
+        model.addAttribute("comment", comment);
+        model.addAttribute("view", null);
+        model.addAttribute("post", false);
+        model.addAttribute("auserRelationship", null);
     }
 
     private void updateNewPostModel(Post post, Model model) {

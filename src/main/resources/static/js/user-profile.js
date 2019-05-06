@@ -76,6 +76,56 @@ function updateStaticProfileViewDisplayElements(updateUrl) {
     // LOAD REPLIES
 }
 
+function togglePostComments(button) {
+    var postId = button.getAttribute("data-postid");
+    var postRepliesElement = document.getElementById("post-replies-" + postId);
+    var postTargetArray = postRepliesElement.querySelector(".posts-list ul");
+    var nextPage = parseInt(postTargetArray.getAttribute("data-page"));
+    if (nextPage == -1 || postTargetArray.style.display === "none") {
+        showPostComments(button, postRepliesElement, postTargetArray, nextPage, 10);
+        alert("Show posts!");
+    } else {
+        alert("Hide posts!");
+        hidePostComments(postRepliesElement, postTargetArray);
+    }
+    alert(" nextPage: " + nextPage + " | toggle comments!");
+}
+
+function showPostComments(button, postRepliesElement, postTargetArray, nextPage, commentsPerQuery) {
+    var commentCount = parseInt(button.getAttribute("data-totalcount"));
+    if (commentCount == 0) {
+        var postCountNotificationElement = postRepliesElement.querySelector(".post-count-notification");
+        postCountNotificationElement.style.display = "block";
+    }
+    postTargetArray.style.display = "block";
+    if (commentCount > 0) {
+        var loadItemsContainer = postRepliesElement.querySelector(".load-items-container");
+        if (nextPage == -1 || commentsPerQuery * (nextPage + 1) < commentCount) {
+            loadItemsContainer.style.display = "flex";
+        }
+        if (nextPage == -1) {
+            alert("TRIGGER LOAD!");
+            loadItemsContainer.querySelector("button").click();
+        }
+    }
+}
+
+function hidePostComments(postRepliesElement, postTargetArray) {
+    hideNoCommentsNotification(postRepliesElement);
+    postTargetArray.style.display = "none";
+    var loadItemsContainer = postRepliesElement.querySelector(".load-items-container");
+    if (loadItemsContainer) {
+        loadItemsContainer.style.display = "none";
+    }
+}
+
+function hideNoCommentsNotification(postRepliesElement) {
+    var postCountNotificationElement = postRepliesElement.querySelector(".post-count-notification");
+    if (postCountNotificationElement) {
+        postCountNotificationElement.style.display = "none";
+    }
+}
+
 function loadComments(postListLoader) {
     var loaderElement = document.getElementById(postListLoader);
     var isPost = postListLoader === "main-post-list-loader";
@@ -244,6 +294,11 @@ function submitCreateNewCommentForm(form) {
             form.reset();
             resetFormErrorMessages(form);
             resizeCommentBoxTextarea(form.querySelector(".comment-textarea"));
+            // Make sure it's visible.
+            if (!isPost) {
+                postTargetArray.style.display = "block";
+                hideNoCommentsNotification(postTarget);
+            }
             // Add to comment/post list.
             postTargetArray.insertAdjacentHTML("afterbegin", httpReq.responseText);
             // Update comment/post count.
@@ -255,7 +310,7 @@ function submitCreateNewCommentForm(form) {
             }
             var postCount = parseInt(totalPostCountElement.getAttribute("data-totalcount")) + 1;
             totalPostCountElement.setAttribute("data-totalcount", postCount);
-            totalPostCountElement.innerHTML = postCount + (isImage ? " Kuvaa" : " Julkaisua");
+            totalPostCountElement.innerHTML = postCount + (isPost ? (isImage ? " Kuvaa" : " Julkaisua") : " Kommenttia <i class='fas fa-chevron-down'></i>");
             if (isImage && postCount >= 10) {
                 var errorElement = createErrorElement("Albumissasi voi olla maksimissaan 10 kuvaa kerrallaan!");
                 buttonWrapper.insertBefore(errorElement, buttonWrapper.firstChild);

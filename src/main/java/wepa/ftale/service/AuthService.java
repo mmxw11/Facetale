@@ -42,8 +42,8 @@ public class AuthService {
     public void addAccount() throws IOException {
         Account account2 = new Account("jorma", "jorma Ojala", "jormala", passwordEncoder.encode("testi"), null);
         Account account = new Account("testi", "testiFullName", "testTag", passwordEncoder.encode("testi"), null);
-        accountRepository.save(account);
-        accountRepository.save(account2);
+        account = accountRepository.save(account);
+        account2 = accountRepository.save(account2);
         List<Post> posts = new ArrayList<>();
         Random r = new Random();
         for (int i = 0; i < 5; i++) {
@@ -70,7 +70,7 @@ public class AuthService {
     }
 
     @Transactional
-    public void createAccount(Account account, BindingResult bindingResult) {
+    public Account createAccount(Account account, BindingResult bindingResult) {
         List<Account> accounts = accountRepository.findAllByUsernameOrProfileTagAllIgnoreCase(account.getUsername(), account.getProfileTag());
         if (!accounts.isEmpty()) {
             if (accounts.size() > 2) {
@@ -84,10 +84,10 @@ public class AuthService {
             if (accounts.size() > 1) {
                 createUnableToCreateAccountResult(account, accounts.get(1), bindingResult);
             }
-            return;
+            return account;
         }
         account.setPassword(passwordEncoder.encode(account.getPassword()));
-        accountRepository.save(account);
+        return accountRepository.save(account);
     }
 
     private void createUnableToCreateAccountResult(Account account, Account facc, BindingResult bindingResult) {

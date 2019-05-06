@@ -20,10 +20,12 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     long albumImageCount(Account account);
 
     Page<Post> findAllByTarget(Account target, Pageable pageable);
-    
+
     Page<Post> findAllImageNotNullByTarget(Account target, Pageable pageable);
 
-    @Query(value = "SELECT Post.id AS postId, IsNull(COUNT(post_likes.post_id), 0) AS likeCount, IsNull((SELECT CASE WHEN post_likes.like_author_id = :requester THEN false ELSE true end), true) AS postRequesterAllowedToLike FROM Post"
-            + " LEFT JOIN post_likes ON post_likes.post_id = Post.id WHERE Post.id IN (:posts) GROUP BY Post.id", nativeQuery = true)
+    @Query(value = "SELECT Post.id AS postId, COUNT(post_likes.post_id) AS likeCount, COUNT(comment.post_id) AS commentCount, (SELECT CASE WHEN post_likes.like_author_id = :requester THEN false ELSE true end) AS postRequesterAllowedToLike FROM Post"
+            + " LEFT JOIN post_likes ON post_likes.post_id = Post.id"
+            + " LEFT JOIN comment ON comment.post_id = Post.id"
+            + " WHERE Post.id IN (:posts) GROUP BY Post.id", nativeQuery = true)
     List<UserPostView> fetchUserPostViews(Account requester, List<Post> posts);
 }
