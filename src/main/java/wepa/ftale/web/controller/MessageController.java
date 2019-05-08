@@ -3,8 +3,6 @@ package wepa.ftale.web.controller;
 import java.io.IOException;
 import java.util.UUID;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 import wepa.ftale.domain.Comment;
 import wepa.ftale.domain.Post;
 import wepa.ftale.service.MessageService;
+import wepa.ftale.service.UserService;
 import wepa.ftale.web.FormUtils;
 import wepa.ftale.web.profile.ProfileViewDisplayType;
 
@@ -33,6 +33,10 @@ public class MessageController {
 
     @Autowired
     private MessageService messageService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private Validator validator;
 
     @GetMapping("/api/posts")
     @PreAuthorize("#page >= 0")
@@ -49,7 +53,9 @@ public class MessageController {
     }
 
     @PostMapping("/api/posts/addpost")
-    public String handleAddPost(@Valid @ModelAttribute Post post, BindingResult bindingResult, Model model) {
+    public String handleAddPost(@ModelAttribute Post post, BindingResult bindingResult, Model model) {
+        post.setAuthor(userService.getAuthenticatedUserAccount());
+        validator.validate(post, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, FormUtils.formatBindingResultErrors(bindingResult));
         }
@@ -59,10 +65,12 @@ public class MessageController {
 
     @PostMapping(path = "/api/posts/addimagepost", consumes = "multipart/form-data")
     @PreAuthorize("authentication.principal.id == #post.getTarget().getId()")
-    public String handleAddImagePost(@Valid @ModelAttribute Post post, BindingResult bindingResult, @RequestParam MultipartFile file, Model model) throws IOException {
+    public String handleAddImagePost(@ModelAttribute Post post, BindingResult bindingResult, @RequestParam MultipartFile file, Model model) throws IOException {
         if (!file.getContentType().startsWith("image/")) {
             throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE);
         }
+        post.setAuthor(userService.getAuthenticatedUserAccount());
+        validator.validate(post, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, FormUtils.formatBindingResultErrors(bindingResult));
         }
@@ -71,7 +79,9 @@ public class MessageController {
     }
 
     @PostMapping("/api/posts/addcomment")
-    public String handleAddComment(@Valid @ModelAttribute Comment comment, BindingResult bindingResult, Model model) {
+    public String handleAddComment(@ModelAttribute Comment comment, BindingResult bindingResult, Model model) {
+        comment.setAuthor(userService.getAuthenticatedUserAccount());
+        validator.validate(comment, bindingResult);
         if (bindingResult.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, FormUtils.formatBindingResultErrors(bindingResult));
         }

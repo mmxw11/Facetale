@@ -2,19 +2,19 @@ package wepa.ftale.domain;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author Matias
@@ -22,10 +22,12 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Getter
+@Setter
+@ToString
 public class Comment extends AbstractPersistable<Long> {
 
+    @NotNull
     @ManyToOne
     private Account author;
     @NotNull
@@ -33,8 +35,7 @@ public class Comment extends AbstractPersistable<Long> {
     private Post post;
     @NotNull
     private LocalDateTime creationDate = LocalDateTime.now();
-    @Lob
-    @Column
+    @Type(type = "org.hibernate.type.TextType")
     @NotBlank
     private String textContent;
 }

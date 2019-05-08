@@ -46,8 +46,8 @@ public class UserService {
     private MessageService messageService;
 
     public ProfileModel createProfileModel(String profileTag, ProfileViewDisplayType displayType) throws ResponseStatusException {
-        AuthenticatedUser auser = getAuthenticatedUser();
-        if (profileTag == null || profileTag.equals(auser.getProfileTag())) {
+        if (profileTag == null) {
+            AuthenticatedUser auser = getAuthenticatedUser();
             profileTag = auser.getProfileTag();
         }
         Account account = accountRepository.findByProfileTagIgnoreCase(profileTag);

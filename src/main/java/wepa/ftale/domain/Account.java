@@ -11,9 +11,10 @@ import javax.validation.constraints.Size;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author Matias
@@ -21,8 +22,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Getter
+@Setter
+@ToString
 public class Account extends AbstractPersistable<UUID> {
 
     @NotBlank
@@ -37,7 +39,7 @@ public class Account extends AbstractPersistable<UUID> {
     @Column(unique = true)
     private String profileTag;
     @NotBlank
-    @Size(min = 5, max = 256)
+    @Size(min = 5, max = 250)
     private String password;
     @OneToOne
     private FtImage profilePicture;

@@ -1,6 +1,7 @@
 package wepa.ftale.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +50,6 @@ public class MessageService {
 
     @Transactional
     public Post addPost(Post post, Model model) throws ResponseStatusException {
-        post.setAuthor(userService.getAuthenticatedUserAccount());
         checkFriendPermissions(post.getAuthor(), post.getTarget());
         post = postRepository.save(post);
         updateNewPostModel(post, model);
@@ -59,7 +59,6 @@ public class MessageService {
     @Transactional
     @PostAuthorize("#post.getAuthor().equals(#post.getTarget())")
     public Post addPost(Post post, MultipartFile file, Model model) throws ResponseStatusException, IOException {
-        post.setAuthor(userService.getAuthenticatedUserAccount());
         long imageCount = postRepository.albumImageCount(post.getTarget());
         if (imageCount >= 10) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Image limit of 10 exceeded!");
@@ -73,7 +72,6 @@ public class MessageService {
 
     @Transactional
     public void addComment(Comment comment, Model model) throws ResponseStatusException {
-        comment.setAuthor(userService.getAuthenticatedUserAccount());
         Post post = comment.getPost();
         checkFriendPermissions(comment.getAuthor(), post.getTarget());
         comment = commentRepository.save(comment);
@@ -155,7 +153,10 @@ public class MessageService {
 
     public Pair<Page<Post>, Map<Long, UserPostView>> generateRequesterPostViews(Account account, Account requester, ProfileViewDisplayType pvDisplayType, Pageable pageable) {
         Page<Post> posts = getProfilePosts(account, pvDisplayType, pageable);
-        List<UserPostView> postViews = postRepository.fetchUserPostViews(requester, posts.getContent());
+        List<UserPostView> postViews = new ArrayList<>();
+        if (!posts.isEmpty()) {
+            postViews = postRepository.fetchUserPostViews(requester, posts.getContent());
+        }
         Map<Long, UserPostView> userPostViews = new HashMap<>();
         for (UserPostView v : postViews) {
             userPostViews.put(v.getPostId(), v);

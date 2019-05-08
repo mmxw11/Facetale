@@ -9,9 +9,10 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author Matias
@@ -19,8 +20,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-@EqualsAndHashCode(callSuper = false)
+@Getter
+@Setter
+@ToString
 public class Friendship extends AbstractPersistable<Long> {
 
     @NotNull
@@ -31,6 +33,7 @@ public class Friendship extends AbstractPersistable<Long> {
      * If the friendship is rejected or later revoked (user removes the target user from their friend list),
      * the entire database record will be deleted.
      * */
+    @NotNull
     private boolean active;
     @NotNull
     @ManyToOne
