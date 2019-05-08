@@ -47,4 +47,11 @@ public class FriendController {
         Account account = userService.handleFriendRequest(accountId, action, friendRequestId);
         return "redirect:/friends?user=" + account.getProfileTag();
     }
+
+    @PostMapping("/api/user/removefriend")
+    @PreAuthorize("authentication.principal.id == #accountId")
+    public String handleFriendRequest(@RequestParam UUID accountId, @RequestParam UUID friendId) {
+        Account account = userService.removeFriend(accountId, friendId);
+        return "redirect:/friends?user=" + account.getProfileTag();
+    }
 }

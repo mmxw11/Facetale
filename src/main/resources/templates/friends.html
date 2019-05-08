@@ -26,13 +26,15 @@
                                     <img th:src="@{${@imageService.getUserProfilePictureLocation(friendRequest.initiator)}}"
                                         class="profile-picture-small" alt="Profile picture" />
                                     <div class="user-profile-info">
-                                        <a th:href="@{/users/{user}(user=${friendRequest.initiator.profileTag})}" th:inline="text"
-                                            class="upi-username"> [[${friendRequest.initiator.name}]]</a>
-                                        <h3>@[[${friendRequest.initiator.profileTag}]]</h3>
+                                        <div class="upi-inner-wrapper">
+                                            <a th:href="@{/users/{user}(user=${friendRequest.initiator.profileTag})}" th:inline="text"
+                                                class="upi-username">[[${friendRequest.initiator.name}]]
+                                                <span>@[[${friendRequest.initiator.profileTag}]]</span></a>
+                                        </div>
+                                        <h3 th:text="${#temporals.format(friendRequest.creationDate, 'dd.MM.yyyy HH:mm')}">Date</h3>
                                     </div>
-                                    <h3 th:text="${#temporals.format(friendRequest.creationDate, 'dd.MM.yyyy HH:mm')}" style="padding-left:5px;">Date</h3>
                                 </div>
-                                <div class="friend-request-actions">
+                                <div class="friend-actions">
                                     <form th:action="@{/api/user/friendreq}" th:method="POST">
                                         <input type="hidden" name="accountId" th:value="${auser.id}" />
                                         <input type="hidden" name="action" value="ACCEPT" />
@@ -65,13 +67,15 @@
                                     <img th:src="@{${@imageService.getUserProfilePictureLocation(friendRequest.target)}}"
                                         class="profile-picture-small" alt="Profile picture" />
                                     <div class="user-profile-info">
-                                        <a th:href="@{/users/{user}(user=${friendRequest.target.profileTag})}" th:inline="text"
-                                            class="upi-username"></a> [[${friendRequest.target.name}]]</a>
-                                        <h3>@[[${friendRequest.target.profileTag}]]</h3>
+                                        <div class="upi-inner-wrapper">
+                                            <a th:href="@{/users/{user}(user=${friendRequest.target.profileTag})}" th:inline="text"
+                                                class="upi-username">[[${friendRequest.target.name}]]
+                                                <span>@[[${friendRequest.target.profileTag}]]</span></a>
+                                        </div>
+                                        <h3 th:text="${#temporals.format(friendRequest.creationDate, 'dd.MM.yyyy HH:mm')}">Date</h3>
                                     </div>
-                                    <h3 th:text="${#temporals.format(friendRequest.creationDate, 'dd.MM.yyyy HH:mm')}" style="padding-left:5px;">Date</h3>
                                 </div>
-                                <div class="friend-request-actions">
+                                <div class="friend-actions">
                                     <form th:action="@{/api/user/friendreq}" th:method="POST">
                                         <input type="hidden" name="accountId" th:value="${auser.id}" />
                                         <input type="hidden" name="action" value="CANCEL" />
@@ -86,7 +90,7 @@
                     <!-- Friends -->
                     <div th:with="hasFriends=${friends.size()} > 0" class="friend-data-container">
                         <div class="results-bar" th:styleappend="${hasFriends} == false ? 'background-color:#D55246;' : 'background-color:#1e7bd2;'">
-                            <p th:if="${hasFriends} == false">Sinulla ei ole yhtään kaveria</p>
+                            <p th:if="${hasFriends} == false">Sinulla ei ole yhtäkään kaveria</p>
                             <p th:if="${hasFriends}" th:inline="text"><i class="fas fa-user"></i> [[${friends.size()}]] Kaveria</p>
                         </div>
                         <ul th:if="${hasFriends}" class="common-list">
@@ -100,8 +104,16 @@
                                         <h3>@[[${friend.profileTag}]]</h3>
                                     </div>
                                 </div>
-                                <a th:href="@{/users/{user}(user=${friend.profileTag})}" class="ft-button"><i
-                                        class="fas fa-user fa-sm"></i>Profiiliin</a>
+                                <div class="friend-actions">
+                                    <form th:if="${ownProfile}" th:action="@{/api/user/removefriend}" th:method="POST">
+                                        <input type="hidden" name="accountId" th:value="${auser.id}" />
+                                        <input type="hidden" name="friendId" th:value="${friend.id}" />
+                                        <button type="submit" class="ft-button ftb-cancel">
+                                            <i class="fas fa-user-plus"></i>Poista kaveri</button>
+                                    </form>
+                                    <a th:href="@{/users/{user}(user=${friend.profileTag})}" class="ft-button">
+                                        <i class="fas fa-user fa-sm"></i>Profiiliin</a>
+                                </div>
                             </li>
                         </ul>
                     </div>

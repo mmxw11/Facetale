@@ -110,6 +110,18 @@ public class UserService {
         return account;
     }
 
+    @Transactional
+    public Account removeFriend(UUID accountId, UUID friendId) throws ResponseStatusException {
+        Account account = getAccount(accountId);
+        Account friend = getAccount(friendId);
+        Friendship frienship = friendRepository.findFriendship(account, friend);
+        if (frienship == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You are not friends with this person!");
+        }
+        friendRepository.delete(frienship);
+        return account;
+    }
+
     /**
      * Find the relationship between two users.
      * Mainly used to determine whether currently logged user is friends with the user whose profile they are viewing.

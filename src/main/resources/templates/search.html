@@ -11,7 +11,7 @@
                 <div class="column primary">
                     <div class="list-title">
                         <h1 th:inline="text">Hakutulokset (Yhteensä [[${users.getTotalElements()}]])</h1>
-                        <h2 th:inline="text">Näytetään [[${users.getContent().size()}]]</h1>
+                        <h2 th:inline="text">Näytetään [[${users.getContent().size()}]]</h2>
                     </div>
                     <div class="results-bar"
                         th:styleappend="${users.getTotalElements()} == 0 ? 'background-color:#D55246;' : 'background-color:#1e7bd2;'">
@@ -24,7 +24,7 @@
                                 <img th:src="@{${@imageService.getUserProfilePictureLocation(user)}}" class="profile-picture-small"
                                     alt="Profile picture" />
                                 <div class="user-profile-info">
-                                    <a th:href="@{/users/{user}(user=${user.profileTag})}" th:inline="text" class="upi-username"> [[${user.name}]]</a>
+                                    <a th:href="@{/users/{user}(user=${user.profileTag})}" th:inline="text" class="upi-username">[[${user.name}]]</a>
                                     <h3>@[[${user.profileTag}]]</h3>
                                 </div>
                             </div>

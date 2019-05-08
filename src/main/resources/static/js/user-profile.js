@@ -128,7 +128,7 @@ function showPostComments(button, postId, postRepliesElement, postTargetArray, n
             loadItemsContainer.style.display = "flex";
         }
         if (nextPage == -1) {
-            // Trigger commnet loader button click.
+            // Trigger comment loader button click.
             loadItemsContainer.querySelector("button").click();
         }
     }

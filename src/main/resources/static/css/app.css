@@ -224,12 +224,13 @@ body {
 
 #ni-account-dropdown-menu .dm-account {
     display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
     border-bottom: 2px solid #302f2f;
     word-break: break-all;
     padding: 10px;
     margin-bottom: 5px;
-    flex-direction: row;
-    align-items: center;
 }
 
 .dm-account .dm-account-user-profile {

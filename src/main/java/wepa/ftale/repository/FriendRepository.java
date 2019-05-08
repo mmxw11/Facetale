@@ -24,6 +24,6 @@ public interface FriendRepository extends JpaRepository<Friendship, Long> {
     Friendship findFriendship(Account account, Account account2);
 
     List<Friendship> findAllByInitiatorOrTargetAndActiveTrue(Account initiator, Account target);
-    
+
     List<Friendship> findAllByInitiatorOrTarget(Account initiator, Account target);
 }
