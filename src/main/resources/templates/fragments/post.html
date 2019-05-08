@@ -16,8 +16,7 @@
                         <textarea rows="1" name="textContent" th:placeholder="${post} ? 'What\'s up?' : 'Uusi kommentti.'" class="comment-textarea"
                             oninput="resizeCommentBoxTextarea(this);" th:disabled="${canPost} == false" required></textarea>
                         <div class="fsubmit-button-wrapper">
-                            <p th:unless="${canPost}" class="fe-error-message" th:inline="text"> Voit [[${post ? 'julkaista' : 'kommentoida'}]] vain
-                                kavereidesi seinälle.</p>
+                            <p th:unless="${canPost}" class="fe-error-message" th:inline="text">Voit [[${post ? 'julkaista' : 'kommentoida'}]] vain kavereidesi seinälle.</p>
                             <button th:unless="${post}" type="reset" class="ft-button ftb-cancel" th:data-newcommentid="${htmlId}"
                                 onclick="toggleNewCommentVisibility(this);">Peruuta</button>
                             <input th:if="${canPost}" type="submit" class="ft-button" th:value="${post} ? 'Lähetä' : 'Kommentoi'" />
@@ -66,8 +65,7 @@
                 th:with="htmlId=(${post} ? 'post-' : 'comment-') + ${comment.id}">
                 <img th:src="@{${@imageService.getUserProfilePictureLocation(comment.author)}}" class="profile-picture-small" alt="Profile picture" />
                 <div class="comment">
-                    <a th:href="@{/users/{user}(user=${comment.author.profileTag})}" class="comment-author-info" th:inline="text">
-                        [[${comment.author.name}]] <span>@[[${comment.author.profileTag}]]</span></a>
+                    <a th:href="@{/users/{user}(user=${comment.author.profileTag})}" class="comment-author-info" th:inline="text">[[${comment.author.name}]] <span>@[[${comment.author.profileTag}]]</span></a>
                     <div th:if="${post} and ${comment.image != null}" class="comment-album-image-container">
                         <img th:src="@{/api/images/{id}.{type}(id=${comment.image.id}, type=${comment.image.getContentSubType()})}"
                             alt="Album image" />
@@ -75,8 +73,7 @@
                     <p class="comment-text-content" th:text="${comment.textContent}"></p>
                     <div class="comment-info-wrapper" th:id="${htmlId} + '-info-wrapper'">
                         <div class="flex-space-between-wrapper" th:styleappend="${post} == false ? 'justify-content: flex-end;'">
-                            <h3 th:if="${post}" th:inline="text" th:id="${htmlId} + '-likecount'" th:data-postlikecount="${view.getLikeCount()}">
-                                [[${view.getLikeCount()}]] Tykkäystä</h3>
+                            <h3 th:if="${post}" th:inline="text" th:id="${htmlId} + '-likecount'" th:data-postlikecount="${view.getLikeCount()}">[[${view.getLikeCount()}]] Tykkäystä</h3>
                             <h3 th:text="${#temporals.format(comment.creationDate, 'dd.MM.yyyy HH:mm')}">Date</h3>
                         </div>
                         <div th:if="${post}" class="comment-actions"
@@ -111,7 +108,7 @@
                             <!-- Comments -->
                             <button type="button" th:id="${htmlId} + '-total-comment-count'" th:data-totalcount="${view.getCommentCount()}"
                                 th:data-postid="${comment.id}" class="ft-button expand-comment-section-button" onclick="togglePostComments(this);"
-                                th:inline="text"> [[${view.getCommentCount()}]] Kommenttia <i class="fas fa-chevron-down"></i></button>
+                                th:inline="text">[[${view.getCommentCount()}]] Kommenttia <i class="fas fa-chevron-down"></i></button>
                         </div>
                         <div th:if="${post}" th:include="fragments/post :: form-loader" class="form-loader-container"></div>
                     </div>

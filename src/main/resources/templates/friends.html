@@ -17,8 +17,7 @@
                         <div class="results-bar"
                             th:styleappend="${hasFriendRequests} == false ? 'background-color:#D55246;' : 'background-color:#1e7bd2;'">
                             <p th:if="${hasFriendRequests} == false">Ei uusia kaveripyyntöjä</p>
-                            <p th:if="${hasFriendRequests}" th:inline="text"><i class="fas fa-user-plus"></i> [[${friendRequestsReceived.size()}]]
-                                uutta kaveripyyntöä</p>
+                            <p th:if="${hasFriendRequests}" th:inline="text"><i class="fas fa-user-plus"></i>[[${friendRequestsReceived.size()}]] uutta kaveripyyntöä</p>
                         </div>
                         <ul th:if="${hasFriendRequests}" class="common-list">
                             <li th:each="friendRequest : ${friendRequestsReceived}" class="common-list-item">
@@ -28,8 +27,7 @@
                                     <div class="user-profile-info">
                                         <div class="upi-inner-wrapper">
                                             <a th:href="@{/users/{user}(user=${friendRequest.initiator.profileTag})}" th:inline="text"
-                                                class="upi-username">[[${friendRequest.initiator.name}]]
-                                                <span>@[[${friendRequest.initiator.profileTag}]]</span></a>
+                                                class="upi-username">[[${friendRequest.initiator.name}]] <span>@[[${friendRequest.initiator.profileTag}]]</span></a>
                                         </div>
                                         <h3 th:text="${#temporals.format(friendRequest.creationDate, 'dd.MM.yyyy HH:mm')}">Date</h3>
                                     </div>
@@ -58,8 +56,7 @@
                         <div class="results-bar"
                             th:styleappend="${hasSentFriendrequests} == false ? 'background-color:#D55246;' : 'background-color:#1e7bd2;'">
                             <p th:if="${hasSentFriendrequests} == false">Et ole lähettänyt kaveripyyntöjä</p>
-                            <p th:if="${hasSentFriendrequests}" th:inline="text"><i class="fas fa-user-plus"></i> [[${friendRequestsSent.size()}]]
-                                aktiivisia lähetettyjä kaveripyyntöjä</p>
+                            <p th:if="${hasSentFriendrequests}" th:inline="text"><i class="fas fa-user-plus"></i>[[${friendRequestsSent.size()}]] aktiivisia lähetettyjä kaveripyyntöjä</p>
                         </div>
                         <ul th:if="${hasSentFriendrequests}" class="common-list">
                             <li th:each="friendRequest : ${friendRequestsSent}" class="common-list-item">
@@ -69,8 +66,7 @@
                                     <div class="user-profile-info">
                                         <div class="upi-inner-wrapper">
                                             <a th:href="@{/users/{user}(user=${friendRequest.target.profileTag})}" th:inline="text"
-                                                class="upi-username">[[${friendRequest.target.name}]]
-                                                <span>@[[${friendRequest.target.profileTag}]]</span></a>
+                                                class="upi-username">[[${friendRequest.target.name}]] <span>@[[${friendRequest.target.profileTag}]]</span></a>
                                         </div>
                                         <h3 th:text="${#temporals.format(friendRequest.creationDate, 'dd.MM.yyyy HH:mm')}">Date</h3>
                                     </div>
@@ -91,7 +87,7 @@
                     <div th:with="hasFriends=${friends.size()} > 0" class="friend-data-container">
                         <div class="results-bar" th:styleappend="${hasFriends} == false ? 'background-color:#D55246;' : 'background-color:#1e7bd2;'">
                             <p th:if="${hasFriends} == false">Sinulla ei ole yhtäkään kaveria</p>
-                            <p th:if="${hasFriends}" th:inline="text"><i class="fas fa-user"></i> [[${friends.size()}]] Kaveria</p>
+                            <p th:if="${hasFriends}" th:inline="text"><i class="fas fa-user"></i>[[${friends.size()}]] Kaveria</p>
                         </div>
                         <ul th:if="${hasFriends}" class="common-list">
                             <li th:each="friend : ${friends}" class="common-list-item">
@@ -99,8 +95,7 @@
                                     <img th:src="@{${@imageService.getUserProfilePictureLocation(friend)}}" class="profile-picture-small"
                                         alt="Profile picture" />
                                     <div class="user-profile-info">
-                                        <a th:href="@{/users/{user}(user=${friend.profileTag})}" th:inline="text" class="upi-username">
-                                            [[${friend.name}]]</a>
+                                        <a th:href="@{/users/{user}(user=${friend.profileTag})}" th:inline="text" class="upi-username">[[${friend.name}]]</a>
                                         <h3>@[[${friend.profileTag}]]</h3>
                                     </div>
                                 </div>
