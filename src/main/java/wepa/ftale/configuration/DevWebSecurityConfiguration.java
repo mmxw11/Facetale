@@ -17,18 +17,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 /**
  * @author Matias
  */
-@Profile("production")
+@Profile("test")
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
 @EnableWebSecurity
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class DevWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity sec) throws Exception {
+        // H2-console.
+        sec.csrf().disable();
+        sec.headers().frameOptions().sameOrigin();
         sec.authorizeRequests()
+                // H2-console
+                .antMatchers("/h2-console", "/h2-console/**").permitAll()
                 // Resources.
                 .antMatchers(HttpMethod.GET, "/static/**").permitAll()
                 // Sign up.
