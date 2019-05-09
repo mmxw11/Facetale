@@ -24,7 +24,7 @@ import wepa.ftale.Pair;
 import wepa.ftale.domain.Account;
 import wepa.ftale.domain.Friendship;
 import wepa.ftale.domain.Post;
-import wepa.ftale.domain.UserPostView;
+import wepa.ftale.domain.projection.UserPostView;
 import wepa.ftale.repository.AccountRepository;
 import wepa.ftale.repository.FriendRepository;
 import wepa.ftale.web.AuthenticatedUser;

@@ -1,12 +1,13 @@
 package wepa.ftale.service;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,10 +27,13 @@ import wepa.ftale.domain.Account;
 import wepa.ftale.domain.Comment;
 import wepa.ftale.domain.FtImage;
 import wepa.ftale.domain.Post;
-import wepa.ftale.domain.UserPostView;
+import wepa.ftale.domain.projection.EmptyPostViewImpl;
+import wepa.ftale.domain.projection.PostView;
+import wepa.ftale.domain.projection.UserPostView;
 import wepa.ftale.repository.CommentRepository;
 import wepa.ftale.repository.ImageRepository;
 import wepa.ftale.repository.PostRepository;
+import wepa.ftale.web.AuthenticatedUser;
 import wepa.ftale.web.profile.ProfileViewDisplayType;
 import wepa.ftale.web.profile.UserRelationship;
 
@@ -92,6 +96,10 @@ public class MessageService {
         // Reset profile picture.
         if (account.getProfilePicture() != null && account.getProfilePicture().equals(image)) {
             account.setProfilePicture(null);
+            AuthenticatedUser auser = userService.getAuthenticatedUser();
+            if (auser.getId().equals(account.getId())) {
+                auser.setProfilePicture(null);
+            }
         }
         userService.saveAccount(account);
         postRepository.delete(post);
@@ -153,10 +161,7 @@ public class MessageService {
 
     public Pair<Page<Post>, Map<Long, UserPostView>> generateRequesterPostViews(Account account, Account requester, ProfileViewDisplayType pvDisplayType, Pageable pageable) {
         Page<Post> posts = getProfilePosts(account, pvDisplayType, pageable);
-        List<UserPostView> postViews = new ArrayList<>();
-        if (!posts.isEmpty()) {
-            postViews = postRepository.fetchUserPostViews(requester, posts.getContent());
-        }
+        List<UserPostView> postViews = getUserPostViews(requester, posts.getContent());
         Map<Long, UserPostView> userPostViews = new HashMap<>();
         for (UserPostView v : postViews) {
             userPostViews.put(v.getPostId(), v);
@@ -173,11 +178,23 @@ public class MessageService {
 
     private void updateNewPostModel(Post post, Model model) {
         UserRelationship urelationship = userService.findUserRelationship(post.getAuthor(), post.getTarget());
-        List<UserPostView> postViews = postRepository.fetchUserPostViews(post.getAuthor(), Arrays.asList(post));
+        UserPostView postView = new UserPostView(new EmptyPostViewImpl(post.getId()), true);
         model.addAttribute("comment", post);
-        model.addAttribute("view", !postViews.isEmpty() ? postViews.get(0) : null);
+        model.addAttribute("view", postView);
         model.addAttribute("post", true);
         model.addAttribute("auserRelationship", urelationship);
+    }
+
+    private List<UserPostView> getUserPostViews(Account user, List<Post> posts) {
+        List<UserPostView> upostViews = new ArrayList<>();
+        if (posts.isEmpty()) {
+            return upostViews;
+        }
+        List<PostView> postViews = postRepository.fetchPostViews(posts);
+        List<BigInteger> likedPostBigIds = postRepository.getLikedPostIds(user, posts);
+        List<Long> likedPostIds = likedPostBigIds.stream().map(BigInteger::longValue).collect(Collectors.toList());
+        postViews.forEach(v -> upostViews.add(new UserPostView(v, !likedPostIds.contains(v.getPostId()))));
+        return upostViews;
     }
 
     private void checkFriendPermissions(Account account, Account target) throws ResponseStatusException {

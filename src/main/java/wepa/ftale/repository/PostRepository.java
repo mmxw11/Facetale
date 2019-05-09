@@ -1,5 +1,6 @@
 package wepa.ftale.repository;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -9,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import wepa.ftale.domain.Account;
 import wepa.ftale.domain.Post;
-import wepa.ftale.domain.UserPostView;
+import wepa.ftale.domain.projection.PostView;
 
 /**
  * @author Matias
@@ -23,12 +24,13 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Page<Post> findAllByTargetAndImageIsNotNull(Account target, Pageable pageable);
 
-    /**
-     * LIke count not working :/ 
-     */
-    @Query(value = "SELECT Post.id AS postId, COUNT(post_likes.like_author_id) AS likeCount, COUNT(comment.post_id) AS commentCount, (SELECT CASE WHEN post_likes.like_author_id = :requester THEN false ELSE true end) AS postRequesterAllowedToLike FROM Post"
-            + " LEFT JOIN post_likes ON post_likes.post_id = Post.id"
-            + " LEFT JOIN comment ON comment.post_id = Post.id"
-            + " WHERE Post.id IN (:posts) GROUP BY Post.id, post_likes.like_author_id", nativeQuery = true)
-    List<UserPostView> fetchUserPostViews(Account requester, List<Post> posts);
+    @Query(value = "SELECT Post.id AS postId, COUNT(DISTINCT pl.like_author_id) AS likeCount, COUNT(DISTINCT c.id) AS commentCount "
+            + "FROM Post LEFT JOIN Comment c ON c.post_id = Post.id "
+            + "LEFT JOIN Post_likes pl ON pl.post_id = Post.id "
+            + "WHERE Post.id IN (:posts) "
+            + "GROUP BY Post.id", nativeQuery = true)
+    List<PostView> fetchPostViews(List<Post> posts);
+
+    @Query(value = "SELECT post_id FROM Post_likes WHERE like_author_id = :user AND post_id IN (:posts)", nativeQuery = true)
+    List<BigInteger> getLikedPostIds(Account user, List<Post> posts);
 }

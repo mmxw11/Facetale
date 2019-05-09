@@ -17,7 +17,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
 * @author Matias
@@ -27,7 +26,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class FtImage extends AbstractPersistable<UUID> {
 
     @NotNull

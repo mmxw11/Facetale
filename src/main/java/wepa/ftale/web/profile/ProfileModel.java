@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import wepa.ftale.domain.Account;
 import wepa.ftale.domain.Post;
-import wepa.ftale.domain.UserPostView;
+import wepa.ftale.domain.projection.UserPostView;
 
 /**
  * @author Matias
