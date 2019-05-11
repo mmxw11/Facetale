@@ -60,7 +60,7 @@ body {
 
 .profile-picture-small {
     height: 40px;
-    max-width: 40px;
+    width: 40px;
     border-radius: 50%;
     margin-right: 5px;
     -webkit-user-select: none;
@@ -202,7 +202,7 @@ body {
 
 .nav-item .ni-account .profile-picture-small {
     height: 35px;
-    max-width: 35px;
+    width: 35px;
 }
 
 /* Account dropdown menu */

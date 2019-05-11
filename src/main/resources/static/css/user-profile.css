@@ -234,7 +234,7 @@
 
 .comment .comment-replies .profile-picture-small {
     height: 30px;
-    max-width: 30px;
+    width: 30px;
 }
 
 .comment .comment-replies .comment-text-content {
