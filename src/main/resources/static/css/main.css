@@ -1,53 +1,54 @@
 /* Common css for all pages. */
 
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:700,300,400);
-
-html, body, ul {
-    margin: 0;
-    padding: 0;
-}
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:700,300,400&display=swap);
 
 html {
-    position: relative;
-    min-height: 100%;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1rem;
 }
 
 body {
-    font-family: "Open Sans", sans-serif;
-    color: white;
-    font-size: 100%;
+    margin: 0;
     min-width: 320px;
-    min-height: 320px;
 }
 
 main {
     /* IE fix (IE doesn't support main.) */
     display: block;
-    /* Height of footer */
-    margin-bottom: 46px;
+    color: white;
+    /* Make sure footer is always at the bottom. */
+    min-height: calc(100vh - 46px - 60px);
 }
 
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    line-height: 1.5;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+
+ol,
+ul {
     margin: 0;
     padding: 0;
-    line-height: 1.4em;
-}
-
-button, input {
-    font-family: inherit;
-    font-size: inherit;
+    list-style-type: none;
 }
 
 .show-element {
     display: block !important;
 }
 
-ul {
-    list-style-type: none;
-}
-
-/* Loading animation */
-/* Credits https://loading.io/css/ */
+/* Loader animation. Credits https://loading.io/css/ */
 
 .lds-ring {
     position: relative;
@@ -89,7 +90,7 @@ ul {
     }
 }
 
-/* End of Loading animation */
+/* End of loader animation */
 
 /* Loader containers */
 
@@ -185,11 +186,10 @@ ul {
 
 #master-footer {
     display: flex;
-    position: absolute;
-    height: 46px;
-    width: 100%;
-    bottom: 0;
     align-items: center;
+    height: 46px;
+    color: white;
+    box-sizing: border-box;
 }
 
 #master-footer h3 {

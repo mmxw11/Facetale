@@ -40,8 +40,9 @@ body {
 
 #content-wrapper {
     position: relative;
+    padding-top: 60px;
     padding-bottom: 30px;
-    margin: 60px 10px 0 10px;
+    margin: 0 10px;
 }
 
 /* Account */
@@ -82,7 +83,6 @@ body {
 /* Account credentials form */
 
 #ac-credentials {
-    line-height: 1.6em;
     padding: 5px 5% 25px 5%;
 }
 
@@ -123,16 +123,16 @@ body {
 .floating-fe-label {
     position: absolute;
     color: black;
-    top: 11px;
+    top: .9em;
     left: 10px;
     pointer-events: none;
     -webkit-transition: all 200ms;
     transition: all 200ms;
 }
 
-.form-input-element:focus + .floating-fe-label,
-.form-input-element:valid + .floating-fe-label,
-.form-input-element.fe-invalid-value + .floating-fe-label {
+.form-input-element:focus+.floating-fe-label,
+.form-input-element:valid+.floating-fe-label,
+.form-input-element.fe-invalid-value+.floating-fe-label {
     height: 20px;
     top: 0;
     left: 0;
@@ -142,7 +142,7 @@ body {
 
 /* Fix floating label position on autofill in most browsers. */
 
-.form-input-element:-webkit-autofill + .floating-fe-label {
+.form-input-element:-webkit-autofill+.floating-fe-label {
     height: 20px;
     top: 0;
     left: 0;
@@ -168,7 +168,7 @@ body {
 
 #hint-container {
     position: absolute;
-    top: 0;
+    top: 60px;
     left: 10%;
     transform: translateX(-10%);
 }

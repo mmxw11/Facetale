@@ -22,15 +22,12 @@ body {
 #main-container {
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
 .column {
     box-sizing: border-box;
     padding: 50px 10px 0 10px;
-}
-
-.column:not(.primary) {
-    flex: 1;
 }
 
 @media screen and (max-width: 1000px) {
@@ -41,10 +38,6 @@ body {
     .column {
         padding-left: 0;
         padding-right: 0;
-    }
-
-    .column.primary {
-        flex: 1;
     }
 }
 
@@ -112,6 +105,7 @@ body {
 
 .nav-item .ni-action {
     font-size: 1.05em;
+    color: white;
     cursor: pointer;
     padding: 5px;
     outline: 0;
@@ -187,7 +181,7 @@ body {
 }
 
 .ni-search-form .ft-button {
-    flex: 1;
+    flex: 1 auto;
     min-width: 80px;
     background-color: #134370;
     padding: 0;

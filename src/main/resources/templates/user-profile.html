@@ -42,26 +42,24 @@
                                     <i class="fas fa-user-clock fa-sm"></i>Odottava kaveripyyntö</p>
                             </th:block>
                             <ul id="user-profile-toolbar">
-                                <div class="flex-space-between-wrapper">
-                                    <li>
-                                        <button type="button" class="ft-button nav-link" onclick="changeProfileViewDisplayType();"
-                                            id="change-profileview-displaytype">displayType</button>
-                                    </li>
-                                    <li>
-                                        <th:block th:switch="${profileModel.auserRelationship == T(wepa.ftale.web.profile.UserRelationship).ITSELF} ? ${true} :
+                                <li>
+                                    <button type="button" class="ft-button nav-link display-type" onclick="changeProfileViewDisplayType();"
+                                        id="change-profileview-displaytype">displayType</button>
+                                </li>
+                                <li>
+                                    <th:block th:switch="${profileModel.auserRelationship == T(wepa.ftale.web.profile.UserRelationship).ITSELF} ? ${true} :
                                         ${profileModel.auserRelationship == T(wepa.ftale.web.profile.UserRelationship).FRIEND}">
-                                            <a th:case="${true}" th:href="@{/friends?user={profileTag}(profileTag=${profileModel.user.profileTag})}"
-                                                class="nav-link"><i class="fas fa-user-friends"></i>Kaverit</a>
-                                            <div th:case="${false}" class="pos-relative-wrapper">
-                                                <a href="javascript:void(0);" class="nav-link user-action-disabled">
-                                                    <i class="fas fa-user-friends"></i>Kaverit</a>
-                                                <p class="user-action-tooltip">Nähdäksesi toisten kaverit sinun täytyy olla kavereita heidän kanssa.
-                                                </p>
-                                            </div>
-                                        </th:block>
-                                    </li>
-                                </div>
-                                <li th:if="${profileModel.auserRelationship == T(wepa.ftale.web.profile.UserRelationship).STRANGER}">
+                                        <a th:case="${true}" th:href="@{/friends?user={profileTag}(profileTag=${profileModel.user.profileTag})}"
+                                            class="nav-link"><i class="fas fa-user-friends"></i>Kaverit</a>
+                                        <div th:case="${false}" class="pos-relative-wrapper">
+                                            <a href="javascript:void(0);" class="nav-link user-action-disabled">
+                                                <i class="fas fa-user-friends"></i>Kaverit</a>
+                                            <p class="user-action-tooltip">Nähdäksesi toisten kaverit sinun täytyy olla kavereita heidän kanssa. </p>
+                                        </div>
+                                    </th:block>
+                                </li>
+                                <li th:if="${profileModel.auserRelationship == T(wepa.ftale.web.profile.UserRelationship).STRANGER}"
+                                    class="friend-req-button">
                                     <form th:action="@{/api/user/sendfriendreq}" th:method="POST">
                                         <input type="hidden" name="senderId" th:value="${auser.id}" />
                                         <input type="hidden" name="recipientId" th:value="${profileModel.user.id}" />

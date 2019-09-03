@@ -1,19 +1,18 @@
 .column.primary {
-    width: 60%;
-    margin: 0 auto;
+    min-width: 1280px;
 }
 
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1400px) {
     .column.primary {
-        width: 80%;
+        min-width: 998px;
     }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1080px) {
     .column.primary {
+        margin: 0 2%;
         width: 96%;
         min-width: 0;
-        margin: 0 auto 20px auto;
     }
 }
 
@@ -68,6 +67,9 @@
     border-radius: 4px;
     box-sizing: border-box;
     padding: 15px 20px 20px 20px;
+}
+
+.common-list .common-list-item:not(:last-child) {
     margin-bottom: 20px;
 }
 
@@ -95,7 +97,7 @@
 
 .user-info-container {
     display: flex;
-    margin: 5px 0;
+    margin: 5px 10px 5px 0;
 }
 
 .user-info-container h3 {
@@ -103,11 +105,16 @@
     font-size: 1em;
 }
 
+.user-info-container .profile-picture-small {
+    flex: 1 0 auto;
+}
+
 .user-info-container .user-profile-info {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: baseline;
+    align-items: flex-start;
     color: white;
     text-decoration: none;
     margin-left: 10px;
@@ -127,6 +134,7 @@
 
 .user-profile-info .upi-inner-wrapper span {
     font-weight: 400;
+    word-break: break-word;
 }
 
 .friend-data-container {

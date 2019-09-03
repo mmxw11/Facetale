@@ -1,17 +1,12 @@
-.column.primary {
-    width: 67%;
-}
-
 .column.secondary {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
 /* Primary column */
 
 #posts-container {
-    width: 70%;
-    min-width: 620px;
+    min-width: 820px;
     max-width: 1080px;
     margin-bottom: 20px;
     border-style: solid;
@@ -21,11 +16,13 @@
     border-radius: 5px 5px 0 0;
 }
 
-@media screen and (max-width: 1000px) {
-    .column.primary {
-        width: initial;
+@media screen and (max-width: 1250px) {
+    #posts-container {
+        min-width: 620px;
     }
+}
 
+@media screen and (max-width: 1000px) {
     #posts-container {
         border: none;
         width: 96%;
@@ -36,7 +33,7 @@
 
 #posts-header {
     display: flex;
-    min-height: 46px;
+    height: 46px;
     background-color: #134370;
     border-radius: 4px 4px 0 0;
     align-items: center;
@@ -62,16 +59,16 @@
 
 /* First comment / post styling */
 
-#profileview-dynamic-content > .new-comment {
+#profileview-dynamic-content>.new-comment {
     border-bottom: 1px solid #5c5c5c;
 }
 
-#profileview-dynamic-content > .new-comment .commentbox {
+#profileview-dynamic-content>.new-comment .commentbox {
     border-radius: 0;
     margin-top: 0;
 }
 
-#profileview-dynamic-content > .posts-list > .commentbox:first-child {
+#profileview-dynamic-content>.posts-list>.commentbox:first-child {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     margin-top: 0;
@@ -104,7 +101,7 @@
     background-color: #232323;
     border-radius: 4px;
     box-sizing: border-box;
-    padding: 15px 20px 20px 20px;
+    padding: 20px;
     margin-top: 50px;
 }
 
@@ -113,9 +110,19 @@
 }
 
 .commentbox .comment {
-    flex: 1;
+    width: 100%;
     font-size: 0.95em;
     word-break: break-all;
+}
+
+@media screen and (max-width: 500px) {
+    .commentbox {
+        flex-direction: column;
+    }
+
+    .commentbox .comment {
+        padding-top: 10px;
+    }
 }
 
 .comment .comment-author-info {
@@ -225,6 +232,8 @@
 .comment .comment-replies .commentbox {
     border-radius: 0;
     padding-left: 0;
+    padding-right: 0;
+    padding-top: 10px;
     margin-top: 0;
 }
 
@@ -245,12 +254,9 @@
 
 #user-profile-container {
     display: flex;
-    flex-direction: column;
     align-self: flex-start;
     max-width: 350px;
     min-width: 320px;
-    align-items: center;
-    justify-content: center;
     background-color: #232323;
     border-radius: 4px;
     padding: 2em;
@@ -259,19 +265,12 @@
 
 @media screen and (max-width: 1000px) {
     #user-profile-container {
-        max-width: 80%;
-        min-width: 60%;
-        margin: 0 auto;
+        max-width: 600px;
+        min-width: 450px;
     }
 }
 
-@media screen and (max-width: 700px) {
-    #user-profile-container {
-        min-width: 80%;
-    }
-}
-
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
     #user-profile-container {
         max-width: 96%;
         min-width: 96%;
@@ -280,8 +279,7 @@
 
 #user-profile-wrapper {
     width: 80%;
-    max-width: 600px;
-    height: auto;
+    margin: 0 auto;
 }
 
 #user-profile-wrapper img {
@@ -299,7 +297,7 @@
     font-weight: 400;
 }
 
-#user-profile-wrapper > p {
+#user-profile-wrapper>p {
     color: #bad7f1;
     font-size: 1em;
 }
@@ -325,34 +323,33 @@
 /* User profile actions */
 
 #user-profile-toolbar {
+    display: flex;
+    flex-wrap: wrap;
     margin-top: 10px;
-}
-
-#user-profile-toolbar .flex-space-between-wrapper li {
-    flex: 1;
-}
-
-#user-profile-toolbar .flex-space-between-wrapper li:not(:last-child) {
-    margin-right: 5%;
-}
-
-#user-profile-toolbar .flex-space-between-wrapper a {
-    padding: 11px 0;
-    justify-content: center;
-}
-
-#user-profile-toolbar .flex-space-between-wrapper .user-action-tooltip {
-    min-width: 140px;
 }
 
 #user-profile-toolbar .nav-link {
     font-size: 0.9em;
+    padding: 11px;
+    justify-content: center;
     background-color: #1e7bd2;
     margin-top: 10px;
 }
 
 #user-profile-toolbar .nav-link:not(.user-action-disabled):hover {
     filter: brightness(85%);
+}
+
+#user-profile-toolbar li {
+    flex: 1 auto;
+}
+
+#user-profile-toolbar li:first-child {
+    margin-right: 10px;
+}
+
+#user-profile-toolbar .friend-req-button {
+    width: 100%;
 }
 
 #user-profile-toolbar button {
@@ -372,14 +369,13 @@
     filter: none;
 }
 
-/* Tooltips  */
+/* Tooltips */
 
 .user-action-tooltip {
     display: none;
     position: absolute;
     color: black;
-    font-size: 0.9em;
-    line-height: 1.2em;
+    font-size: .9em;
     background: white;
     max-width: 100%;
     padding: 5px;
@@ -398,6 +394,6 @@
     border-color: white transparent transparent transparent;
 }
 
-.user-action-disabled:hover + .user-action-tooltip {
+.user-action-disabled:hover+.user-action-tooltip {
     display: block;
 }
